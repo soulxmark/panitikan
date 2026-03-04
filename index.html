@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="fil">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Filibusterismo — Mga Tauhan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c96d;
+    --gold-dark: #8b6914;
+    --crimson: #7a1a1a;
+    --crimson-light: #a52a2a;
+    --ink: #0d0a06;
+    --parchment: #f5ead0;
+    --parchment-dark: #e8d5a8;
+    --shadow: #1a0f00;
+    --text-main: #2a1a08;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--ink);
+    color: var(--parchment);
+    font-family: 'EB Garamond', serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 200px;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.5;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 0%, #3a1505 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 50% 100%, #1a0500 0%, transparent 60%),
+      var(--ink);
+    overflow: hidden;
+  }
+
+  .hero-bg-circles {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .hero-bg-circles span {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.07);
+    animation: pulse-ring 8s ease-in-out infinite;
+  }
+  .hero-bg-circles span:nth-child(1) { width: 300px; height: 300px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 0s; }
+  .hero-bg-circles span:nth-child(2) { width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 1s; }
+  .hero-bg-circles span:nth-child(3) { width: 700px; height: 700px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 2s; }
+  .hero-bg-circles span:nth-child(4) { width: 900px; height: 900px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 3s; }
+
+  @keyframes pulse-ring {
+    0%,100% { opacity: 0.3; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 0.08; transform: translate(-50%,-50%) scale(1.04); }
+  }
+
+  .hero-ornament {
+    font-family: 'Cinzel Decorative', serif;
+    color: var(--gold);
+    font-size: clamp(0.6rem, 1.5vw, 0.85rem);
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fade-up 1s 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(2.4rem, 7vw, 6rem);
+    font-weight: 900;
+    color: var(--gold);
+    text-shadow:
+      0 0 40px rgba(201,168,76,0.3),
+      0 4px 20px rgba(0,0,0,0.8);
+    line-height: 1.1;
+    margin: 0.5rem 0;
+    opacity: 0;
+    animation: fade-up 1s 0.6s forwards;
+    position: relative;
+  }
+
+  .hero-title::after {
+    content: 'El Filibusterismo';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 40%, var(--gold-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.75rem, 2vw, 1rem);
+    letter-spacing: 0.3em;
+    color: var(--parchment-dark);
+    opacity: 0;
+    animation: fade-up 1s 0.9s forwards;
+    margin-bottom: 0.8rem;
+  }
+
+  .hero-divider {
+    display: flex; align-items: center; gap: 1rem;
+    margin: 1.2rem 0 0.6rem;
+    opacity: 0;
+    animation: fade-up 1s 1.1s forwards;
+    width: min(500px, 90vw);
+  }
+  .hero-divider::before, .hero-divider::after {
+    content: ''; flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .hero-divider-gem {
+    color: var(--gold); font-size: 1.2rem;
+  }
+
+  .hero-desc {
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
+    font-style: italic;
+    color: var(--parchment-dark);
+    max-width: 500px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fade-up 1s 1.3s forwards;
+  }
+
+  .scroll-cue {
+    margin-top: 2.5rem;
+    opacity: 0;
+    animation: fade-up 1s 1.6s forwards;
+    display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+  }
+  .scroll-arrow {
+    width: 18px; height: 18px;
+    border-right: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold);
+    transform: rotate(45deg);
+    animation: bounce-down 1.5s ease-in-out infinite;
+  }
+  @keyframes bounce-down {
+    0%,100% { transform: rotate(45deg) translateY(0); }
+    50% { transform: rotate(45deg) translateY(6px); }
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 5rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.45em;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 0.4rem;
+  }
+  .section-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.5rem, 4vw, 2.6rem);
+    color: var(--gold-light);
+    text-align: center;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 20px rgba(201,168,76,0.2);
+  }
+  .section-rule {
+    display: flex; align-items: center; justify-content: center; gap: 0.8rem;
+    margin: 0 auto 3.5rem;
+    width: min(400px, 80vw);
+  }
+  .section-rule::before, .section-rule::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
+  }
+  .section-rule span { color: var(--gold); font-size: 1rem; }
+
+  /* ── CARDS GRID ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .char-card {
+    position: relative;
+    background: linear-gradient(145deg, #1a0e04 0%, #110800 100%);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .char-card.visible {
+    animation: card-appear 0.7s ease forwards;
+  }
+
+  @keyframes card-appear {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .char-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow:
+      0 20px 60px rgba(0,0,0,0.7),
+      0 0 30px rgba(201,168,76,0.12),
+      inset 0 1px 0 rgba(201,168,76,0.2);
+    border-color: rgba(201,168,76,0.5);
+  }
+
+  /* corner ornaments */
+  .char-card::before, .char-card::after {
+    content: '';
+    position: absolute;
+    width: 24px; height: 24px;
+    border-color: var(--gold);
+    border-style: solid;
+    opacity: 0.4;
+    transition: opacity 0.4s, width 0.4s, height 0.4s;
+    z-index: 2;
+  }
+  .char-card::before { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
+  .char-card::after  { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
+  .char-card:hover::before, .char-card:hover::after {
+    opacity: 1; width: 36px; height: 36px;
+  }
+
+  /* role tag */
+  .card-role {
+    position: absolute; top: 14px; right: 14px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.25em;
+    padding: 3px 10px;
+    border: 1px solid var(--gold-dark);
+    color: var(--gold);
+    background: rgba(10,6,0,0.7);
+    text-transform: uppercase;
+    z-index: 3;
+  }
+
+  .card-portrait {
+    width: 100%;
+    aspect-ratio: 3/4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-portrait-bg {
+    position: absolute; inset: 0;
+    transition: transform 0.6s ease;
+  }
+  .char-card:hover .card-portrait-bg {
+    transform: scale(1.08);
+  }
+
+  .card-portrait-emoji {
+    position: relative; z-index: 2;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.7));
+    transition: transform 0.4s ease;
+    font-size: 7rem;
+  }
+  .char-card:hover .card-portrait-emoji {
+    transform: scale(1.1) translateY(-4px);
+  }
+
+  /* shimmer on hover */
+  .card-portrait::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 40%, rgba(201,168,76,0.08) 50%, transparent 60%);
+    background-size: 200% 200%;
+    transition: background-position 0.6s;
+    z-index: 3;
+  }
+  .char-card:hover .card-portrait::after {
+    background-position: 100% 100%;
+  }
+
+  .card-body {
+    padding: 1.4rem 1.4rem 1.6rem;
+    position: relative;
+  }
+
+  .card-body::before {
+    content: '';
+    position: absolute; top: 0; left: 1.4rem; right: 1.4rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
+  }
+
+  .card-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gold-light);
+    margin-bottom: 0.15rem;
+    letter-spacing: 0.03em;
+  }
+
+  .card-alias {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: rgba(201,168,76,0.6);
+    margin-bottom: 0.7rem;
+  }
+
+  .card-desc {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: rgba(245,234,208,0.75);
+  }
+
+  .card-trait {
+    display: inline-block;
+    margin-top: 0.8rem;
+    padding: 3px 8px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    border: 1px solid;
+    text-transform: uppercase;
+  }
+  .trait-protagonist { border-color: #c9a84c; color: #c9a84c; }
+  .trait-antagonist  { border-color: #8b2020; color: #c04040; }
+  .trait-neutral     { border-color: #556; color: #99a; }
+  .trait-religious   { border-color: #5a3d1a; color: #a07040; }
+  .trait-love        { border-color: #7a3a5a; color: #c06080; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(5,2,0,0.92);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .modal-overlay.open {
+    opacity: 1; pointer-events: all;
+  }
+
+  .modal {
+    background: linear-gradient(160deg, #1e1006 0%, #0d0700 100%);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 4px;
+    max-width: 640px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.35s ease;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.9), 0 0 60px rgba(201,168,76,0.05);
+  }
+  .modal-overlay.open .modal {
+    transform: scale(1) translateY(0);
+  }
+
+  .modal-header {
+    position: relative;
+    padding: 2rem 2rem 1.5rem;
+    border-bottom: 1px solid rgba(201,168,76,0.15);
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+  }
+  .modal-emoji {
+    font-size: 3.5rem;
+    flex-shrink: 0;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.6));
+  }
+  .modal-info { flex: 1; }
+  .modal-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--gold-light);
+    margin-bottom: 0.2rem;
+  }
+  .modal-alias {
+    font-style: italic;
+    color: rgba(201,168,76,0.6);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  .modal-role-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    padding: 3px 10px;
+    border: 1px solid var(--gold-dark);
+    color: var(--gold);
+    text-transform: uppercase;
+    display: inline-block;
+  }
+
+  .modal-close {
+    position: absolute; top: 1rem; right: 1rem;
+    background: none; border: none;
+    color: rgba(201,168,76,0.5);
+    font-size: 1.4rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s, transform 0.2s;
+  }
+  .modal-close:hover { color: var(--gold); transform: rotate(90deg); }
+
+  .modal-body {
+    padding: 1.5rem 2rem 2rem;
+  }
+  .modal-section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    margin-top: 1.2rem;
+  }
+  .modal-desc {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: rgba(245,234,208,0.8);
+  }
+  .modal-quote {
+    border-left: 2px solid var(--gold-dark);
+    padding-left: 1rem;
+    font-style: italic;
+    color: rgba(201,168,76,0.7);
+    font-size: 0.92rem;
+    margin-top: 1rem;
+    line-height: 1.7;
+  }
+
+  .modal-attributes {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+  .attr-item {
+    background: rgba(201,168,76,0.04);
+    border: 1px solid rgba(201,168,76,0.1);
+    padding: 0.5rem 0.8rem;
+    border-radius: 2px;
+  }
+  .attr-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--gold-dark);
+    display: block;
+    margin-bottom: 0.15rem;
+    text-transform: uppercase;
+  }
+  .attr-value {
+    font-size: 0.85rem;
+    color: var(--parchment-dark);
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    border-top: 1px solid rgba(201,168,76,0.1);
+    font-size: 0.78rem;
+    color: rgba(245,234,208,0.3);
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.2em;
+  }
+  .footer span { color: var(--gold-dark); }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--ink); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-circles">
+    <span></span><span></span><span></span><span></span>
+  </div>
+
+  <p class="hero-ornament">Jose Rizal · 1891</p>
+  <h1 class="hero-title">El Filibusterismo</h1>
+  <p class="hero-sub">Nobelang Panlipunan ng Pilipinas</p>
+
+  <div class="hero-divider">
+    <span class="hero-divider-gem">✦</span>
+  </div>
+
+  <p class="hero-desc">
+    Ang ikalawang nobela ni Rizal — isang kwento ng galit, pagmamahal,
+    at rebolusyon laban sa pananakop.
+  </p>
+
+  <div class="scroll-cue">
+    <span>TUKLASIN ANG MGA TAUHAN</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- CHARACTERS -->
+<main class="section">
+  <p class="section-label">Dramatis Personae</p>
+  <h2 class="section-title">Mga Pangunahing Tauhan</h2>
+  <div class="section-rule"><span>✦</span></div>
+
+  <div class="cards-grid" id="cardsGrid"></div>
+</main>
+
+<footer class="footer">
+  <span>✦</span> &nbsp; El Filibusterismo — Jose Rizal — 1891 &nbsp; <span>✦</span><br>
+  <small style="opacity:0.5;margin-top:0.5rem;display:block;">Inilathala sa Ghent, Belgium</small>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <div class="modal-header">
+      <div class="modal-emoji" id="modalEmoji"></div>
+      <div class="modal-info">
+        <div class="modal-name" id="modalName"></div>
+        <div class="modal-alias" id="modalAlias"></div>
+        <span class="modal-role-tag" id="modalRole"></span>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section-title">Katangian</div>
+      <div class="modal-attributes" id="modalAttrs"></div>
+      <div class="modal-section-title">Buod</div>
+      <p class="modal-desc" id="modalDesc"></p>
+      <div class="modal-quote" id="modalQuote"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const characters = [
+  {
+    emoji: '🎩',
+    name: 'Simoun',
+    alias: 'Crisostomo Ibarra',
+    role: 'Pangunahing Tauhan',
+    traitClass: 'trait-protagonist',
+    traitLabel: 'Protagonista',
+    bg: 'linear-gradient(160deg, #1a0a00, #2a1500)',
+    bgHover: '#3a1a00',
+    shortDesc: 'Isang mayamang mangangalakal na nagtatago ng mapait na lihim — ang dating idealista na naging tagapanghiganti.',
+    attrs: [
+      { label: 'Tunay na Pangalan', value: 'Crisostomo Ibarra' },
+      { label: 'Katayuan', value: 'Mangangalakal, Rebolusyonaryo' },
+      { label: 'Simbolo', value: 'Poot at Paghihiganti' },
+      { label: 'Kapalaran', value: 'Namatay sa pampang ng dagat' },
+    ],
+    desc: 'Si Simoun — ang bagong anyo ni Crisostomo Ibarra — ay bumalik sa Pilipinas bilang isang maimpluwensiyang Espanyol na mangangalakal. Sa ilalim ng kanyang kayamanan at kapangyarihan ay nagtatago ang isang lalaking puno ng galit at panghihiganti para sa bansang inapi. Plano niyang pagsabakin ang isang rebolusyon upang buwagin ang mapang-aping sistema.',
+    quote: '"Ang mga luha ng dukha ay nagiging dugo ng mga makapangyarihan."'
+  },
+  {
+    emoji: '📿',
+    name: 'Basilio',
+    alias: 'Anak ni Sisa',
+    role: 'Pangunahing Tauhan',
+    traitClass: 'trait-protagonist',
+    traitLabel: 'Protagonista',
+    bg: 'linear-gradient(160deg, #0a0f1a, #050a12)',
+    bgHover: '#0d1525',
+    shortDesc: 'Matalino at matiisin na estudyante ng medisina na nakita ang katotohanan ng lipunan mula sa kahirapan.',
+    attrs: [
+      { label: 'Propesyon', value: 'Estudyante ng Medisina' },
+      { label: 'Ina', value: 'Sisa (Noli Me Tangere)' },
+      { label: 'Simbolo', value: 'Kabataang Pilipino' },
+      { label: 'Katayuan', value: 'Nadakip ng Guardia Civil' },
+    ],
+    desc: 'Si Basilio ay lumaki mula sa kahirapan at naulila pagkamatay ng kanyang ina na si Sisa. Sa pamamagitan ng sipag at tiyaga, naging estudyante siya ng medisina. Nakilala niya si Simoun at nalaman ang tunay na pagkakakilanlan nito. Nais niyang tumulong ngunit nangangamba sa karahasan. Sa dulo, siya ay nadakip dahil sa kanyang kaalaman.',
+    quote: '"Ang aming mga pangarap ay hindi paunti-unti kundi sabay-sabay na nasisira."'
+  },
+  {
+    emoji: '🌹',
+    name: 'Paulita Gomez',
+    alias: 'La Bella Paulita',
+    role: 'Pag-ibig ni Isagani',
+    traitClass: 'trait-love',
+    traitLabel: 'Pag-ibig',
+    bg: 'linear-gradient(160deg, #1a0010, #0d0008)',
+    bgHover: '#250015',
+    shortDesc: 'Maganda at makabagong dalagang pinagnanasaan ng marami — pumili ng kayamanan kaysa sa pag-ibig.',
+    attrs: [
+      { label: 'Katayuan', value: 'Asyendero\'s Pamangkin' },
+      { label: 'Pag-ibig', value: 'Isagani, pagkatapos ay Juanito' },
+      { label: 'Simbolo', value: 'Materyal na Pag-ibig' },
+      { label: 'Katangian', value: 'Makabago, Maselang' },
+    ],
+    desc: 'Si Paulita Gomez ay isang magandang dalaga na paboritong usapan ng lipunan. Mahal siya ni Isagani nang buong puso, ngunit sa huli ay pinili niya si Juanito Pelaez — ang mas mayaman at mas may posisyon. Kumakatawan siya sa mga Pilipinong pinipili ang materyal na kayamanan kaysa sa tunay na pagmamahal.',
+    quote: '"Hindi lahat ng maganda ay tapat, at hindi lahat ng tapat ay maganda."'
+  },
+  {
+    emoji: '🔥',
+    name: 'Isagani',
+    alias: 'Ang Makatang Kabataan',
+    role: 'Mabuting Kaibigan',
+    traitClass: 'trait-protagonist',
+    traitLabel: 'Rebolusyonaryo',
+    bg: 'linear-gradient(160deg, #1a0a05, #100500)',
+    bgHover: '#201008',
+    shortDesc: 'Makatang kabataan na puno ng pag-asa para sa bayang Pilipinas — nagsakripisyo ng lahat para sa pag-ibig.',
+    attrs: [
+      { label: 'Talento', value: 'Makata at Mananalumpati' },
+      { label: 'Pagmamahal', value: 'Paulita Gomez' },
+      { label: 'Simbolo', value: 'Sana ng Kabataan' },
+      { label: 'Dakilang Gawa', value: 'Iniligtas ang kasalan mula sa bomba' },
+    ],
+    desc: 'Si Isagani ay isang makabayang kabataang makata, matalinong estudyante, at mapagmahal na nobyo. Mahal niya si Paulita nang walang hanggan. Sa huling hatinggabi ng nobela, natagpuan niya ang granada ni Simoun at inihagis ito sa ilog — kaya nailigtas ang maraming buhay ngunit winasak ang plano ng rebolusyon.',
+    quote: '"Ang Pilipinas ay hindi maliit na bansa para sa maliit na pangarap."'
+  },
+  {
+    emoji: '⛪',
+    name: 'Padre Florentino',
+    alias: 'Ang Paring Pilipino',
+    role: 'Marunong na Matanda',
+    traitClass: 'trait-religious',
+    traitLabel: 'Relihiyoso',
+    bg: 'linear-gradient(160deg, #0f0a00, #080600)',
+    bgHover: '#1a1200',
+    shortDesc: 'Mapagmahal at marunong na paring Pilipino — tinawid ang kamatayan ni Simoun nang may habag at karunungan.',
+    attrs: [
+      { label: 'Propesyon', value: 'Paring Pilipino (Sekular)' },
+      { label: 'Tirahan', value: 'Cavite (Dalampasigan)' },
+      { label: 'Simbolo', value: 'Karunungan at Awa' },
+      { label: 'Papel', value: 'Huling Tagapakinig ni Simoun' },
+    ],
+    desc: 'Si Padre Florentino ay kumakatawan sa perpektong paring Pilipino — mapagmahal, marunong, at tapat. Sa kanyang tahanan sa dalampasigan natanggap niya ang nahahabal na si Simoun. Bago mamatay si Simoun, nakinig siya sa buong kwento at nagtangkang ibigay ang huling pag-asa. Sa dulo, ibinagsak niya ang kayamanan ni Simoun sa karagatan bilang alay sa bansa.',
+    quote: '"Hindi pa panahon... Kung kailan ang tao ay handa nang magsakripisyo para sa lahat."'
+  },
+  {
+    emoji: '💰',
+    name: 'Don Custodio',
+    alias: 'El Buen Sentido',
+    role: 'Opisyal ng Pamahalaan',
+    traitClass: 'trait-neutral',
+    traitLabel: 'Opisyal',
+    bg: 'linear-gradient(160deg, #0a0a0a, #050505)',
+    bgHover: '#151515',
+    shortDesc: 'Isang mataas na opisyal na kinakatawan ang burukrasya at kawalang-katarungan ng sistemang kolonyal.',
+    attrs: [
+      { label: 'Posisyon', value: 'Mataas na Opisyal' },
+      { label: 'Katangian', value: 'Mapagpanggap, Makasarili' },
+      { label: 'Simbolo', value: 'Bulok na Burukrasya' },
+      { label: 'Desisyon', value: 'Tinanggihan ang Unibersidad' },
+    ],
+    desc: 'Si Don Custodio ay isang mataas na opisyal na lumalabas na palaging may "maayos na pag-iisip" ngunit sa katotohanan ay pabor lamang sa sarili at sa sistema. Kabilang sa mga humadlang sa panukala para sa isang pampublikong akademya ng wikang Kastila, na naglalarawan ng burukrasyang pumipigil sa pag-unlad ng mga Pilipino.',
+    quote: '"Ang katuwiran ng batas ay para protektahan ang batas, hindi ang tao."'
+  },
+  {
+    emoji: '📚',
+    name: 'Macaraig',
+    alias: 'Mayamang Estudyante',
+    role: 'Estudyante',
+    traitClass: 'trait-neutral',
+    traitLabel: 'Estudyante',
+    bg: 'linear-gradient(160deg, #050a0f, #030609)',
+    bgHover: '#081015',
+    shortDesc: 'Mayamang kabataang estudyante na nagsimula ng pagbabago sa pamamagitan ng akademya.',
+    attrs: [
+      { label: 'Katayuan', value: 'Estudyante, Marangal na Pamilya' },
+      { label: 'Adhikain', value: 'Pagtataguyod ng Wika at Kultura' },
+      { label: 'Simbolo', value: 'Bagong Henerasyong Pilipino' },
+      { label: 'Papel', value: 'Lider ng mga Estudyante' },
+    ],
+    desc: 'Si Macaraig ay kumakatawan sa mayamang kabataang Pilipino na may mataas na edukasyon at panlipunang kamalayan. Siya ang nagpanukala ng pagtatayo ng akademya para sa wikang Kastila bilang daan para mabigyan ng tinig ang mga Pilipino. Kahit hindi siya ang sentro ng nobela, ang kanyang papel ay nagpapakita na ang pagbabago ay maaari ring manggaling sa kabataan.',
+    quote: '"Ang wika ay sandata rin ng mga taong naghahanap ng kalayaan."'
+  },
+  {
+    emoji: '🎭',
+    name: 'Padre Salvi',
+    alias: 'Ang Mapanlinlang na Pari',
+    role: 'Antagonista',
+    traitClass: 'trait-antagonist',
+    traitLabel: 'Antagonista',
+    bg: 'linear-gradient(160deg, #1a0000, #0d0000)',
+    bgHover: '#200000',
+    shortDesc: 'Ang mapanlinlang na prayleng nagbabalik mula sa Noli Me Tangere — mas makapangyarihan at mas mapanganib.',
+    attrs: [
+      { label: 'Relihiyon', value: 'Prayle (Pransiskano)' },
+      { label: 'Nakilala Sa', value: 'Noli Me Tangere' },
+      { label: 'Simbolo', value: 'Mapanlinlang na Kapangyarihan' },
+      { label: 'Katangian', value: 'Mapanghimasok, Mapagsamantala' },
+    ],
+    desc: 'Si Padre Salvi ay bumalik sa ikalawang nobela bilang mas makapangyarihang pari. Sa Noli Me Tangere, siya ang nagmahal kay Maria Clara nang may maruming hangarin. Sa El Filibusterismo, patuloy siyang gumagamit ng relihiyon bilang sandata para kontrolin ang mga tao at mapangalagaan ang sariling kapakanan at kapangyarihan.',
+    quote: '"Ang Diyos ay nasa aming panig — ang batas ay nasa aming mga kamay."'
+  },
+  {
+    emoji: '🌺',
+    name: 'Maria Clara',
+    alias: 'Pinaka-Bantog na Pilipina',
+    role: 'Simbolikong Tauhan',
+    traitClass: 'trait-love',
+    traitLabel: 'Simbolo',
+    bg: 'linear-gradient(160deg, #1a0515, #0d0009)',
+    bgHover: '#220820',
+    shortDesc: 'Hindi direktang lumulabas ngunit ang kanyang alaala ay patuloy na kumukuha sa puso ni Ibarra/Simoun.',
+    attrs: [
+      { label: 'Nakilala Sa', value: 'Noli Me Tangere' },
+      { label: 'Kasalukuyang Katayuan', value: 'Mother Superior / Madre' },
+      { label: 'Simbolo', value: 'Inang Pilipinas' },
+      { label: 'Epekto kay Simoun', value: 'Pangunahing Dahilan ng Galit' },
+    ],
+    desc: 'Si Maria Clara ay hindi direktang lumalabas sa El Filibusterismo ngunit ang kanyang alaala ay isa sa mga pangunahing dahilan kung bakit nagpasyang gumanti si Ibarra bilang Simoun. Narinig ni Simoun na naging madre na si Maria Clara, na nagpapakita ng kanyang kawalan ng kalayaan sa sistemang kolonyal at relihiyoso.',
+    quote: '"Ang pagmamahal ay hindi natatapos sa pagkawala ng minamahal."'
+  },
+  {
+    emoji: '⚖️',
+    name: 'Don Timoteo Pelaez',
+    alias: 'Ambisyosong Ama',
+    role: 'Ama ni Juanito',
+    traitClass: 'trait-neutral',
+    traitLabel: 'Burgis',
+    bg: 'linear-gradient(160deg, #0a0a05, #060604)',
+    bgHover: '#111108',
+    shortDesc: 'Ambisyosong magnanakalang gustong maging bahagi ng mataas na lipunan sa pamamagitan ng kasal ng anak.',
+    attrs: [
+      { label: 'Hanapbuhay', value: 'Mangangalakal' },
+      { label: 'Anak', value: 'Juanito Pelaez' },
+      { label: 'Simbolo', value: 'Burgesyang Pilipino' },
+      { label: 'Hangad', value: 'Kapangyarihang Panlipunan' },
+    ],
+    desc: 'Si Don Timoteo Pelaez ay isang ambisyosong mangangalakal na gusto niyang mapabilang ang pamilya niya sa mataas na antas ng kolonyal na lipunan. Ang kasal ng kanyang anak na si Juanito kay Paulita ang kanyang pangarap. Kumakatawan siya sa burgesyang Pilipinong mas pinipili ang posisyon at kayamanan kaysa sa katotohanan at katarungan.',
+    quote: '"Ang tagumpay ay nangangailangan ng tamang koneksyon, hindi lamang tamang gawa."'
+  },
+  {
+    emoji: '🌊',
+    name: 'Cabesang Tales',
+    alias: 'Tandang Tales',
+    role: 'Magsasaka',
+    traitClass: 'trait-protagonist',
+    traitLabel: 'Biktima',
+    bg: 'linear-gradient(160deg, #051a08, #030d05)',
+    bgHover: '#082510',
+    shortDesc: 'Isang masipag na magsasakang nawalan ng lupa dahil sa kasakiman ng mga prayle — naging tulisan ng kagubatan.',
+    attrs: [
+      { label: 'Hanapbuhay', value: 'Magsasaka, Dating Cabeza' },
+      { label: 'Anak', value: 'Juli (Juliana)' },
+      { label: 'Simbolo', value: 'Inaping Magsasaka' },
+      { label: 'Nagawa', value: 'Naging tulisan, nagbawi ng lupa' },
+    ],
+    desc: 'Si Cabesang Tales ay isang masipag na magsasakang nagpaguho ng kanyang buhay para linangin ang isang bukid — ngunit ang mga prayle ay naangkin ang lupa. Nang maulila ang kanyang pamilya at makulong ang anak na si Juli, wala na siyang ibang pagpipilian kundi ang maging tulisan. Kumakatawan siya sa lahat ng magsasakang Pilipinong inagaw ang karapatan.',
+    quote: '"Ang lupang aking inani ng pawis ay hindi ipagkakaloob ko kahit kanino."'
+  },
+  {
+    emoji: '🕊️',
+    name: 'Juli (Juliana)',
+    alias: 'Anak ni Cabesang Tales',
+    role: 'Biktima ng Lipunan',
+    traitClass: 'trait-love',
+    traitLabel: 'Trahedya',
+    bg: 'linear-gradient(160deg, #0f1520, #060a10)',
+    bgHover: '#151e2a',
+    shortDesc: 'Dalisay at matiisin na dalaga na nagbenta ng kalayaan para mailigtas ang ama — nagtapos sa trahedya.',
+    attrs: [
+      { label: 'Ama', value: 'Cabesang Tales' },
+      { label: 'Katayuan', value: 'Alipin sa Bahay-prayle' },
+      { label: 'Simbolo', value: 'Kababaihang Inalipin' },
+      { label: 'Katapusan', value: 'Nahulog mula sa bintana' },
+    ],
+    desc: 'Si Juli ay isang dalisay at magandang dalagang nagpakaalipin sa bahay ng mga prayle para mapalaya ang kanyang ama. Inilahad ni Rizal ang kanyang kapalaran bilang simbolo ng lahat ng kababaihang Pilipinong biktima ng mapang-aping sistema. Ang kanyang trahedya — paghulog sa bintana upang makaiwas sa pang-aabuso — ay isa sa pinaka-masakit na bahagi ng nobela.',
+    quote: '"Lalong malaya ang namatay kaysa nabuhay nang walang karangalan."'
+  },
+];
+
+const grid = document.getElementById('cardsGrid');
+
+characters.forEach((c, i) => {
+  const card = document.createElement('div');
+  card.className = 'char-card';
+  card.style.animationDelay = `${i * 0.07}s`;
+  card.innerHTML = `
+    <span class="card-role">${c.role}</span>
+    <div class="card-portrait">
+      <div class="card-portrait-bg" style="background:${c.bg}"></div>
+      <div class="card-portrait-emoji">${c.emoji}</div>
+    </div>
+    <div class="card-body">
+      <div class="card-name">${c.name}</div>
+      <div class="card-alias">${c.alias}</div>
+      <p class="card-desc">${c.shortDesc}</p>
+      <span class="card-trait ${c.traitClass}">${c.traitLabel}</span>
+    </div>
+  `;
+  card.addEventListener('click', () => openModal(c));
+  grid.appendChild(card);
+});
+
+// Intersection Observer for card reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.char-card').forEach(c => observer.observe(c));
+
+function openModal(c) {
+  document.getElementById('modalEmoji').textContent = c.emoji;
+  document.getElementById('modalName').textContent = c.name;
+  document.getElementById('modalAlias').textContent = c.alias;
+  document.getElementById('modalRole').textContent = c.role;
+  document.getElementById('modalDesc').textContent = c.desc;
+  document.getElementById('modalQuote').textContent = c.quote;
+
+  const attrs = document.getElementById('modalAttrs');
+  attrs.innerHTML = c.attrs.map(a => `
+    <div class="attr-item">
+      <span class="attr-label">${a.label}</span>
+      <span class="attr-value">${a.value}</span>
+    </div>
+  `).join('');
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) {
+    doClose();
+  }
+}
+function closeModalBtn() { doClose(); }
+function doClose() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') doClose(); });
+</script>
+</body>
+</html>
