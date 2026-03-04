@@ -2,887 +2,2746 @@
 <html lang="fil">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>El Filibusterismo — Mga Tauhan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>El Filibusterismo — Pangunahing Pahina</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ══════════════════════════════════════════════
+   EL FILIBUSTERISMO — COMPLETE WEBSITE
+   Multi-page SPA with Nav, Landing, Characters,
+   About, and Interactive Game with Voice API
+   ══════════════════════════════════════════════ */
 
-  :root {
-    --gold: #c9a84c;
-    --gold-light: #e8c96d;
-    --gold-dark: #8b6914;
-    --crimson: #7a1a1a;
-    --crimson-light: #a52a2a;
-    --ink: #0d0a06;
-    --parchment: #f5ead0;
-    --parchment-dark: #e8d5a8;
-    --shadow: #1a0f00;
-    --text-main: #2a1a08;
-  }
+:root {
+  --gold:#c9a84c; --gold-light:#f0d070; --gold-dim:#9a7830; --gold-pale:rgba(201,168,76,.12);
+  --ink:#040200; --ink-2:#0c0800; --ink-3:#1a1008;
+  --parchment:#f5ead0; --parchment-dark:#d4b87a;
+  --crimson:#7a1212; --ember:#e8620a;
+  --ease-expo:cubic-bezier(.16,1,.3,1);
+  --ease-spring:cubic-bezier(.34,1.56,.64,1);
+  --nav-h:64px;
+}
 
-  html { scroll-behavior: smooth; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--parchment);font-family:'EB Garamond',Georgia,serif;overflow-x:hidden;cursor:none}
+@media(max-width:768px){body{cursor:auto}}
 
-  body {
-    background-color: var(--ink);
-    color: var(--parchment);
-    font-family: 'EB Garamond', serif;
-    overflow-x: hidden;
-    cursor: default;
-  }
+/* NOISE */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");background-size:256px;pointer-events:none;z-index:9000;opacity:.5}
+body::after{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 120% 120% at 50% 50%,transparent 50%,rgba(4,2,0,.65) 100%);pointer-events:none;z-index:8999}
 
-  /* ── NOISE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    background-size: 200px;
-    pointer-events: none;
-    z-index: 999;
-    opacity: 0.5;
-  }
+/* ── KEYFRAMES ── */
+@keyframes fade-up{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fade-in{from{opacity:0}to{opacity:1}}
+@keyframes pulse-ring{0%,100%{opacity:.18;transform:translate(-50%,-50%) scale(1)}50%{opacity:.04;transform:translate(-50%,-50%) scale(1.07)}}
+@keyframes float-p{0%{transform:translateY(0) translateX(0) scale(1);opacity:0}8%{opacity:.9}92%{opacity:.5}100%{transform:translateY(-110vh) translateX(var(--dx)) scale(.2);opacity:0}}
+@keyframes flame-flicker{0%,100%{transform:scaleY(1) scaleX(1) rotate(-1.5deg);opacity:1}22%{transform:scaleY(1.13) scaleX(.91) rotate(2.2deg);opacity:.87}48%{transform:scaleY(.92) scaleX(1.08) rotate(-.6deg)}72%{transform:scaleY(1.08) scaleX(.94) rotate(2.8deg);opacity:.93}}
+@keyframes glow-candle{0%,100%{filter:drop-shadow(0 0 8px rgba(255,120,10,.5)) drop-shadow(0 0 22px rgba(255,75,0,.18))}50%{filter:drop-shadow(0 0 20px rgba(255,150,20,.8)) drop-shadow(0 0 45px rgba(255,100,5,.32))}}
+@keyframes smoke-d{0%{transform:translateY(0) scale(1) rotate(0);opacity:.32}100%{transform:translateY(-80px) scale(3.2) rotate(40deg);opacity:0}}
+@keyframes card-reveal{from{opacity:0;transform:translateY(42px) scale(.965)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes modal-in{from{opacity:0;transform:scale(.86) translateY(32px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes ink-reveal{from{clip-path:inset(0 100% 0 0);opacity:0}to{clip-path:inset(0 0% 0 0);opacity:1}}
+@keyframes float-s{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-7px) rotate(1deg)}}
+@keyframes spark-a{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--sx),var(--sy)) scale(0);opacity:0}}
+@keyframes bounce-arr{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(8px)}}
+@keyframes page-wipe{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@keyframes slide-page{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes nav-in{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes eq{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+@keyframes glow-pulse{0%,100%{box-shadow:0 0 20px rgba(201,168,76,.15)}50%{box-shadow:0 0 40px rgba(201,168,76,.35)}}
+@keyframes score-pop{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
+@keyframes wrong-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+@keyframes voice-pulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.15);opacity:1}}
+@keyframes typewriter{from{width:0}to{width:100%}}
+@keyframes cursor-blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes hero-pan{0%{transform:scale(1.06) translateX(0)}100%{transform:scale(1) translateX(-1.5%)}}
+@keyframes countdown{from{stroke-dashoffset:0}to{stroke-dashoffset:283}}
 
-  /* ── HERO ── */
-  .hero {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 3rem 1.5rem;
-    background:
-      radial-gradient(ellipse 70% 50% at 50% 0%, #3a1505 0%, transparent 70%),
-      radial-gradient(ellipse 60% 40% at 50% 100%, #1a0500 0%, transparent 60%),
-      var(--ink);
-    overflow: hidden;
-  }
+/* ── READ PROGRESS ── */
+#readProg{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold-dim),var(--gold-light));z-index:9995;width:0;transition:width .1s;box-shadow:0 0 6px rgba(201,168,76,.5)}
 
-  .hero-bg-circles {
-    position: absolute; inset: 0; pointer-events: none;
-  }
-  .hero-bg-circles span {
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid rgba(201,168,76,0.07);
-    animation: pulse-ring 8s ease-in-out infinite;
-  }
-  .hero-bg-circles span:nth-child(1) { width: 300px; height: 300px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 0s; }
-  .hero-bg-circles span:nth-child(2) { width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 1s; }
-  .hero-bg-circles span:nth-child(3) { width: 700px; height: 700px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 2s; }
-  .hero-bg-circles span:nth-child(4) { width: 900px; height: 900px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 3s; }
+/* ── PAGE WIPE ── */
+#pageWipe{position:fixed;inset:0;background:var(--ink);z-index:99998;transform-origin:right center;animation:page-wipe 1.1s cubic-bezier(.77,0,.18,1) .1s forwards}
 
-  @keyframes pulse-ring {
-    0%,100% { opacity: 0.3; transform: translate(-50%,-50%) scale(1); }
-    50% { opacity: 0.08; transform: translate(-50%,-50%) scale(1.04); }
-  }
+/* ── CURSOR ── */
+.c-dot,.c-ring{position:fixed;border-radius:50%;pointer-events:none;z-index:9999}
+.c-dot{width:7px;height:7px;background:var(--gold);top:-3.5px;left:-3.5px;transition:transform .06s var(--ease-expo);mix-blend-mode:difference}
+.c-ring{width:32px;height:32px;border:1.5px solid rgba(201,168,76,.6);top:-16px;left:-16px;transition:transform .16s var(--ease-expo),width .3s,height .3s,border-color .3s;mix-blend-mode:difference}
+.c-ring.hov{width:52px;height:52px;border-color:rgba(201,168,76,.22);top:-26px;left:-26px}
+@media(max-width:768px){.c-dot,.c-ring{display:none}}
 
-  .hero-ornament {
-    font-family: 'Cinzel Decorative', serif;
-    color: var(--gold);
-    font-size: clamp(0.6rem, 1.5vw, 0.85rem);
-    letter-spacing: 0.5em;
-    text-transform: uppercase;
-    opacity: 0;
-    animation: fade-up 1s 0.3s forwards;
-  }
+/* ── NAVBAR ── */
+#navbar{
+  position:fixed;top:0;left:0;right:0;height:var(--nav-h);
+  z-index:9990;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2rem;
+  background:rgba(4,2,0,.82);
+  backdrop-filter:blur(18px) saturate(.8);
+  border-bottom:1px solid rgba(201,168,76,.12);
+  transition:background .4s,border-color .4s;
+  animation:nav-in .8s var(--ease-expo) .3s both;
+}
+#navbar.scrolled{background:rgba(4,2,0,.96);border-color:rgba(201,168,76,.2)}
+.nav-brand{font-family:'Cinzel Decorative',serif;font-size:clamp(.8rem,2vw,1.05rem);font-weight:700;color:var(--gold-light);cursor:pointer;letter-spacing:.03em;transition:color .3s;flex-shrink:0}
+.nav-brand:hover{color:#fff}
+.nav-links{display:flex;align-items:center;gap:.3rem}
+.nav-link{
+  font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(201,168,76,.65);padding:.5rem .9rem;cursor:pointer;
+  position:relative;transition:color .3s;white-space:nowrap;border:none;background:none;
+}
+.nav-link::after{content:'';position:absolute;bottom:6px;left:.9rem;right:.9rem;height:1px;background:var(--gold);transform:scaleX(0);transform-origin:center;transition:transform .3s var(--ease-expo)}
+.nav-link:hover,.nav-link.active{color:var(--gold)}
+.nav-link:hover::after,.nav-link.active::after{transform:scaleX(1)}
+.nav-music-btn{
+  width:34px;height:34px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold-dim),var(--gold));
+  border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;color:var(--ink);
+  transition:transform .2s var(--ease-spring),box-shadow .3s;
+  flex-shrink:0;margin-left:.5rem;
+}
+.nav-music-btn:hover{transform:scale(1.12);box-shadow:0 0 20px rgba(201,168,76,.4)}
+.nav-eq{display:flex;align-items:flex-end;gap:2px;height:14px;margin-left:.3rem}
+.nav-eq-bar{width:3px;background:var(--gold);border-radius:2px;animation:eq var(--s) ease-in-out infinite alternate;opacity:.8}
+.nav-eq-bar:nth-child(1){--s:.4s;height:5px}
+.nav-eq-bar:nth-child(2){--s:.3s;height:11px;animation-delay:.1s}
+.nav-eq-bar:nth-child(3){--s:.5s;height:7px;animation-delay:.2s}
+.nav-eq-bar.paused{animation-play-state:paused;transform:scaleY(.3)}
 
-  .hero-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: clamp(2.4rem, 7vw, 6rem);
-    font-weight: 900;
-    color: var(--gold);
-    text-shadow:
-      0 0 40px rgba(201,168,76,0.3),
-      0 4px 20px rgba(0,0,0,0.8);
-    line-height: 1.1;
-    margin: 0.5rem 0;
-    opacity: 0;
-    animation: fade-up 1s 0.6s forwards;
-    position: relative;
-  }
+/* Hamburger */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:.4rem;border:none;background:none}
+.hamburger span{display:block;width:24px;height:1.5px;background:var(--gold);transition:transform .3s,opacity .3s}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 
-  .hero-title::after {
-    content: 'El Filibusterismo';
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg, var(--gold-light) 0%, var(--gold) 40%, var(--gold-dark) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+/* Mobile nav */
+.mobile-nav{
+  position:fixed;top:var(--nav-h);left:0;right:0;bottom:0;
+  background:rgba(4,2,0,.97);backdrop-filter:blur(20px);
+  z-index:9989;display:none;flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+  opacity:0;transition:opacity .3s;
+}
+.mobile-nav.open{display:flex;opacity:1}
+.mobile-nav-link{font-family:'Cinzel Decorative',serif;font-size:1.4rem;color:rgba(201,168,76,.6);cursor:pointer;transition:color .3s,transform .3s;letter-spacing:.05em}
+.mobile-nav-link:hover{color:var(--gold-light);transform:scale(1.05)}
 
-  .hero-sub {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(0.75rem, 2vw, 1rem);
-    letter-spacing: 0.3em;
-    color: var(--parchment-dark);
-    opacity: 0;
-    animation: fade-up 1s 0.9s forwards;
-    margin-bottom: 0.8rem;
-  }
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  #navbar{padding:0 1.2rem}
+}
 
-  .hero-divider {
-    display: flex; align-items: center; gap: 1rem;
-    margin: 1.2rem 0 0.6rem;
-    opacity: 0;
-    animation: fade-up 1s 1.1s forwards;
-    width: min(500px, 90vw);
-  }
-  .hero-divider::before, .hero-divider::after {
-    content: ''; flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-  .hero-divider-gem {
-    color: var(--gold); font-size: 1.2rem;
-  }
+/* ── PAGES ── */
+.page{display:none;min-height:100vh;padding-top:var(--nav-h)}
+.page.active{display:block;animation:slide-page .55s var(--ease-expo) forwards}
 
-  .hero-desc {
-    font-size: clamp(0.9rem, 2vw, 1.05rem);
-    font-style: italic;
-    color: var(--parchment-dark);
-    max-width: 500px;
-    line-height: 1.7;
-    opacity: 0;
-    animation: fade-up 1s 1.3s forwards;
-  }
+/* ═══════════════════════════════════
+   LANDING PAGE
+   ═══════════════════════════════════ */
+#page-home{}
 
-  .scroll-cue {
-    margin-top: 2.5rem;
-    opacity: 0;
-    animation: fade-up 1s 1.6s forwards;
-    display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
-    color: var(--gold);
-    font-family: 'Cinzel', serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.3em;
-  }
-  .scroll-arrow {
-    width: 18px; height: 18px;
-    border-right: 2px solid var(--gold);
-    border-bottom: 2px solid var(--gold);
-    transform: rotate(45deg);
-    animation: bounce-down 1.5s ease-in-out infinite;
-  }
-  @keyframes bounce-down {
-    0%,100% { transform: rotate(45deg) translateY(0); }
-    50% { transform: rotate(45deg) translateY(6px); }
-  }
+/* Hero */
+.lhero{
+  position:relative;min-height:calc(100vh - var(--nav-h));
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:3rem 1.5rem;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%,rgba(65,22,5,.92) 0%,transparent 65%),
+    radial-gradient(ellipse 70% 50% at 50% 110%,rgba(30,8,0,.85) 0%,transparent 55%),
+    linear-gradient(180deg,#0a0400,#040200);
+  overflow:hidden;
+}
+.lhero-rings{position:absolute;inset:0;pointer-events:none}
+.lhero-ring{position:absolute;border-radius:50%;border:1px solid rgba(201,168,76,.07);top:50%;left:50%;animation:pulse-ring 9s ease-in-out infinite}
+.lhero-tag{font-family:'Cinzel',serif;font-size:clamp(.58rem,1.3vw,.75rem);letter-spacing:.55em;color:var(--gold);text-transform:uppercase;opacity:0;animation:fade-up 1s .3s var(--ease-expo) forwards;margin-bottom:.6rem}
+.lhero-title{font-family:'Cinzel Decorative',serif;font-size:clamp(2.5rem,8.5vw,7.5rem);font-weight:900;line-height:1.04;opacity:0;animation:fade-up 1.1s .5s var(--ease-expo) forwards;background:linear-gradient(160deg,#f0d070 0%,#c9a84c 45%,#9a7830 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:.3rem 0}
+.lhero-sub{font-family:'Cinzel',serif;font-size:clamp(.68rem,1.8vw,.92rem);letter-spacing:.32em;color:var(--parchment-dark);opacity:0;animation:fade-up 1s .75s var(--ease-expo) forwards;margin-bottom:1.2rem}
+.lhero-divider{display:flex;align-items:center;gap:1rem;width:min(500px,90vw);margin-bottom:1rem;opacity:0;animation:fade-up 1s .95s var(--ease-expo) forwards}
+.lhero-divider::before,.lhero-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
+.lhero-gem{color:var(--gold);font-size:1.2rem}
+.lhero-desc{font-size:clamp(.88rem,2vw,1.05rem);font-style:italic;color:rgba(212,184,122,.82);max-width:520px;line-height:1.85;opacity:0;animation:fade-up 1s 1.15s var(--ease-expo) forwards}
+.lhero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:2rem;opacity:0;animation:fade-up 1s 1.35s var(--ease-expo) forwards}
+.btn-primary{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.3em;padding:.8rem 2rem;background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:var(--ink);border:none;cursor:pointer;transition:transform .2s var(--ease-spring),box-shadow .3s;text-transform:uppercase;border-radius:2px;font-weight:600}
+.btn-primary:hover{transform:scale(1.05);box-shadow:0 8px 30px rgba(201,168,76,.35)}
+.btn-outline{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.3em;padding:.8rem 2rem;background:none;color:var(--gold);border:1px solid rgba(201,168,76,.4);cursor:pointer;transition:border-color .3s,background .3s,transform .2s var(--ease-spring);text-transform:uppercase;border-radius:2px}
+.btn-outline:hover{border-color:var(--gold);background:rgba(201,168,76,.07);transform:scale(1.04)}
 
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+/* Candles */
+.candle-row{display:flex;align-items:flex-end;gap:clamp(1.5rem,4vw,3.5rem);margin-top:2.5rem;opacity:0;animation:fade-in 1.5s 1.8s forwards}
+.candle{position:relative;width:16px;cursor:pointer}
+.candle-flame{width:16px;height:26px;background:radial-gradient(ellipse at 50% 75%,#fffce0 0%,#ffc030 35%,#ff6010 65%,transparent 100%);border-radius:50% 50% 30% 30%/60% 60% 40% 40%;margin:0 auto -2px;animation:flame-flicker 1.9s ease-in-out infinite,glow-candle 2.3s ease-in-out infinite;transform-origin:bottom center}
+.candle-wick{width:2px;height:14px;background:#3a2000;margin:0 auto;border-radius:1px}
+.candle-body{width:16px;height:68px;background:linear-gradient(180deg,#f9f0da,#e8cc88 45%,#c8a040);border-radius:3px 3px 2px 2px;box-shadow:inset -3px 0 8px rgba(0,0,0,.2)}
+.candle-base{width:22px;height:6px;margin:0 auto;background:linear-gradient(180deg,#b89040,#907020);border-radius:2px}
+.candle-smoke{position:absolute;top:-6px;left:50%;width:7px;height:7px;border-radius:50%;background:rgba(180,160,110,.22);animation:smoke-d 3s ease-out infinite}
 
-  /* ── SECTION ── */
-  .section {
-    padding: 5rem 1.5rem;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+.lhero-scroll{margin-top:1.8rem;opacity:0;animation:fade-up 1s 2s var(--ease-expo) forwards;display:flex;flex-direction:column;align-items:center;gap:.5rem;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.35em;color:var(--gold)}
+.lhero-scroll-arr{width:15px;height:15px;border-right:1.5px solid var(--gold);border-bottom:1.5px solid var(--gold);transform:rotate(45deg);animation:bounce-arr 1.6s ease-in-out infinite}
 
-  .section-label {
-    font-family: 'Cinzel', serif;
-    font-size: 0.72rem;
-    letter-spacing: 0.45em;
-    color: var(--gold);
-    text-align: center;
-    margin-bottom: 0.4rem;
-  }
-  .section-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: clamp(1.5rem, 4vw, 2.6rem);
-    color: var(--gold-light);
-    text-align: center;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 2px 20px rgba(201,168,76,0.2);
-  }
-  .section-rule {
-    display: flex; align-items: center; justify-content: center; gap: 0.8rem;
-    margin: 0 auto 3.5rem;
-    width: min(400px, 80vw);
-  }
-  .section-rule::before, .section-rule::after {
-    content: ''; flex: 1; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
-  }
-  .section-rule span { color: var(--gold); font-size: 1rem; }
+/* Featured strip */
+.featured{padding:5rem 2rem;max-width:1280px;margin:0 auto}
+.featured-label{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.5em;color:var(--gold);text-align:center;text-transform:uppercase;margin-bottom:.4rem}
+.featured-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.4rem,4vw,2.5rem);text-align:center;margin-bottom:.4rem;background:linear-gradient(160deg,#f0d070,#c9a84c 50%,#9a7830);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.featured-rule{display:flex;align-items:center;gap:.8rem;margin:0 auto 3.5rem;width:min(360px,80vw)}
+.featured-rule::before,.featured-rule::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
+.featured-rule span{color:var(--gold)}
 
-  /* ── CARDS GRID ── */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
-  }
+.featured-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.5rem}
+@media(max-width:600px){.featured-grid{grid-template-columns:repeat(2,1fr);gap:1rem}}
 
-  .char-card {
-    position: relative;
-    background: linear-gradient(145deg, #1a0e04 0%, #110800 100%);
-    border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 4px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-    opacity: 0;
-    transform: translateY(30px);
-  }
+.feat-card{
+  position:relative;background:var(--ink-3);border:1px solid rgba(201,168,76,.15);
+  border-radius:3px;overflow:hidden;cursor:pointer;
+  transition:transform .4s var(--ease-expo),box-shadow .4s,border-color .4s;
+  opacity:0;transform:translateY(30px);
+}
+.feat-card.visible{animation:card-reveal .6s var(--ease-expo) forwards}
+.feat-card:hover{transform:translateY(-6px) scale(1.03);box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 30px rgba(201,168,76,.1);border-color:rgba(201,168,76,.4)}
+.feat-emoji{font-size:3.5rem;text-align:center;padding:2rem 1rem 1rem;filter:drop-shadow(0 6px 16px rgba(0,0,0,.7));transition:transform .4s var(--ease-spring)}
+.feat-card:hover .feat-emoji{transform:scale(1.15) translateY(-4px)}
+.feat-name{font-family:'Cinzel',serif;font-size:.88rem;color:var(--gold-light);text-align:center;padding:.5rem 1rem 1.2rem;letter-spacing:.04em}
 
-  .char-card.visible {
-    animation: card-appear 0.7s ease forwards;
-  }
+/* Quote strip */
+.quote-strip{
+  padding:5rem 2rem;text-align:center;
+  background:linear-gradient(180deg,transparent,rgba(201,168,76,.03) 50%,transparent);
+  border-top:1px solid rgba(201,168,76,.08);border-bottom:1px solid rgba(201,168,76,.08);
+}
+.quote-text{font-family:'Cinzel Decorative',serif;font-size:clamp(1rem,3vw,1.8rem);color:var(--gold-light);max-width:700px;margin:0 auto 1rem;line-height:1.5;font-style:italic;text-shadow:0 0 40px rgba(201,168,76,.2)}
+.quote-attr{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.4em;color:rgba(201,168,76,.5);text-transform:uppercase}
 
-  @keyframes card-appear {
-    to { opacity: 1; transform: translateY(0); }
-  }
+/* ═══════════════════════════════════
+   CHARACTERS PAGE
+   ═══════════════════════════════════ */
+.chars-hero{padding:5rem 2rem 3rem;text-align:center;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(40,15,3,.9),transparent 70%)}
+.chars-eyeline{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.5em;color:var(--gold);text-transform:uppercase;margin-bottom:.4rem}
+.chars-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.6rem,5vw,3.2rem);background:linear-gradient(160deg,#f0d070,#c9a84c 50%,#9a7830);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
+.chars-desc{font-style:italic;font-size:clamp(.88rem,2vw,1rem);color:rgba(212,184,122,.75);max-width:540px;margin:0 auto;line-height:1.8}
 
-  .char-card:hover {
-    transform: translateY(-6px) scale(1.01);
-    box-shadow:
-      0 20px 60px rgba(0,0,0,0.7),
-      0 0 30px rgba(201,168,76,0.12),
-      inset 0 1px 0 rgba(201,168,76,0.2);
-    border-color: rgba(201,168,76,0.5);
-  }
+.section-wrap{padding:3rem 2rem 6rem;max-width:1280px;margin:0 auto}
+.s-rule{display:flex;align-items:center;gap:.8rem;margin:2rem auto 3rem;width:min(360px,80vw)}
+.s-rule::before,.s-rule::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
+.s-rule span{color:var(--gold)}
 
-  /* corner ornaments */
-  .char-card::before, .char-card::after {
-    content: '';
-    position: absolute;
-    width: 24px; height: 24px;
-    border-color: var(--gold);
-    border-style: solid;
-    opacity: 0.4;
-    transition: opacity 0.4s, width 0.4s, height 0.4s;
-    z-index: 2;
-  }
-  .char-card::before { top: 8px; left: 8px; border-width: 1px 0 0 1px; }
-  .char-card::after  { bottom: 8px; right: 8px; border-width: 0 1px 1px 0; }
-  .char-card:hover::before, .char-card:hover::after {
-    opacity: 1; width: 36px; height: 36px;
-  }
+/* Filter bar */
+.filter-bar{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-bottom:3rem}
+.filter-btn{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.22em;padding:.4rem .9rem;border:1px solid rgba(201,168,76,.25);color:rgba(201,168,76,.6);background:none;cursor:pointer;text-transform:uppercase;transition:all .25s;border-radius:20px}
+.filter-btn:hover,.filter-btn.active{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.07)}
 
-  /* role tag */
-  .card-role {
-    position: absolute; top: 14px; right: 14px;
-    font-family: 'Cinzel', serif;
-    font-size: 0.58rem;
-    letter-spacing: 0.25em;
-    padding: 3px 10px;
-    border: 1px solid var(--gold-dark);
-    color: var(--gold);
-    background: rgba(10,6,0,0.7);
-    text-transform: uppercase;
-    z-index: 3;
-  }
+/* Cards */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2rem}
+@media(max-width:600px){.cards-grid{grid-template-columns:1fr;gap:1.4rem}}
+@media(min-width:601px) and (max-width:900px){.cards-grid{grid-template-columns:repeat(2,1fr)}}
 
-  .card-portrait {
-    width: 100%;
-    aspect-ratio: 3/4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 6rem;
-    position: relative;
-    overflow: hidden;
-  }
+.char-card{position:relative;background:linear-gradient(145deg,#1e1208,#0f0800);border:1px solid rgba(201,168,76,.18);border-radius:3px;overflow:hidden;cursor:none;opacity:0;transform:translateY(40px);will-change:transform;transition:transform .5s var(--ease-expo),box-shadow .5s,border-color .4s}
+@media(max-width:768px){.char-card{cursor:pointer}}
+.char-card.visible{animation:card-reveal .7s var(--ease-expo) forwards}
+.char-card:hover{border-color:rgba(201,168,76,.5);box-shadow:0 24px 70px rgba(0,0,0,.75),0 0 40px rgba(201,168,76,.14),inset 0 1px 0 rgba(201,168,76,.18)}
+.char-card::before,.char-card::after{content:'';position:absolute;width:22px;height:22px;border-color:var(--gold);border-style:solid;opacity:.3;z-index:6;pointer-events:none;transition:opacity .4s,width .4s,height .4s}
+.char-card::before{top:8px;left:8px;border-width:1px 0 0 1px}
+.char-card::after{bottom:8px;right:8px;border-width:0 1px 1px 0}
+.char-card:hover::before,.char-card:hover::after{opacity:1;width:36px;height:36px}
+.card-role-tag{position:absolute;top:14px;right:14px;font-family:'Cinzel',serif;font-size:.53rem;letter-spacing:.2em;padding:3px 9px;border:1px solid rgba(201,168,76,.45);color:var(--gold);background:rgba(4,2,0,.78);text-transform:uppercase;z-index:5;backdrop-filter:blur(4px)}
+.card-portrait{width:100%;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+@media(max-width:600px){.card-portrait{aspect-ratio:2/1.2}}
+.card-portrait-bg{position:absolute;inset:0;transition:transform .7s var(--ease-expo)}
+.char-card:hover .card-portrait-bg{transform:scale(1.1)}
+.card-emoji{position:relative;z-index:2;font-size:clamp(4rem,9vw,7rem);filter:drop-shadow(0 10px 30px rgba(0,0,0,.8));transition:transform .5s var(--ease-spring)}
+.char-card:hover .card-emoji{transform:scale(1.12) translateY(-6px) rotate(2deg)}
+.card-portrait::after{content:'';position:absolute;inset:0;z-index:4;background:linear-gradient(125deg,transparent 30%,rgba(201,168,76,.07) 50%,transparent 70%);background-size:250% 250%;transition:background-position .6s}
+.char-card:hover .card-portrait::after{background-position:100% 100%}
+.shimmer-l{position:absolute;inset:0;z-index:5;pointer-events:none;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,.04) 50%,transparent 60%);background-size:200% 100%;opacity:0;transition:opacity .3s}
+.char-card:hover .shimmer-l{opacity:1;animation:shimmer 1.2s ease forwards}
+.card-body{padding:1.4rem 1.5rem 1.8rem;position:relative}
+.card-body::before{content:'';position:absolute;top:0;left:1.5rem;right:1.5rem;height:1px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
+.card-name{font-family:'Cinzel',serif;font-size:clamp(.95rem,2.5vw,1.1rem);font-weight:700;color:#f0d070;margin-bottom:.15rem}
+.card-alias{font-style:italic;font-size:.82rem;color:rgba(201,168,76,.55);margin-bottom:.65rem}
+.card-desc{font-size:.86rem;line-height:1.68;color:rgba(245,234,208,.7)}
+.card-trait{display:inline-block;margin-top:.9rem;padding:3px 9px;font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;border:1px solid}
+.trait-p{border-color:var(--gold);color:var(--gold)}
+.trait-a{border-color:#8b2020;color:#c04040}
+.trait-n{border-color:#556;color:#99a}
+.trait-r{border-color:#5a3d1a;color:#a07040}
+.trait-l{border-color:#7a3a5a;color:#c06080}
 
-  .card-portrait-bg {
-    position: absolute; inset: 0;
-    transition: transform 0.6s ease;
-  }
-  .char-card:hover .card-portrait-bg {
-    transform: scale(1.08);
-  }
+/* ═══════════════════════════════════
+   ABOUT PAGE
+   ═══════════════════════════════════ */
+.about-hero{
+  padding:5rem 2rem 4rem;text-align:center;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(35,12,3,.9),transparent 70%);
+}
+.about-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.8rem,5vw,3.5rem);background:linear-gradient(160deg,#f0d070,#c9a84c 50%,#9a7830);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
+.about-subtitle{font-style:italic;color:rgba(212,184,122,.7);font-size:clamp(.9rem,2vw,1.1rem);margin-bottom:1.5rem}
 
-  .card-portrait-emoji {
-    position: relative; z-index: 2;
-    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.7));
-    transition: transform 0.4s ease;
-    font-size: 7rem;
-  }
-  .char-card:hover .card-portrait-emoji {
-    transform: scale(1.1) translateY(-4px);
-  }
+.about-content{max-width:860px;margin:0 auto;padding:2rem 2rem 6rem}
 
-  /* shimmer on hover */
-  .card-portrait::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(135deg, transparent 40%, rgba(201,168,76,0.08) 50%, transparent 60%);
-    background-size: 200% 200%;
-    transition: background-position 0.6s;
-    z-index: 3;
-  }
-  .char-card:hover .card-portrait::after {
-    background-position: 100% 100%;
-  }
+.about-section{margin-bottom:4rem}
+.about-section-title{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.45em;color:var(--gold);text-transform:uppercase;margin-bottom:1.2rem;display:flex;align-items:center;gap:1rem}
+.about-section-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--gold-dim),transparent)}
+.about-text{font-size:clamp(.9rem,2vw,1.05rem);line-height:1.9;color:rgba(245,234,208,.78);margin-bottom:1.2rem}
+.about-text strong{color:var(--gold-light);font-weight:600}
 
-  .card-body {
-    padding: 1.4rem 1.4rem 1.6rem;
-    position: relative;
-  }
+/* Timeline */
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--gold-dim),transparent)}
+.tl-item{position:relative;margin-bottom:2.2rem;opacity:0;transform:translateX(-16px);transition:opacity .6s,transform .6s}
+.tl-item.vis{opacity:1;transform:translateX(0)}
+.tl-dot{position:absolute;left:-2rem;top:3px;width:12px;height:12px;border-radius:50%;background:var(--gold-dim);border:2px solid var(--ink);box-shadow:0 0 8px rgba(201,168,76,.4)}
+.tl-year{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.3em;color:var(--gold);margin-bottom:.3rem}
+.tl-text{font-size:.95rem;line-height:1.75;color:rgba(245,234,208,.75)}
 
-  .card-body::before {
-    content: '';
-    position: absolute; top: 0; left: 1.4rem; right: 1.4rem;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
-  }
+/* Rizal portrait box */
+.rizal-box{
+  background:var(--ink-3);border:1px solid rgba(201,168,76,.2);
+  border-radius:3px;padding:2rem;margin-bottom:2.5rem;
+  display:flex;gap:2rem;align-items:flex-start;
+  position:relative;overflow:hidden;
+}
+.rizal-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 0% 50%,rgba(201,168,76,.04),transparent 65%);pointer-events:none}
+.rizal-emoji{font-size:4rem;flex-shrink:0;filter:drop-shadow(0 6px 16px rgba(0,0,0,.6))}
+.rizal-info{}
+.rizal-name{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold-light);margin-bottom:.3rem}
+.rizal-dates{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.25em;color:rgba(201,168,76,.55);margin-bottom:.8rem}
+.rizal-bio{font-size:.92rem;line-height:1.78;color:rgba(245,234,208,.75)}
+@media(max-width:540px){.rizal-box{flex-direction:column;gap:1rem}}
 
-  .card-name {
-    font-family: 'Cinzel', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--gold-light);
-    margin-bottom: 0.15rem;
-    letter-spacing: 0.03em;
-  }
+/* Fact cards */
+.facts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem;margin-top:1rem}
+.fact-card{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.12);border-radius:3px;padding:1.2rem 1.4rem;transition:background .3s,border-color .3s}
+.fact-card:hover{background:rgba(201,168,76,.08);border-color:rgba(201,168,76,.25)}
+.fact-icon{font-size:1.6rem;margin-bottom:.6rem}
+.fact-title{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.25em;color:var(--gold);text-transform:uppercase;margin-bottom:.35rem}
+.fact-text{font-size:.88rem;line-height:1.65;color:rgba(245,234,208,.7)}
 
-  .card-alias {
-    font-family: 'EB Garamond', serif;
-    font-style: italic;
-    font-size: 0.82rem;
-    color: rgba(201,168,76,0.6);
-    margin-bottom: 0.7rem;
-  }
+/* ═══════════════════════════════════
+   GAME PAGE
+   ═══════════════════════════════════ */
+.game-hero{padding:4rem 2rem 2rem;text-align:center}
+.game-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.8rem,5vw,3.2rem);background:linear-gradient(160deg,#f0d070,#c9a84c 50%,#9a7830);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.4rem}
+.game-subtitle{font-style:italic;color:rgba(212,184,122,.7);font-size:clamp(.88rem,2vw,1rem);margin-bottom:1.5rem}
 
-  .card-desc {
-    font-size: 0.88rem;
-    line-height: 1.65;
-    color: rgba(245,234,208,0.75);
-  }
+.game-wrap{max-width:800px;margin:0 auto;padding:1rem 2rem 5rem}
+@media(max-width:600px){.game-wrap{padding:1rem 1rem 4rem}}
 
-  .card-trait {
-    display: inline-block;
-    margin-top: 0.8rem;
-    padding: 3px 8px;
-    font-family: 'Cinzel', serif;
-    font-size: 0.58rem;
-    letter-spacing: 0.2em;
-    border: 1px solid;
-    text-transform: uppercase;
-  }
-  .trait-protagonist { border-color: #c9a84c; color: #c9a84c; }
-  .trait-antagonist  { border-color: #8b2020; color: #c04040; }
-  .trait-neutral     { border-color: #556; color: #99a; }
-  .trait-religious   { border-color: #5a3d1a; color: #a07040; }
-  .trait-love        { border-color: #7a3a5a; color: #c06080; }
+/* Score bar */
+.score-bar{display:flex;align-items:center;justify-content:space-between;background:var(--ink-3);border:1px solid rgba(201,168,76,.18);border-radius:3px;padding:.8rem 1.4rem;margin-bottom:2rem}
+.score-item{text-align:center}
+.score-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.28em;color:rgba(201,168,76,.55);text-transform:uppercase;display:block;margin-bottom:.2rem}
+.score-val{font-family:'Cinzel Decorative',serif;font-size:1.6rem;color:var(--gold-light)}
+.score-val.pop{animation:score-pop .4s var(--ease-spring)}
 
-  /* ── MODAL ── */
-  .modal-overlay {
-    position: fixed; inset: 0;
-    background: rgba(5,2,0,0.92);
-    backdrop-filter: blur(6px);
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.35s ease;
-  }
-  .modal-overlay.open {
-    opacity: 1; pointer-events: all;
-  }
+/* Difficulty */
+.diff-row{display:flex;gap:.7rem;justify-content:center;margin-bottom:2rem;flex-wrap:wrap}
+.diff-btn{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.22em;padding:.4rem .9rem;border:1px solid rgba(201,168,76,.25);color:rgba(201,168,76,.6);background:none;cursor:pointer;text-transform:uppercase;transition:all .25s;border-radius:20px}
+.diff-btn:hover,.diff-btn.active{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.07)}
 
-  .modal {
-    background: linear-gradient(160deg, #1e1006 0%, #0d0700 100%);
-    border: 1px solid rgba(201,168,76,0.3);
-    border-radius: 4px;
-    max-width: 640px;
-    width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
-    position: relative;
-    transform: scale(0.9) translateY(20px);
-    transition: transform 0.35s ease;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.9), 0 0 60px rgba(201,168,76,0.05);
-  }
-  .modal-overlay.open .modal {
-    transform: scale(1) translateY(0);
-  }
+/* Game card */
+.game-card{
+  background:linear-gradient(145deg,#1e1208,#0d0800);
+  border:1px solid rgba(201,168,76,.22);border-radius:4px;
+  padding:2.5rem 2rem 2rem;margin-bottom:1.5rem;
+  position:relative;overflow:hidden;
+  animation:glow-pulse 4s ease-in-out infinite;
+  min-height:220px;
+}
+.game-card::before,.game-card::after{content:'';position:absolute;width:28px;height:28px;border-color:var(--gold);border-style:solid;opacity:.3;pointer-events:none}
+.game-card::before{top:10px;left:10px;border-width:1px 0 0 1px}
+.game-card::after{bottom:10px;right:10px;border-width:0 1px 1px 0}
 
-  .modal-header {
-    position: relative;
-    padding: 2rem 2rem 1.5rem;
-    border-bottom: 1px solid rgba(201,168,76,0.15);
-    display: flex;
-    align-items: flex-start;
-    gap: 1.2rem;
-  }
-  .modal-emoji {
-    font-size: 3.5rem;
-    flex-shrink: 0;
-    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.6));
-  }
-  .modal-info { flex: 1; }
-  .modal-name {
-    font-family: 'Cinzel', serif;
-    font-size: 1.5rem;
-    color: var(--gold-light);
-    margin-bottom: 0.2rem;
-  }
-  .modal-alias {
-    font-style: italic;
-    color: rgba(201,168,76,0.6);
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-  }
-  .modal-role-tag {
-    font-family: 'Cinzel', serif;
-    font-size: 0.6rem;
-    letter-spacing: 0.25em;
-    padding: 3px 10px;
-    border: 1px solid var(--gold-dark);
-    color: var(--gold);
-    text-transform: uppercase;
-    display: inline-block;
-  }
+.clue-number{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.35em;color:rgba(201,168,76,.55);text-transform:uppercase;margin-bottom:1rem}
+.clue-text{font-family:'EB Garamond',serif;font-size:clamp(1rem,2.5vw,1.22rem);font-style:italic;line-height:1.85;color:rgba(245,234,208,.88);min-height:80px}
+.clue-cursor{display:inline-block;width:2px;height:1em;background:var(--gold);vertical-align:middle;animation:cursor-blink 1s infinite;margin-left:2px}
 
-  .modal-close {
-    position: absolute; top: 1rem; right: 1rem;
-    background: none; border: none;
-    color: rgba(201,168,76,0.5);
-    font-size: 1.4rem;
-    cursor: pointer;
-    line-height: 1;
-    transition: color 0.2s, transform 0.2s;
-  }
-  .modal-close:hover { color: var(--gold); transform: rotate(90deg); }
+/* Voice controls */
+.voice-row{display:flex;align-items:center;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
+.voice-btn{
+  display:flex;align-items:center;gap:.5rem;
+  font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.25em;
+  padding:.55rem 1.2rem;border:1px solid rgba(201,168,76,.35);
+  color:var(--gold);background:none;cursor:pointer;
+  text-transform:uppercase;transition:all .3s;border-radius:20px;
+}
+.voice-btn:hover{border-color:var(--gold);background:rgba(201,168,76,.07)}
+.voice-btn.speaking{border-color:var(--ember);color:var(--ember);animation:voice-pulse 1s ease-in-out infinite}
+.voice-icon{font-size:1rem}
+.ai-btn{
+  display:flex;align-items:center;gap:.5rem;
+  font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.22em;
+  padding:.55rem 1.2rem;
+  background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.25));
+  border:1px solid rgba(201,168,76,.5);color:var(--gold-light);
+  cursor:pointer;text-transform:uppercase;transition:all .3s;border-radius:20px;
+}
+.ai-btn:hover{background:linear-gradient(135deg,rgba(201,168,76,.25),rgba(201,168,76,.4));box-shadow:0 0 20px rgba(201,168,76,.2)}
+.ai-btn:disabled{opacity:.4;cursor:not-allowed}
+.ai-loading{display:none;width:14px;height:14px;border:1.5px solid rgba(201,168,76,.3);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-  .modal-body {
-    padding: 1.5rem 2rem 2rem;
-  }
-  .modal-section-title {
-    font-family: 'Cinzel', serif;
-    font-size: 0.68rem;
-    letter-spacing: 0.35em;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-    margin-top: 1.2rem;
-  }
-  .modal-desc {
-    font-size: 0.95rem;
-    line-height: 1.75;
-    color: rgba(245,234,208,0.8);
-  }
-  .modal-quote {
-    border-left: 2px solid var(--gold-dark);
-    padding-left: 1rem;
-    font-style: italic;
-    color: rgba(201,168,76,0.7);
-    font-size: 0.92rem;
-    margin-top: 1rem;
-    line-height: 1.7;
-  }
+/* Countdown ring */
+.countdown-wrap{position:absolute;top:1rem;right:1rem;width:46px;height:46px}
+.countdown-svg{transform:rotate(-90deg)}
+.countdown-bg{fill:none;stroke:rgba(201,168,76,.12);stroke-width:3}
+.countdown-arc{fill:none;stroke:var(--gold);stroke-width:3;stroke-linecap:round;stroke-dasharray:283;stroke-dashoffset:0;transition:stroke-dashoffset .1s linear,stroke .3s}
+.countdown-arc.urgent{stroke:var(--ember)}
+.countdown-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:.75rem;color:var(--gold)}
 
-  .modal-attributes {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 0.6rem;
-    margin-top: 0.5rem;
-  }
-  .attr-item {
-    background: rgba(201,168,76,0.04);
-    border: 1px solid rgba(201,168,76,0.1);
-    padding: 0.5rem 0.8rem;
-    border-radius: 2px;
-  }
-  .attr-label {
-    font-family: 'Cinzel', serif;
-    font-size: 0.55rem;
-    letter-spacing: 0.2em;
-    color: var(--gold-dark);
-    display: block;
-    margin-bottom: 0.15rem;
-    text-transform: uppercase;
-  }
-  .attr-value {
-    font-size: 0.85rem;
-    color: var(--parchment-dark);
-  }
+/* Answer choices */
+.choices-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:1.5rem}
+@media(max-width:480px){.choices-grid{grid-template-columns:1fr}}
+.choice-btn{
+  font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;
+  padding:.9rem 1rem;text-align:left;
+  border:1px solid rgba(201,168,76,.2);
+  background:rgba(201,168,76,.04);color:var(--parchment-dark);
+  cursor:pointer;border-radius:3px;
+  transition:all .25s;display:flex;align-items:center;gap:.7rem;
+}
+.choice-btn:hover:not(:disabled){border-color:var(--gold);background:rgba(201,168,76,.1);color:var(--gold-light);transform:translateX(4px)}
+.choice-btn.correct{border-color:#4a9a4a;background:rgba(74,154,74,.12);color:#7acc7a;pointer-events:none}
+.choice-btn.wrong{border-color:#9a2020;background:rgba(154,32,32,.12);color:#cc5050;pointer-events:none;animation:wrong-shake .4s ease}
+.choice-btn:disabled{opacity:.5;cursor:not-allowed}
+.choice-emoji{font-size:1.2rem}
 
-  /* ── FOOTER ── */
-  .footer {
-    text-align: center;
-    padding: 3rem 1.5rem;
-    border-top: 1px solid rgba(201,168,76,0.1);
-    font-size: 0.78rem;
-    color: rgba(245,234,208,0.3);
-    font-family: 'Cinzel', serif;
-    letter-spacing: 0.2em;
-  }
-  .footer span { color: var(--gold-dark); }
+/* Result feedback */
+.result-feedback{
+  display:none;text-align:center;padding:1.2rem;
+  border-radius:3px;margin-bottom:1.2rem;
+  font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.2em;
+}
+.result-feedback.show{display:block;animation:fade-up .4s var(--ease-expo)}
+.result-feedback.correct-fb{background:rgba(74,154,74,.1);border:1px solid rgba(74,154,74,.3);color:#7acc7a}
+.result-feedback.wrong-fb{background:rgba(154,32,32,.1);border:1px solid rgba(154,32,32,.3);color:#cc5050}
 
-  /* scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--ink); }
-  ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
+/* Game controls */
+.game-ctrl{display:flex;gap:.9rem;flex-wrap:wrap}
+.ctrl-btn{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.28em;padding:.7rem 1.6rem;border:1px solid rgba(201,168,76,.35);color:var(--gold);background:none;cursor:pointer;text-transform:uppercase;transition:all .3s;border-radius:2px}
+.ctrl-btn:hover{border-color:var(--gold);background:rgba(201,168,76,.07)}
+.ctrl-btn.primary{background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:var(--ink);border-color:transparent;font-weight:600}
+.ctrl-btn.primary:hover{transform:scale(1.04);box-shadow:0 6px 24px rgba(201,168,76,.3)}
+
+/* High scores */
+.highscores{margin-top:2.5rem;background:var(--ink-3);border:1px solid rgba(201,168,76,.15);border-radius:3px;padding:1.5rem 1.8rem}
+.hs-title{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem}
+.hs-list{list-style:none}
+.hs-item{display:flex;align-items:center;gap:1rem;padding:.5rem 0;border-bottom:1px solid rgba(201,168,76,.07)}
+.hs-item:last-child{border-bottom:none}
+.hs-rank{font-family:'Cinzel Decorative',serif;font-size:.8rem;color:var(--gold-dim);width:24px;text-align:center}
+.hs-name{flex:1;font-size:.9rem;color:var(--parchment-dark)}
+.hs-score{font-family:'Cinzel',serif;font-size:.78rem;color:var(--gold)}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(3,1,0,.95);backdrop-filter:blur(10px) saturate(.6);z-index:8000;display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .35s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:linear-gradient(155deg,#1e1208,#0d0700);border:1px solid rgba(201,168,76,.28);border-radius:4px;max-width:660px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 55px 130px rgba(0,0,0,.97);opacity:0}
+.modal-overlay.open .modal{animation:modal-in .4s var(--ease-expo) forwards}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:rgba(201,168,76,.42);font-size:1.3rem;cursor:pointer;transition:color .2s,transform .3s;z-index:3}
+.modal-close:hover{color:var(--gold);transform:rotate(90deg)}
+.modal-header{padding:2.2rem 2.2rem 1.6rem;border-bottom:1px solid rgba(201,168,76,.12);display:flex;gap:1.4rem;align-items:flex-start;position:relative;overflow:hidden}
+.modal-header::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 0% 50%,rgba(201,168,76,.04),transparent 65%);pointer-events:none}
+.modal-emoji{font-size:3.8rem;flex-shrink:0;filter:drop-shadow(0 6px 16px rgba(0,0,0,.6));animation:float-s 3s ease-in-out infinite}
+.modal-name{font-family:'Cinzel',serif;font-size:clamp(1.2rem,4vw,1.55rem);color:var(--gold-light);margin-bottom:.2rem;animation:ink-reveal .6s var(--ease-expo) forwards}
+.modal-alias{font-style:italic;font-size:.88rem;color:rgba(201,168,76,.55);margin-bottom:.55rem}
+.modal-role-tag{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.25em;padding:3px 10px;border:1px solid rgba(201,168,76,.45);color:var(--gold);text-transform:uppercase;display:inline-block}
+.modal-body{padding:1.6rem 2.2rem 2.2rem}
+@media(max-width:600px){.modal-header{padding:1.5rem;flex-direction:column;gap:.8rem}.modal-body{padding:1.2rem 1.5rem 1.8rem}.modal{max-height:95vh}}
+.modal-sec-label{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.38em;color:var(--gold);text-transform:uppercase;margin:1.3rem 0 .55rem}
+.modal-attrs{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+@media(max-width:480px){.modal-attrs{grid-template-columns:1fr}}
+.modal-attr{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.1);padding:.55rem .9rem;border-radius:2px;transition:background .3s,border-color .3s}
+.modal-attr:hover{background:rgba(201,168,76,.08);border-color:rgba(201,168,76,.25)}
+.modal-attr-label{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.2em;color:var(--gold-dim);display:block;margin-bottom:.15rem;text-transform:uppercase}
+.modal-attr-val{font-size:.86rem;color:var(--parchment-dark)}
+.modal-desc{font-size:.96rem;line-height:1.8;color:rgba(245,234,208,.8)}
+.modal-quote{border-left:2px solid var(--gold-dim);padding:.4rem 0 .4rem 1rem;font-style:italic;color:rgba(201,168,76,.65);font-size:.9rem;line-height:1.75;margin-top:1.1rem}
+
+/* Particles */
+#particles{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden}
+.ptcl{position:absolute;bottom:-5px;border-radius:50%;background:radial-gradient(circle,#f0d070,#c9a84c 50%,transparent);animation:float-p var(--dur) var(--delay) ease-in infinite;left:var(--left);width:var(--size);height:var(--size);opacity:0}
+.spark{position:fixed;width:5px;height:5px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:9997;animation:spark-a .55s ease-out forwards}
+
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--ink)}
+::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:3px}
+.modal::-webkit-scrollbar{width:4px}
+.footer{text-align:center;padding:2.5rem 1.5rem 4rem;border-top:1px solid rgba(201,168,76,.1);font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.22em;color:rgba(245,234,208,.2)}
+.footer span{color:var(--gold-dim)}
+
+/* ═══════════════════════════════════════════════════
+   KWENTO (STORY) PAGE — CINEMATIC CHAPTER VIEWER
+   ═══════════════════════════════════════════════════ */
+
+#page-kwento { background: #000; }
+
+/* Chapter selector */
+.kwento-hero {
+  text-align:center; padding:4rem 1.5rem 2rem;
+  background: radial-gradient(ellipse 85% 65% at 50% 0%, rgba(50,18,4,.95), transparent 68%),
+              linear-gradient(180deg,#080400,#020100);
+}
+.kwento-title { font-family:'Cinzel Decorative',serif; font-size:clamp(1.8rem,5vw,3.2rem);
+  background:linear-gradient(160deg,#f0d070,#c9a84c 50%,#9a7830);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:.4rem }
+.kwento-sub { font-style:italic; color:rgba(212,184,122,.7); font-size:clamp(.85rem,2vw,1rem); margin-bottom:2rem }
+
+/* Chapter list */
+.chapter-list { display:flex; flex-direction:column; gap:0; max-width:920px; margin:0 auto; padding:0 1.5rem 2rem }
+
+.chapter-item {
+  display:grid; grid-template-columns:80px 1fr;
+  border-bottom:1px solid rgba(201,168,76,.1);
+  cursor:pointer; transition:background .3s, border-color .3s;
+  position:relative; overflow:hidden;
+}
+.chapter-item::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg,rgba(201,168,76,.07),transparent);
+  opacity:0; transition:opacity .3s;
+}
+.chapter-item:hover::before, .chapter-item.active-ch::before { opacity:1 }
+.chapter-item.active-ch { border-left:2px solid var(--gold) }
+
+.ch-num-col {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:1.2rem .8rem; border-right:1px solid rgba(201,168,76,.1);
+}
+.ch-roman { font-family:'Cinzel Decorative',serif; font-size:1rem; color:var(--gold-dim) }
+.ch-num { font-family:'Cinzel',serif; font-size:.55rem; letter-spacing:.2em; color:rgba(201,168,76,.4); margin-top:.15rem }
+
+.ch-content { padding:1.2rem 1.5rem; display:flex; align-items:center; gap:1.2rem }
+.ch-emoji { font-size:1.8rem; filter:drop-shadow(0 4px 12px rgba(0,0,0,.6)); flex-shrink:0 }
+.ch-info { flex:1; min-width:0 }
+.ch-title { font-family:'Cinzel',serif; font-size:clamp(.78rem,2vw,.92rem); color:var(--gold-light); margin-bottom:.25rem; letter-spacing:.04em }
+.ch-preview { font-size:.82rem; color:rgba(245,234,208,.55); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-style:italic }
+.ch-chars { display:flex; gap:.3rem; flex-wrap:wrap; margin-top:.4rem }
+.ch-char-tag { font-family:'Cinzel',serif; font-size:.48rem; letter-spacing:.18em; padding:2px 6px;
+  border:1px solid rgba(201,168,76,.2); color:rgba(201,168,76,.6); border-radius:10px; text-transform:uppercase }
+.ch-arrow { color:rgba(201,168,76,.3); font-size:.8rem; flex-shrink:0; transition:transform .3s, color .3s }
+.chapter-item:hover .ch-arrow { transform:translateX(4px); color:var(--gold) }
+
+@media(max-width:600px) {
+  .chapter-item { grid-template-columns:56px 1fr }
+  .ch-num-col { padding:.8rem .4rem }
+  .ch-content { padding:.9rem 1rem; gap:.8rem }
+  .ch-emoji { font-size:1.4rem }
+}
+
+/* ── SCENE VIEWER ── */
+.scene-viewer {
+  position:fixed; inset:0; z-index:8500;
+  background:#000; display:none; flex-direction:column;
+}
+.scene-viewer.open { display:flex }
+
+/* Scene canvas area */
+.scene-stage {
+  position:relative; flex:1; overflow:hidden; min-height:0;
+}
+#sceneCanvas { position:absolute; inset:0; width:100%; height:100%; display:block }
+
+/* Parallax emoji layers */
+.scene-layer {
+  position:absolute; pointer-events:none;
+  will-change:transform;
+  filter:drop-shadow(0 20px 60px rgba(0,0,0,.9));
+}
+
+/* Text overlay */
+.scene-text-overlay {
+  position:absolute; inset:0; z-index:10;
+  display:flex; flex-direction:column;
+  justify-content:flex-end;
+  background:linear-gradient(0deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.5) 35%, transparent 65%);
+  pointer-events:none;
+}
+.scene-chapter-tag {
+  font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.45em;
+  color:rgba(201,168,76,.65); text-transform:uppercase;
+  padding:0 2.5rem; margin-bottom:.5rem;
+}
+.scene-title {
+  font-family:'Cinzel Decorative',serif; font-size:clamp(1.2rem,4vw,2.5rem);
+  color:var(--gold-light); padding:0 2.5rem; margin-bottom:.8rem; line-height:1.2;
+  text-shadow:0 0 40px rgba(201,168,76,.3);
+}
+.scene-body {
+  font-family:'EB Garamond',serif; font-style:italic;
+  font-size:clamp(.88rem,2vw,1.08rem); line-height:1.8;
+  color:rgba(245,234,208,.85); padding:0 2.5rem 1.5rem;
+  max-width:680px;
+}
+.scene-chars-row {
+  display:flex; gap:.8rem; flex-wrap:wrap;
+  padding:0 2.5rem 2rem;
+}
+.scene-char-pill {
+  display:flex; align-items:center; gap:.4rem;
+  background:rgba(201,168,76,.08); border:1px solid rgba(201,168,76,.2);
+  border-radius:20px; padding:.3rem .7rem; cursor:pointer; pointer-events:all;
+  transition:background .25s, border-color .25s; font-size:.78rem;
+}
+.scene-char-pill:hover { background:rgba(201,168,76,.16); border-color:rgba(201,168,76,.5) }
+.scene-char-pill-emoji { font-size:1rem }
+.scene-char-pill-name { font-family:'Cinzel',serif; font-size:.55rem; letter-spacing:.15em; color:var(--gold); text-transform:uppercase }
+
+@media(max-width:600px) {
+  .scene-title { padding:0 1.2rem; margin-bottom:.5rem }
+  .scene-body  { padding:0 1.2rem 1rem }
+  .scene-chars-row { padding:0 1.2rem 1.2rem; gap:.5rem }
+  .scene-chapter-tag { padding:0 1.2rem }
+}
+
+/* Scene navigation */
+.scene-nav {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.8rem 1.5rem; background:rgba(0,0,0,.88);
+  border-top:1px solid rgba(201,168,76,.12);
+  gap:.8rem; flex-shrink:0;
+  backdrop-filter:blur(12px);
+}
+.scene-nav-btn {
+  font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.25em;
+  padding:.55rem 1.2rem; border:1px solid rgba(201,168,76,.3);
+  color:var(--gold); background:none; cursor:pointer;
+  transition:all .25s; border-radius:2px; text-transform:uppercase;
+  flex-shrink:0;
+}
+.scene-nav-btn:hover { border-color:var(--gold); background:rgba(201,168,76,.08) }
+.scene-nav-btn:disabled { opacity:.3; cursor:not-allowed }
+.scene-close-btn {
+  font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.25em;
+  padding:.55rem 1.1rem; border:1px solid rgba(201,168,76,.25);
+  color:rgba(201,168,76,.6); background:none; cursor:pointer;
+  transition:all .25s; border-radius:2px; flex-shrink:0;
+}
+.scene-close-btn:hover { color:var(--gold); border-color:var(--gold) }
+
+.scene-progress-dots {
+  display:flex; gap:.5rem; align-items:center; overflow-x:auto; flex:1; justify-content:center;
+  scrollbar-width:none; padding:0 .5rem;
+}
+.scene-progress-dots::-webkit-scrollbar { display:none }
+.scene-prog-dot {
+  width:6px; height:6px; border-radius:50%;
+  background:rgba(201,168,76,.2); cursor:pointer; flex-shrink:0;
+  transition:background .3s, transform .3s;
+}
+.scene-prog-dot.active { background:var(--gold); transform:scale(1.6) }
+.scene-prog-dot:hover { background:rgba(201,168,76,.5) }
+
+/* Voice & auto-play */
+.scene-controls {
+  position:absolute; top:1rem; right:1rem; z-index:20;
+  display:flex; flex-direction:column; gap:.5rem; align-items:flex-end;
+}
+.scene-ctrl-btn {
+  font-family:'Cinzel',serif; font-size:.55rem; letter-spacing:.2em;
+  padding:.4rem .9rem; border:1px solid rgba(201,168,76,.3);
+  color:rgba(201,168,76,.7); background:rgba(0,0,0,.6);
+  cursor:pointer; border-radius:20px; backdrop-filter:blur(8px);
+  transition:all .3s; text-transform:uppercase;
+}
+.scene-ctrl-btn:hover { border-color:var(--gold); color:var(--gold); background:rgba(0,0,0,.8) }
+.scene-ctrl-btn.active { border-color:var(--ember); color:var(--ember) }
+
+/* Transition flash */
+.scene-flash {
+  position:absolute; inset:0; z-index:30;
+  background:var(--ink); opacity:0; pointer-events:none;
+  transition:opacity .35s;
+}
+.scene-flash.flash-out { opacity:1 }
+
+@keyframes char-float-scene {
+  0%,100% { transform:translateY(0) rotate(-1deg) scale(1) }
+  33% { transform:translateY(-18px) rotate(1.5deg) scale(1.04) }
+  66% { transform:translateY(-8px) rotate(-.5deg) scale(.98) }
+}
+@keyframes char-sway {
+  0%,100% { transform:translateX(0) rotate(0) }
+  50% { transform:translateX(12px) rotate(2deg) }
+}
+@keyframes ember-scene {
+  0% { transform:translateY(0) translateX(0) scale(1); opacity:.9 }
+  100% { transform:translateY(-200px) translateX(var(--edx)) scale(.1); opacity:0 }
+}
+@keyframes bg-ken-burns {
+  0% { transform:scale(1.08) translate(-1%,0) }
+  100% { transform:scale(1) translate(1%,-1%) }
+}
+@keyframes scene-text-in {
+  from { opacity:0; transform:translateY(16px) }
+  to   { opacity:1; transform:translateY(0) }
+}
+
+/* ═══════════════════════════════════════
+   VIDEO PAGE
+   ═══════════════════════════════════════ */
+#page-video { background: #000 }
+.video-hero { text-align:center; padding:4rem 1.5rem 2.5rem;
+  background:radial-gradient(ellipse 85% 60% at 50% 0%,rgba(50,15,5,.95),transparent 68%),
+             linear-gradient(180deg,#080300,#020100) }
+.video-hero-title { font-family:'Cinzel Decorative',serif;
+  font-size:clamp(1.8rem,5vw,3.2rem);
+  background:linear-gradient(160deg,#f0d070,#c9a84c 50%,#9a7830);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  margin-bottom:.4rem }
+.video-hero-sub { font-style:italic; color:rgba(212,184,122,.7);
+  font-size:clamp(.85rem,2vw,1rem); margin-bottom:2rem }
+
+.video-wrap { max-width:1200px; margin:0 auto; padding:0 1.5rem 5rem }
+
+/* Category tabs */
+.vid-tabs { display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center; margin-bottom:2.5rem }
+.vid-tab { font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.22em;
+  padding:.45rem 1rem; border:1px solid rgba(201,168,76,.25);
+  color:rgba(201,168,76,.6); background:none; cursor:pointer;
+  text-transform:uppercase; border-radius:20px; transition:all .25s }
+.vid-tab:hover,.vid-tab.active { border-color:var(--gold); color:var(--gold); background:rgba(201,168,76,.07) }
+
+/* Grid */
+.vid-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.8rem }
+@media(max-width:640px){ .vid-grid { grid-template-columns:1fr; gap:1.2rem } }
+
+/* Card */
+.vid-card { background:var(--ink-3); border:1px solid rgba(201,168,76,.15);
+  border-radius:4px; overflow:hidden; cursor:pointer;
+  transition:transform .4s var(--ease-expo), box-shadow .4s, border-color .4s;
+  opacity:0; transform:translateY(28px) }
+.vid-card.vis { animation:card-reveal .6s var(--ease-expo) forwards }
+.vid-card:hover { transform:translateY(-6px) scale(1.02);
+  box-shadow:0 20px 60px rgba(0,0,0,.75), 0 0 30px rgba(201,168,76,.1);
+  border-color:rgba(201,168,76,.4) }
+
+/* Thumbnail */
+.vid-thumb { position:relative; aspect-ratio:16/9; overflow:hidden; background:#111 }
+.vid-thumb img { width:100%; height:100%; object-fit:cover;
+  transition:transform .6s var(--ease-expo); display:block }
+.vid-card:hover .vid-thumb img { transform:scale(1.07) }
+.vid-thumb-placeholder { width:100%; height:100%; display:flex; align-items:center;
+  justify-content:center; font-size:3rem;
+  background:linear-gradient(135deg,#1a0d03,#0a0600) }
+.vid-play-icon { position:absolute; inset:0; display:flex; align-items:center;
+  justify-content:center; background:rgba(0,0,0,.38);
+  transition:background .3s }
+.vid-card:hover .vid-play-icon { background:rgba(0,0,0,.2) }
+.vid-play-circle { width:54px; height:54px; border-radius:50%;
+  background:rgba(201,168,76,.18); border:2px solid rgba(201,168,76,.7);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .3s var(--ease-spring), background .3s;
+  backdrop-filter:blur(4px) }
+.vid-card:hover .vid-play-circle { transform:scale(1.12); background:rgba(201,168,76,.32) }
+.vid-play-triangle { width:0; height:0; border-top:11px solid transparent;
+  border-bottom:11px solid transparent; border-left:18px solid var(--gold);
+  margin-left:4px }
+.vid-duration { position:absolute; bottom:.5rem; right:.6rem;
+  font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.15em;
+  background:rgba(0,0,0,.78); color:var(--gold); padding:2px 7px;
+  border-radius:2px; backdrop-filter:blur(4px) }
+.vid-badge { position:absolute; top:.6rem; left:.6rem;
+  font-family:'Cinzel',serif; font-size:.48rem; letter-spacing:.2em;
+  padding:3px 8px; border-radius:2px; text-transform:uppercase; font-weight:600 }
+.badge-doc  { background:rgba(80,40,10,.85); color:#e09050; border:1px solid rgba(224,144,80,.4) }
+.badge-film { background:rgba(10,30,60,.85); color:#5090d0; border:1px solid rgba(80,144,208,.4) }
+.badge-lec  { background:rgba(10,50,20,.85); color:#50b060; border:1px solid rgba(80,176,96,.4) }
+.badge-ani  { background:rgba(60,10,60,.85); color:#c060c0; border:1px solid rgba(192,96,192,.4) }
+
+/* Card body */
+.vid-info { padding:1.1rem 1.2rem 1.4rem }
+.vid-cat { font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.28em;
+  color:rgba(201,168,76,.5); text-transform:uppercase; margin-bottom:.35rem }
+.vid-title { font-family:'Cinzel',serif; font-size:clamp(.85rem,2vw,.98rem);
+  color:var(--gold-light); margin-bottom:.4rem; line-height:1.3; letter-spacing:.02em }
+.vid-desc { font-size:.84rem; line-height:1.65; color:rgba(245,234,208,.62);
+  font-style:italic; margin-bottom:.7rem }
+.vid-meta { display:flex; align-items:center; gap:.8rem; flex-wrap:wrap }
+.vid-source { font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.18em;
+  color:rgba(201,168,76,.45); text-transform:uppercase }
+.vid-lang { font-family:'Cinzel',serif; font-size:.5rem; letter-spacing:.15em;
+  padding:2px 6px; border:1px solid rgba(201,168,76,.2);
+  color:rgba(201,168,76,.55); border-radius:10px; text-transform:uppercase }
+
+/* Lightbox */
+.vid-lightbox { position:fixed; inset:0; z-index:9500;
+  background:rgba(0,0,0,.96); display:none; align-items:center;
+  justify-content:center; flex-direction:column; padding:1rem;
+  backdrop-filter:blur(12px) }
+.vid-lightbox.open { display:flex }
+.vid-lb-inner { width:100%; max-width:900px; position:relative }
+.vid-lb-close { position:absolute; top:-2.5rem; right:0;
+  font-family:'Cinzel',serif; font-size:.65rem; letter-spacing:.28em;
+  color:rgba(201,168,76,.6); background:none; border:1px solid rgba(201,168,76,.25);
+  padding:.4rem .9rem; border-radius:20px; cursor:pointer; transition:all .3s }
+.vid-lb-close:hover { color:var(--gold); border-color:var(--gold) }
+.vid-lb-frame { position:relative; aspect-ratio:16/9; background:#000;
+  border:1px solid rgba(201,168,76,.2); border-radius:3px; overflow:hidden }
+.vid-lb-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:none }
+.vid-lb-title { font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.28em;
+  color:rgba(201,168,76,.65); text-align:center; margin-top:1rem; text-transform:uppercase }
+
+
+/* ═══════════════════════════════════════════
+   PLAYER REGISTRATION + GOOGLE SHEETS BOARD
+   ═══════════════════════════════════════════ */
+
+/* Registration screen */
+.reg-screen {
+  position:fixed; inset:0; z-index:9700;
+  background:rgba(2,1,0,.97);
+  display:flex; align-items:center; justify-content:center;
+  padding:1.5rem; backdrop-filter:blur(18px);
+}
+.reg-screen.hidden { display:none }
+
+.reg-box {
+  background:linear-gradient(155deg,#1e1208,#0d0700);
+  border:1px solid rgba(201,168,76,.3);
+  border-radius:5px; width:100%; max-width:480px;
+  padding:2.5rem 2.2rem 2rem;
+  box-shadow:0 40px 120px rgba(0,0,0,.9), 0 0 60px rgba(201,168,76,.06);
+  position:relative; overflow:hidden;
+  animation:modal-in .5s var(--ease-expo) both;
+}
+.reg-box::before,.reg-box::after {
+  content:''; position:absolute;
+  width:28px; height:28px; border-color:var(--gold); border-style:solid; opacity:.3;
+}
+.reg-box::before { top:10px; left:10px; border-width:1px 0 0 1px }
+.reg-box::after  { bottom:10px; right:10px; border-width:0 1px 1px 0 }
+
+.reg-eyeline {
+  font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.45em;
+  color:rgba(201,168,76,.55); text-transform:uppercase; margin-bottom:.5rem; text-align:center;
+}
+.reg-title {
+  font-family:'Cinzel Decorative',serif; font-size:clamp(1.3rem,4vw,1.9rem);
+  background:linear-gradient(160deg,#f0d070,#c9a84c 50%,#9a7830);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  text-align:center; margin-bottom:.3rem;
+}
+.reg-sub {
+  text-align:center; font-style:italic; color:rgba(212,184,122,.6);
+  font-size:.88rem; margin-bottom:1.8rem;
+}
+
+.reg-divider {
+  display:flex; align-items:center; gap:.8rem; margin-bottom:1.6rem;
+}
+.reg-divider::before,.reg-divider::after {
+  content:''; flex:1; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);
+}
+.reg-divider span { color:var(--gold); font-size:.9rem }
+
+.reg-field { margin-bottom:1.1rem }
+.reg-label {
+  display:block; font-family:'Cinzel',serif; font-size:.55rem;
+  letter-spacing:.3em; color:rgba(201,168,76,.65); text-transform:uppercase;
+  margin-bottom:.4rem;
+}
+.reg-input, .reg-select {
+  width:100%; padding:.65rem .9rem;
+  background:rgba(201,168,76,.04); border:1px solid rgba(201,168,76,.2);
+  color:var(--parchment); font-family:'EB Garamond',serif; font-size:.96rem;
+  border-radius:3px; outline:none;
+  transition:border-color .3s, background .3s, box-shadow .3s;
+}
+.reg-input::placeholder { color:rgba(245,234,208,.3); font-style:italic }
+.reg-input:focus, .reg-select:focus {
+  border-color:rgba(201,168,76,.6);
+  background:rgba(201,168,76,.07);
+  box-shadow:0 0 0 3px rgba(201,168,76,.08);
+}
+.reg-select { cursor:pointer; appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23c9a84c' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right .8rem center;
+  padding-right:2rem;
+}
+.reg-select option { background:#1e1208; color:var(--parchment) }
+
+.reg-row { display:grid; grid-template-columns:1fr 1fr; gap:.8rem }
+@media(max-width:440px) { .reg-row { grid-template-columns:1fr } }
+
+.reg-error {
+  color:#e05050; font-size:.78rem; font-style:italic;
+  margin-top:.35rem; display:none;
+}
+.reg-error.show { display:block }
+
+.reg-submit {
+  width:100%; margin-top:1.4rem; padding:.85rem 1rem;
+  background:linear-gradient(135deg,var(--gold-dim),var(--gold));
+  color:var(--ink); font-family:'Cinzel',serif;
+  font-size:.7rem; letter-spacing:.32em; font-weight:700;
+  text-transform:uppercase; border:none; border-radius:3px; cursor:pointer;
+  transition:transform .2s var(--ease-spring), box-shadow .3s;
+  display:flex; align-items:center; justify-content:center; gap:.6rem;
+}
+.reg-submit:hover { transform:scale(1.03); box-shadow:0 8px 30px rgba(201,168,76,.35) }
+.reg-submit:active { transform:scale(.98) }
+.reg-submit:disabled { opacity:.5; cursor:not-allowed; transform:none }
+.reg-spin { width:15px; height:15px; border:2px solid rgba(4,2,0,.3);
+  border-top-color:var(--ink); border-radius:50%; animation:spin .7s linear infinite;
+  display:none }
+
+/* Player badge (top of game) */
+.player-badge {
+  display:flex; align-items:center; gap:.8rem;
+  background:rgba(201,168,76,.06); border:1px solid rgba(201,168,76,.16);
+  border-radius:40px; padding:.5rem 1rem .5rem .6rem;
+  margin-bottom:1.4rem; transition:border-color .3s;
+}
+.player-badge:hover { border-color:rgba(201,168,76,.3) }
+.player-avatar {
+  width:36px; height:36px; border-radius:50%;
+  background:linear-gradient(135deg,var(--gold-dim),var(--gold));
+  display:flex; align-items:center; justify-content:center;
+  font-size:1rem; flex-shrink:0; font-family:'Cinzel Decorative',serif;
+  color:var(--ink); font-weight:700;
+}
+.player-info { flex:1; min-width:0 }
+.player-name { font-family:'Cinzel',serif; font-size:.78rem; color:var(--gold-light);
+  letter-spacing:.04em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+.player-meta { font-size:.72rem; color:rgba(201,168,76,.5); font-style:italic }
+.player-change-btn {
+  font-family:'Cinzel',serif; font-size:.48rem; letter-spacing:.2em;
+  padding:.25rem .6rem; border:1px solid rgba(201,168,76,.2);
+  color:rgba(201,168,76,.5); background:none; cursor:pointer;
+  border-radius:10px; transition:all .25s; text-transform:uppercase; flex-shrink:0;
+}
+.player-change-btn:hover { border-color:var(--gold); color:var(--gold) }
+
+/* Global leaderboard section */
+.global-lb {
+  margin-top:2.5rem;
+  background:linear-gradient(145deg,#1a1005,#0d0900);
+  border:1px solid rgba(201,168,76,.2); border-radius:4px; overflow:hidden;
+}
+.glb-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1rem 1.4rem; border-bottom:1px solid rgba(201,168,76,.12);
+  background:rgba(201,168,76,.04);
+}
+.glb-title-wrap { display:flex; align-items:center; gap:.7rem }
+.glb-icon { font-size:1.4rem }
+.glb-title { font-family:'Cinzel',serif; font-size:.7rem; letter-spacing:.3em;
+  color:var(--gold); text-transform:uppercase }
+.glb-sub { font-size:.72rem; color:rgba(201,168,76,.45); font-style:italic; margin-top:.1rem }
+.glb-refresh {
+  font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.2em;
+  padding:.35rem .8rem; border:1px solid rgba(201,168,76,.25);
+  color:rgba(201,168,76,.6); background:none; cursor:pointer;
+  border-radius:20px; transition:all .25s; text-transform:uppercase;
+}
+.glb-refresh:hover { border-color:var(--gold); color:var(--gold) }
+.glb-refresh.spinning { animation:spin 1s linear infinite; pointer-events:none }
+
+.glb-body { padding:.5rem 0 }
+.glb-row {
+  display:grid; grid-template-columns:44px 1fr auto;
+  align-items:center; gap:.6rem;
+  padding:.65rem 1.4rem; border-bottom:1px solid rgba(201,168,76,.06);
+  transition:background .2s;
+}
+.glb-row:hover { background:rgba(201,168,76,.04) }
+.glb-row:last-child { border-bottom:none }
+.glb-row.me { background:rgba(201,168,76,.08); border-left:2px solid var(--gold) }
+.glb-rank { font-family:'Cinzel Decorative',serif; font-size:.95rem;
+  color:var(--gold-dim); text-align:center }
+.glb-rank.top1 { color:#ffd700 } .glb-rank.top2 { color:#c0c0c0 } .glb-rank.top3 { color:#cd7f32 }
+.glb-player { min-width:0 }
+.glb-player-name { font-family:'Cinzel',serif; font-size:.8rem;
+  color:var(--gold-light); letter-spacing:.03em;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+.glb-player-info { font-size:.7rem; color:rgba(201,168,76,.45); font-style:italic }
+.glb-score { font-family:'Cinzel Decorative',serif; font-size:1.05rem;
+  color:var(--gold); white-space:nowrap }
+.glb-score small { font-size:.6rem; font-family:'Cinzel',serif;
+  color:rgba(201,168,76,.5); display:block; text-align:right; letter-spacing:.1em }
+
+.glb-empty { text-align:center; padding:2rem 1rem;
+  font-style:italic; color:rgba(245,234,208,.35); font-size:.9rem }
+.glb-loading { display:flex; align-items:center; justify-content:center; gap:.8rem;
+  padding:2rem; color:rgba(201,168,76,.5); font-family:'Cinzel',serif;
+  font-size:.65rem; letter-spacing:.28em; text-transform:uppercase }
+.glb-loading-spin { width:18px; height:18px; border:2px solid rgba(201,168,76,.2);
+  border-top-color:var(--gold); border-radius:50%; animation:spin .8s linear infinite }
+.glb-error { text-align:center; padding:1.5rem; color:rgba(224,100,80,.7);
+  font-style:italic; font-size:.88rem }
+
+/* Confetti pop on submit */
+@keyframes confetti-pop {
+  0%   { transform:scale(0) rotate(0deg); opacity:1 }
+  80%  { transform:scale(1.2) rotate(180deg); opacity:1 }
+  100% { transform:scale(1) rotate(360deg); opacity:0 }
+}
+.confetti-dot {
+  position:fixed; width:8px; height:8px; border-radius:50%;
+  pointer-events:none; z-index:9999;
+  animation:confetti-pop .8s ease-out forwards;
+}
+
 </style>
 </head>
 <body>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg-circles">
-    <span></span><span></span><span></span><span></span>
+<!-- Page wipe -->
+<div id="pageWipe"></div>
+<!-- Read progress -->
+<div id="readProg"></div>
+<!-- Cursor -->
+<div class="c-dot" id="cDot"></div>
+<div class="c-ring" id="cRing"></div>
+<!-- Particles -->
+<div id="particles"></div>
+
+<!-- ══════════════════════════════════════
+     NAVBAR
+     ══════════════════════════════════════ -->
+<nav id="navbar">
+  <div class="nav-brand" onclick="nav('home')">El Filibusterismo</div>
+  <div class="nav-links">
+    <button class="nav-link active" data-page="home" onclick="nav('home')">Tahanan</button>
+    <button class="nav-link" data-page="characters" onclick="nav('characters')">Mga Tauhan</button>
+    <button class="nav-link" data-page="kwento" onclick="nav('kwento')">Kwento</button>
+    <button class="nav-link" data-page="about" onclick="nav('about')">Tungkol Sa</button>
+    <button class="nav-link" data-page="game" onclick="nav('game')">Laro</button>
+    <button class="nav-link" data-page="video" onclick="nav('video')">▶ Video</button>
+  </div>
+  <div style="display:flex;align-items:center;gap:.4rem">
+    <button class="nav-music-btn" id="navMusicBtn" onclick="toggleMusic()" title="Musika">▶</button>
+    <div class="nav-eq" id="navEq">
+      <div class="nav-eq-bar paused"></div>
+      <div class="nav-eq-bar paused"></div>
+      <div class="nav-eq-bar paused"></div>
+    </div>
+    <button class="hamburger" id="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile nav -->
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-link" onclick="nav('home');toggleMobileNav()">✦ Tahanan</div>
+  <div class="mobile-nav-link" onclick="nav('characters');toggleMobileNav()">⚜ Mga Tauhan</div>
+  <div class="mobile-nav-link" onclick="nav('kwento');toggleMobileNav()">📖 Kwento</div>
+  <div class="mobile-nav-link" onclick="nav('about');toggleMobileNav()">📜 Tungkol Sa</div>
+  <div class="mobile-nav-link" onclick="nav('game');toggleMobileNav()">🎮 Laro</div>
+  <div class="mobile-nav-link" onclick="nav('video');toggleMobileNav()">▶ Video</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     LANDING PAGE
+     ══════════════════════════════════════ -->
+<div id="page-home" class="page active">
+  <section class="lhero">
+    <div class="lhero-rings" id="lheroRings"></div>
+    <p class="lhero-tag">Jose Rizal · Ghent, Belgium · 1891</p>
+    <h1 class="lhero-title">El Filibusterismo</h1>
+    <p class="lhero-sub">Nobelang Panlipunan ng Pilipinas</p>
+    <div class="lhero-divider"><span class="lhero-gem">✦</span></div>
+    <p class="lhero-desc">Ang ikalawang nobela ni Jose Rizal — isang kwento ng galit,<br>pagmamahal, at rebolusyon laban sa pananakop ng Espanya.</p>
+    <div class="lhero-btns">
+      <button class="btn-primary" onclick="nav('characters')">Tuklasin ang mga Tauhan</button>
+      <button class="btn-outline" onclick="nav('game')">Maglaro Ngayon ✦</button>
+    </div>
+    <div class="candle-row" id="candleRow"></div>
+    <div class="lhero-scroll">
+      <span>MAG-SCROLL PABABA</span>
+      <div class="lhero-scroll-arr"></div>
+    </div>
+  </section>
+
+  <!-- Featured characters -->
+  <section class="featured">
+    <p class="featured-label">Mga Pangunahing Tauhan</p>
+    <h2 class="featured-title">Kilalanin Sila</h2>
+    <div class="featured-rule"><span>✦</span></div>
+    <div class="featured-grid" id="featGrid"></div>
+  </section>
+
+  <!-- Quote -->
+  <div class="quote-strip">
+    <p class="quote-text">"Ang mga luha ng dukha ay nagiging dugo ng mga makapangyarihan."</p>
+    <p class="quote-attr">— Simoun, El Filibusterismo</p>
   </div>
 
-  <p class="hero-ornament">Jose Rizal · 1891</p>
-  <h1 class="hero-title">El Filibusterismo</h1>
-  <p class="hero-sub">Nobelang Panlipunan ng Pilipinas</p>
+  <footer class="footer"><span>✦</span>&nbsp; El Filibusterismo — Jose Rizal — 1891 &nbsp;<span>✦</span></footer>
+</div>
 
-  <div class="hero-divider">
-    <span class="hero-divider-gem">✦</span>
+<!-- ══════════════════════════════════════
+     CHARACTERS PAGE
+     ══════════════════════════════════════ -->
+<div id="page-characters" class="page">
+  <div class="chars-hero">
+    <p class="chars-eyeline">Dramatis Personae</p>
+    <h1 class="chars-title">Mga Pangunahing Tauhan</h1>
+    <p class="chars-desc">Ang bawat tauhan ay isang salamin ng lipunang kolonyal ng Pilipinas sa ilalim ng pamamahala ng Espanya.</p>
   </div>
-
-  <p class="hero-desc">
-    Ang ikalawang nobela ni Rizal — isang kwento ng galit, pagmamahal,
-    at rebolusyon laban sa pananakop.
-  </p>
-
-  <div class="scroll-cue">
-    <span>TUKLASIN ANG MGA TAUHAN</span>
-    <div class="scroll-arrow"></div>
+  <div class="section-wrap">
+    <div class="s-rule"><span>✦</span></div>
+    <div class="filter-bar" id="filterBar"></div>
+    <div class="cards-grid" id="cardsGrid"></div>
   </div>
-</section>
+  <footer class="footer"><span>✦</span>&nbsp; El Filibusterismo — Jose Rizal — 1891 &nbsp;<span>✦</span></footer>
+</div>
 
-<!-- CHARACTERS -->
-<main class="section">
-  <p class="section-label">Dramatis Personae</p>
-  <h2 class="section-title">Mga Pangunahing Tauhan</h2>
-  <div class="section-rule"><span>✦</span></div>
+<!-- ══════════════════════════════════════
+     ABOUT PAGE
+     ══════════════════════════════════════ -->
+<div id="page-about" class="page">
+  <div class="about-hero">
+    <h1 class="about-title">Tungkol Sa Nobela</h1>
+    <p class="about-subtitle">Ang Kasaysayan, Kahulugan, at Pamana ng El Filibusterismo</p>
+  </div>
+  <div class="about-content">
+    <div class="rizal-box">
+      <div class="rizal-emoji">👨‍💼</div>
+      <div class="rizal-info">
+        <div class="rizal-name">Jose Protacio Rizal Mercado y Alonzo Realonda</div>
+        <div class="rizal-dates">Hunyo 19, 1861 — Disyembre 30, 1896</div>
+        <p class="rizal-bio">Si Jose Rizal ay ang pambansang bayani ng Pilipinas — isang manunulat, doktor, painter, sculptor, at polyglot na nagsalita ng mahigit 22 wika. Ang kanyang mga nobela — <strong>Noli Me Tangere</strong> at <strong>El Filibusterismo</strong> — ay nagbigay ng sunog sa rebolusyonaryong kilusan ng mga Pilipino.</p>
+      </div>
+    </div>
 
-  <div class="cards-grid" id="cardsGrid"></div>
-</main>
+    <div class="about-section">
+      <div class="about-section-title">Kasaysayan ng Nobela</div>
+      <p class="about-text">Ang <strong>El Filibusterismo</strong> ay ang ikalawang bahagi ng dilogy ni Rizal, na sinundan ang unang nobela na <strong>Noli Me Tangere</strong> (1887). Inilathala ito noong <strong>1891 sa Ghent, Belgium</strong>, matapos maibenta ni Rizal ang kanyang alahas upang mapondohan ang pag-imprenta.</p>
+      <p class="about-text">Ang pamagat ay nagmula sa salitang Espanyol na "filibustero" — isang termino na ginamit ng mga Espanyol para tukuyin ang mga Pilipinong nagtataguyod ng reporma o rebolusyon. Sa nobela, ito ay ang bansag sa dating Crisostomo Ibarra na ngayon ay kilala bilang <strong>Simoun</strong>.</p>
+      <p class="about-text">Kung ang Noli Me Tangere ay naglarawan ng mga panlipunang sakit ng lipunang Pilipino, ang El Filibusterismo naman ay nagtatayo ng tanong: <em>"Kung hindi mababago ang sistema sa pamamagitan ng reporma, dapat bang rebolusyon ang sagot?"</em></p>
+    </div>
 
-<footer class="footer">
-  <span>✦</span> &nbsp; El Filibusterismo — Jose Rizal — 1891 &nbsp; <span>✦</span><br>
-  <small style="opacity:0.5;margin-top:0.5rem;display:block;">Inilathala sa Ghent, Belgium</small>
-</footer>
+    <div class="about-section">
+      <div class="about-section-title">Kronolohiya</div>
+      <div class="timeline" id="timeline"></div>
+    </div>
 
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
-  <div class="modal" id="modal">
-    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    <div class="about-section">
+      <div class="about-section-title">Mga Katotohanan</div>
+      <div class="facts-grid">
+        <div class="fact-card"><div class="fact-icon">📖</div><div class="fact-title">Kabanata</div><div class="fact-text">38 na kabanata ang nobela, mula "Ang Bisita" hanggang "Epilogo".</div></div>
+        <div class="fact-card"><div class="fact-icon">🌍</div><div class="fact-title">Wika</div><div class="fact-text">Orihinal na isinulat sa wikang Espanyol, ngunit isinalin na sa Pilipino, Ingles, at marami pang iba.</div></div>
+        <div class="fact-card"><div class="fact-icon">🎭</div><div class="fact-title">Tema</div><div class="fact-text">Paghihiganti, katarungan, rebolusyon, pag-ibig, at ang kahulugan ng kalayaan.</div></div>
+        <div class="fact-card"><div class="fact-icon">📍</div><div class="fact-title">Setting</div><div class="fact-text">Pangunahin sa Maynila at karatig-lalawigan nito sa panahon ng kolonyal na pamamahala ng Espanya.</div></div>
+        <div class="fact-card"><div class="fact-icon">💰</div><div class="fact-title">Pagpopondo</div><div class="fact-text">Ipinagbili ni Rizal ang alahas ng isang kaibigan upang mapondohan ang pag-imprenta ng nobela.</div></div>
+        <div class="fact-card"><div class="fact-icon">⚖️</div><div class="fact-title">Pagbabawal</div><div class="fact-text">Agad na ipinagbawal ng mga Espanyol ang nobela sa Pilipinas pagkatapos itong mailathala.</div></div>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <div class="about-section-title">Pamana at Kahalagahan</div>
+      <p class="about-text">Ang El Filibusterismo ay itinuturing na isa sa mga pinakamahalagang akdang pampanitikan sa kasaysayan ng Pilipinas. Ito ay nagsilbing inspirasyon sa Kilusang Propaganda at sa huli ay sa Rebolusyong Pilipino ng 1896.</p>
+      <p class="about-text">Ngayon, ang nobela ay bahagi ng curriculum ng lahat ng paaralang Pilipino at patuloy na pinag-aaralan bilang isang kritikal na pagsusuri ng kolonyal na karanasan ng mga Pilipino.</p>
+    </div>
+  </div>
+  <footer class="footer"><span>✦</span>&nbsp; El Filibusterismo — Jose Rizal — 1891 &nbsp;<span>✦</span></footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     GAME PAGE
+     ══════════════════════════════════════ -->
+<div id="page-game" class="page">
+  <div class="game-hero">
+    <h1 class="game-title">Sino Ako?</h1>
+    <p class="game-subtitle">Hulaan ang tauhan mula sa mga pahiwatig · May Boses na AI</p>
+  </div>
+  <div class="game-wrap">
+    <!-- Player Badge -->
+    <div class="player-badge" id="playerBadge" style="display:none">
+      <div class="player-avatar" id="playerAvatar">?</div>
+      <div class="player-info">
+        <div class="player-name" id="playerName">—</div>
+        <div class="player-meta" id="playerMeta">—</div>
+      </div>
+      <button class="player-change-btn" onclick="showReg()">Baguhin</button>
+    </div>
+
+    <!-- Score -->
+    <div class="score-bar">
+      <div class="score-item"><span class="score-label">Puntos</span><span class="score-val" id="scoreVal">0</span></div>
+      <div class="score-item"><span class="score-label">Streak</span><span class="score-val" id="streakVal">0🔥</span></div>
+      <div class="score-item"><span class="score-label">Tanong</span><span class="score-val" id="qNumVal">1/10</span></div>
+      <div class="score-item"><span class="score-label">Pinakamataas</span><span class="score-val" id="highVal">0</span></div>
+    </div>
+
+    <!-- Difficulty -->
+    <div class="diff-row">
+      <button class="diff-btn active" onclick="setDiff('easy',this)">Madali</button>
+      <button class="diff-btn" onclick="setDiff('medium',this)">Katamtaman</button>
+      <button class="diff-btn" onclick="setDiff('hard',this)">Mahirap</button>
+    </div>
+
+    <!-- Game card -->
+    <div class="game-card" id="gameCard">
+      <div class="clue-number" id="clueNumber">PAHIWATIG #1</div>
+      <div class="clue-text" id="clueText"><span id="clueDisplay"></span><span class="clue-cursor" id="clueCursor"></span></div>
+      <div class="voice-row">
+        <button class="voice-btn" id="voiceBtn" onclick="speakClue()"><span class="voice-icon">🔊</span> BASAHIN</button>
+        <button class="ai-btn" id="aiBtn" onclick="getAIClue()"><span>✦</span> <span id="aiBtnText">AI PAHIWATIG</span> <span class="ai-loading" id="aiLoading"></span></button>
+      </div>
+      <!-- Countdown -->
+      <div class="countdown-wrap" id="countdownWrap">
+        <svg class="countdown-svg" width="46" height="46" viewBox="0 0 46 46">
+          <circle class="countdown-bg" cx="23" cy="23" r="20"/>
+          <circle class="countdown-arc" id="countdownArc" cx="23" cy="23" r="20"/>
+        </svg>
+        <div class="countdown-num" id="countdownNum">30</div>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div class="result-feedback" id="resultFb"></div>
+
+    <!-- Choices -->
+    <div class="choices-grid" id="choicesGrid"></div>
+
+    <!-- Controls -->
+    <div class="game-ctrl">
+      <button class="ctrl-btn primary" id="nextBtn" onclick="nextQuestion()" style="display:none">Susunod →</button>
+      <button class="ctrl-btn" onclick="resetGame()">↺ Magsimula Ulit</button>
+    </div>
+
+    <!-- Local high scores -->
+    <div class="highscores">
+      <div class="hs-title">⭐ Iyong mga Naitala</div>
+      <ul class="hs-list" id="hsList"></ul>
+    </div>
+
+    <!-- Global leaderboard -->
+    <div class="global-lb" id="globalLb">
+      <div class="glb-header">
+        <div class="glb-title-wrap">
+          <span class="glb-icon">🌍</span>
+          <div>
+            <div class="glb-title">Global Leaderboard</div>
+            <div class="glb-sub">Pinakamataas na Puntos — Lahat ng Manlalaro</div>
+          </div>
+        </div>
+        <button class="glb-refresh" id="glbRefreshBtn" onclick="loadGlobalBoard()">↺ I-refresh</button>
+      </div>
+      <div class="glb-body" id="glbBody">
+        <div class="glb-loading"><div class="glb-loading-spin"></div>Nilo-load ang leaderboard...</div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer"><span>✦</span>&nbsp; El Filibusterismo — Jose Rizal — 1891 &nbsp;<span>✦</span></footer>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     KWENTO (STORY) PAGE
+     ══════════════════════════════════════ -->
+<div id="page-kwento" class="page">
+  <div class="kwento-hero">
+    <h1 class="kwento-title">Mga Kabanata</h1>
+    <p class="kwento-sub">Ang buong kwento ng El Filibusterismo — kabanata sa kabanata</p>
+  </div>
+  <div class="chapter-list" id="chapterList"></div>
+  <footer class="footer"><span>✦</span>&nbsp; El Filibusterismo — Jose Rizal — 1891 &nbsp;<span>✦</span></footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     SCENE VIEWER OVERLAY
+     ══════════════════════════════════════ -->
+<div class="scene-viewer" id="sceneViewer">
+  <div class="scene-stage" id="sceneStage">
+    <canvas id="sceneCanvas"></canvas>
+    <!-- Character layers rendered by JS -->
+    <div class="scene-text-overlay">
+      <div class="scene-chapter-tag" id="sceneChTag"></div>
+      <div class="scene-title" id="sceneTitle"></div>
+      <div class="scene-body" id="sceneBody"></div>
+      <div class="scene-chars-row" id="sceneCharsRow"></div>
+    </div>
+    <div class="scene-flash" id="sceneFlash"></div>
+    <!-- Controls -->
+    <div class="scene-controls">
+      <button class="scene-ctrl-btn" id="sceneVoiceBtn" onclick="sceneSpeak()">🔊 BOSES</button>
+      <button class="scene-ctrl-btn" id="sceneAutoBtn" onclick="toggleAutoPlay()">▶ AUTO</button>
+    </div>
+  </div>
+  <div class="scene-nav">
+    <button class="scene-nav-btn" id="scenePrevBtn" onclick="sceneNav(-1)">← NAKARAAN</button>
+    <div class="scene-progress-dots" id="sceneProgDots"></div>
+    <button class="scene-nav-btn" id="sceneNextBtn" onclick="sceneNav(1)">SUSUNOD →</button>
+    <button class="scene-close-btn" onclick="closeScene()">✕ ISARA</button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     VIDEO PAGE
+     ══════════════════════════════════════ -->
+<div id="page-video" class="page">
+  <div class="video-hero">
+    <h1 class="video-hero-title">Mga Video</h1>
+    <p class="video-hero-sub">Dokumentaryo, pelikula, at lektura tungkol sa El Filibusterismo at kay Jose Rizal</p>
+  </div>
+  <div class="video-wrap">
+    <div class="vid-tabs" id="vidTabs"></div>
+    <div class="vid-grid" id="vidGrid"></div>
+  </div>
+  <footer class="footer"><span>✦</span>&nbsp; El Filibusterismo — Jose Rizal — 1891 &nbsp;<span>✦</span></footer>
+</div>
+
+<!-- Video Lightbox -->
+<div class="vid-lightbox" id="vidLightbox">
+  <div class="vid-lb-inner">
+    <button class="vid-lb-close" onclick="closeLightbox()">✕ ISARA</button>
+    <div class="vid-lb-frame"><iframe id="vidLbFrame" allowfullscreen allow="autoplay"></iframe></div>
+    <div class="vid-lb-title" id="vidLbTitle"></div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" id="modalClose">✕</button>
     <div class="modal-header">
-      <div class="modal-emoji" id="modalEmoji"></div>
-      <div class="modal-info">
-        <div class="modal-name" id="modalName"></div>
-        <div class="modal-alias" id="modalAlias"></div>
-        <span class="modal-role-tag" id="modalRole"></span>
+      <div class="modal-emoji" id="mEmoji"></div>
+      <div>
+        <div class="modal-name" id="mName"></div>
+        <div class="modal-alias" id="mAlias"></div>
+        <span class="modal-role-tag" id="mRole"></span>
       </div>
     </div>
     <div class="modal-body">
-      <div class="modal-section-title">Katangian</div>
-      <div class="modal-attributes" id="modalAttrs"></div>
-      <div class="modal-section-title">Buod</div>
-      <p class="modal-desc" id="modalDesc"></p>
-      <div class="modal-quote" id="modalQuote"></div>
+      <div class="modal-sec-label">Mga Katangian</div>
+      <div class="modal-attrs" id="mAttrs"></div>
+      <div class="modal-sec-label">Buod</div>
+      <p class="modal-desc" id="mDesc"></p>
+      <div class="modal-quote" id="mQuote"></div>
     </div>
   </div>
 </div>
 
 <script>
-const characters = [
-  {
-    emoji: '🎩',
-    name: 'Simoun',
-    alias: 'Crisostomo Ibarra',
-    role: 'Pangunahing Tauhan',
-    traitClass: 'trait-protagonist',
-    traitLabel: 'Protagonista',
-    bg: 'linear-gradient(160deg, #1a0a00, #2a1500)',
-    bgHover: '#3a1a00',
-    shortDesc: 'Isang mayamang mangangalakal na nagtatago ng mapait na lihim — ang dating idealista na naging tagapanghiganti.',
-    attrs: [
-      { label: 'Tunay na Pangalan', value: 'Crisostomo Ibarra' },
-      { label: 'Katayuan', value: 'Mangangalakal, Rebolusyonaryo' },
-      { label: 'Simbolo', value: 'Poot at Paghihiganti' },
-      { label: 'Kapalaran', value: 'Namatay sa pampang ng dagat' },
-    ],
-    desc: 'Si Simoun — ang bagong anyo ni Crisostomo Ibarra — ay bumalik sa Pilipinas bilang isang maimpluwensiyang Espanyol na mangangalakal. Sa ilalim ng kanyang kayamanan at kapangyarihan ay nagtatago ang isang lalaking puno ng galit at panghihiganti para sa bansang inapi. Plano niyang pagsabakin ang isang rebolusyon upang buwagin ang mapang-aping sistema.',
-    quote: '"Ang mga luha ng dukha ay nagiging dugo ng mga makapangyarihan."'
-  },
-  {
-    emoji: '📿',
-    name: 'Basilio',
-    alias: 'Anak ni Sisa',
-    role: 'Pangunahing Tauhan',
-    traitClass: 'trait-protagonist',
-    traitLabel: 'Protagonista',
-    bg: 'linear-gradient(160deg, #0a0f1a, #050a12)',
-    bgHover: '#0d1525',
-    shortDesc: 'Matalino at matiisin na estudyante ng medisina na nakita ang katotohanan ng lipunan mula sa kahirapan.',
-    attrs: [
-      { label: 'Propesyon', value: 'Estudyante ng Medisina' },
-      { label: 'Ina', value: 'Sisa (Noli Me Tangere)' },
-      { label: 'Simbolo', value: 'Kabataang Pilipino' },
-      { label: 'Katayuan', value: 'Nadakip ng Guardia Civil' },
-    ],
-    desc: 'Si Basilio ay lumaki mula sa kahirapan at naulila pagkamatay ng kanyang ina na si Sisa. Sa pamamagitan ng sipag at tiyaga, naging estudyante siya ng medisina. Nakilala niya si Simoun at nalaman ang tunay na pagkakakilanlan nito. Nais niyang tumulong ngunit nangangamba sa karahasan. Sa dulo, siya ay nadakip dahil sa kanyang kaalaman.',
-    quote: '"Ang aming mga pangarap ay hindi paunti-unti kundi sabay-sabay na nasisira."'
-  },
-  {
-    emoji: '🌹',
-    name: 'Paulita Gomez',
-    alias: 'La Bella Paulita',
-    role: 'Pag-ibig ni Isagani',
-    traitClass: 'trait-love',
-    traitLabel: 'Pag-ibig',
-    bg: 'linear-gradient(160deg, #1a0010, #0d0008)',
-    bgHover: '#250015',
-    shortDesc: 'Maganda at makabagong dalagang pinagnanasaan ng marami — pumili ng kayamanan kaysa sa pag-ibig.',
-    attrs: [
-      { label: 'Katayuan', value: 'Asyendero\'s Pamangkin' },
-      { label: 'Pag-ibig', value: 'Isagani, pagkatapos ay Juanito' },
-      { label: 'Simbolo', value: 'Materyal na Pag-ibig' },
-      { label: 'Katangian', value: 'Makabago, Maselang' },
-    ],
-    desc: 'Si Paulita Gomez ay isang magandang dalaga na paboritong usapan ng lipunan. Mahal siya ni Isagani nang buong puso, ngunit sa huli ay pinili niya si Juanito Pelaez — ang mas mayaman at mas may posisyon. Kumakatawan siya sa mga Pilipinong pinipili ang materyal na kayamanan kaysa sa tunay na pagmamahal.',
-    quote: '"Hindi lahat ng maganda ay tapat, at hindi lahat ng tapat ay maganda."'
-  },
-  {
-    emoji: '🔥',
-    name: 'Isagani',
-    alias: 'Ang Makatang Kabataan',
-    role: 'Mabuting Kaibigan',
-    traitClass: 'trait-protagonist',
-    traitLabel: 'Rebolusyonaryo',
-    bg: 'linear-gradient(160deg, #1a0a05, #100500)',
-    bgHover: '#201008',
-    shortDesc: 'Makatang kabataan na puno ng pag-asa para sa bayang Pilipinas — nagsakripisyo ng lahat para sa pag-ibig.',
-    attrs: [
-      { label: 'Talento', value: 'Makata at Mananalumpati' },
-      { label: 'Pagmamahal', value: 'Paulita Gomez' },
-      { label: 'Simbolo', value: 'Sana ng Kabataan' },
-      { label: 'Dakilang Gawa', value: 'Iniligtas ang kasalan mula sa bomba' },
-    ],
-    desc: 'Si Isagani ay isang makabayang kabataang makata, matalinong estudyante, at mapagmahal na nobyo. Mahal niya si Paulita nang walang hanggan. Sa huling hatinggabi ng nobela, natagpuan niya ang granada ni Simoun at inihagis ito sa ilog — kaya nailigtas ang maraming buhay ngunit winasak ang plano ng rebolusyon.',
-    quote: '"Ang Pilipinas ay hindi maliit na bansa para sa maliit na pangarap."'
-  },
-  {
-    emoji: '⛪',
-    name: 'Padre Florentino',
-    alias: 'Ang Paring Pilipino',
-    role: 'Marunong na Matanda',
-    traitClass: 'trait-religious',
-    traitLabel: 'Relihiyoso',
-    bg: 'linear-gradient(160deg, #0f0a00, #080600)',
-    bgHover: '#1a1200',
-    shortDesc: 'Mapagmahal at marunong na paring Pilipino — tinawid ang kamatayan ni Simoun nang may habag at karunungan.',
-    attrs: [
-      { label: 'Propesyon', value: 'Paring Pilipino (Sekular)' },
-      { label: 'Tirahan', value: 'Cavite (Dalampasigan)' },
-      { label: 'Simbolo', value: 'Karunungan at Awa' },
-      { label: 'Papel', value: 'Huling Tagapakinig ni Simoun' },
-    ],
-    desc: 'Si Padre Florentino ay kumakatawan sa perpektong paring Pilipino — mapagmahal, marunong, at tapat. Sa kanyang tahanan sa dalampasigan natanggap niya ang nahahabal na si Simoun. Bago mamatay si Simoun, nakinig siya sa buong kwento at nagtangkang ibigay ang huling pag-asa. Sa dulo, ibinagsak niya ang kayamanan ni Simoun sa karagatan bilang alay sa bansa.',
-    quote: '"Hindi pa panahon... Kung kailan ang tao ay handa nang magsakripisyo para sa lahat."'
-  },
-  {
-    emoji: '💰',
-    name: 'Don Custodio',
-    alias: 'El Buen Sentido',
-    role: 'Opisyal ng Pamahalaan',
-    traitClass: 'trait-neutral',
-    traitLabel: 'Opisyal',
-    bg: 'linear-gradient(160deg, #0a0a0a, #050505)',
-    bgHover: '#151515',
-    shortDesc: 'Isang mataas na opisyal na kinakatawan ang burukrasya at kawalang-katarungan ng sistemang kolonyal.',
-    attrs: [
-      { label: 'Posisyon', value: 'Mataas na Opisyal' },
-      { label: 'Katangian', value: 'Mapagpanggap, Makasarili' },
-      { label: 'Simbolo', value: 'Bulok na Burukrasya' },
-      { label: 'Desisyon', value: 'Tinanggihan ang Unibersidad' },
-    ],
-    desc: 'Si Don Custodio ay isang mataas na opisyal na lumalabas na palaging may "maayos na pag-iisip" ngunit sa katotohanan ay pabor lamang sa sarili at sa sistema. Kabilang sa mga humadlang sa panukala para sa isang pampublikong akademya ng wikang Kastila, na naglalarawan ng burukrasyang pumipigil sa pag-unlad ng mga Pilipino.',
-    quote: '"Ang katuwiran ng batas ay para protektahan ang batas, hindi ang tao."'
-  },
-  {
-    emoji: '📚',
-    name: 'Macaraig',
-    alias: 'Mayamang Estudyante',
-    role: 'Estudyante',
-    traitClass: 'trait-neutral',
-    traitLabel: 'Estudyante',
-    bg: 'linear-gradient(160deg, #050a0f, #030609)',
-    bgHover: '#081015',
-    shortDesc: 'Mayamang kabataang estudyante na nagsimula ng pagbabago sa pamamagitan ng akademya.',
-    attrs: [
-      { label: 'Katayuan', value: 'Estudyante, Marangal na Pamilya' },
-      { label: 'Adhikain', value: 'Pagtataguyod ng Wika at Kultura' },
-      { label: 'Simbolo', value: 'Bagong Henerasyong Pilipino' },
-      { label: 'Papel', value: 'Lider ng mga Estudyante' },
-    ],
-    desc: 'Si Macaraig ay kumakatawan sa mayamang kabataang Pilipino na may mataas na edukasyon at panlipunang kamalayan. Siya ang nagpanukala ng pagtatayo ng akademya para sa wikang Kastila bilang daan para mabigyan ng tinig ang mga Pilipino. Kahit hindi siya ang sentro ng nobela, ang kanyang papel ay nagpapakita na ang pagbabago ay maaari ring manggaling sa kabataan.',
-    quote: '"Ang wika ay sandata rin ng mga taong naghahanap ng kalayaan."'
-  },
-  {
-    emoji: '🎭',
-    name: 'Padre Salvi',
-    alias: 'Ang Mapanlinlang na Pari',
-    role: 'Antagonista',
-    traitClass: 'trait-antagonist',
-    traitLabel: 'Antagonista',
-    bg: 'linear-gradient(160deg, #1a0000, #0d0000)',
-    bgHover: '#200000',
-    shortDesc: 'Ang mapanlinlang na prayleng nagbabalik mula sa Noli Me Tangere — mas makapangyarihan at mas mapanganib.',
-    attrs: [
-      { label: 'Relihiyon', value: 'Prayle (Pransiskano)' },
-      { label: 'Nakilala Sa', value: 'Noli Me Tangere' },
-      { label: 'Simbolo', value: 'Mapanlinlang na Kapangyarihan' },
-      { label: 'Katangian', value: 'Mapanghimasok, Mapagsamantala' },
-    ],
-    desc: 'Si Padre Salvi ay bumalik sa ikalawang nobela bilang mas makapangyarihang pari. Sa Noli Me Tangere, siya ang nagmahal kay Maria Clara nang may maruming hangarin. Sa El Filibusterismo, patuloy siyang gumagamit ng relihiyon bilang sandata para kontrolin ang mga tao at mapangalagaan ang sariling kapakanan at kapangyarihan.',
-    quote: '"Ang Diyos ay nasa aming panig — ang batas ay nasa aming mga kamay."'
-  },
-  {
-    emoji: '🌺',
-    name: 'Maria Clara',
-    alias: 'Pinaka-Bantog na Pilipina',
-    role: 'Simbolikong Tauhan',
-    traitClass: 'trait-love',
-    traitLabel: 'Simbolo',
-    bg: 'linear-gradient(160deg, #1a0515, #0d0009)',
-    bgHover: '#220820',
-    shortDesc: 'Hindi direktang lumulabas ngunit ang kanyang alaala ay patuloy na kumukuha sa puso ni Ibarra/Simoun.',
-    attrs: [
-      { label: 'Nakilala Sa', value: 'Noli Me Tangere' },
-      { label: 'Kasalukuyang Katayuan', value: 'Mother Superior / Madre' },
-      { label: 'Simbolo', value: 'Inang Pilipinas' },
-      { label: 'Epekto kay Simoun', value: 'Pangunahing Dahilan ng Galit' },
-    ],
-    desc: 'Si Maria Clara ay hindi direktang lumalabas sa El Filibusterismo ngunit ang kanyang alaala ay isa sa mga pangunahing dahilan kung bakit nagpasyang gumanti si Ibarra bilang Simoun. Narinig ni Simoun na naging madre na si Maria Clara, na nagpapakita ng kanyang kawalan ng kalayaan sa sistemang kolonyal at relihiyoso.',
-    quote: '"Ang pagmamahal ay hindi natatapos sa pagkawala ng minamahal."'
-  },
-  {
-    emoji: '⚖️',
-    name: 'Don Timoteo Pelaez',
-    alias: 'Ambisyosong Ama',
-    role: 'Ama ni Juanito',
-    traitClass: 'trait-neutral',
-    traitLabel: 'Burgis',
-    bg: 'linear-gradient(160deg, #0a0a05, #060604)',
-    bgHover: '#111108',
-    shortDesc: 'Ambisyosong magnanakalang gustong maging bahagi ng mataas na lipunan sa pamamagitan ng kasal ng anak.',
-    attrs: [
-      { label: 'Hanapbuhay', value: 'Mangangalakal' },
-      { label: 'Anak', value: 'Juanito Pelaez' },
-      { label: 'Simbolo', value: 'Burgesyang Pilipino' },
-      { label: 'Hangad', value: 'Kapangyarihang Panlipunan' },
-    ],
-    desc: 'Si Don Timoteo Pelaez ay isang ambisyosong mangangalakal na gusto niyang mapabilang ang pamilya niya sa mataas na antas ng kolonyal na lipunan. Ang kasal ng kanyang anak na si Juanito kay Paulita ang kanyang pangarap. Kumakatawan siya sa burgesyang Pilipinong mas pinipili ang posisyon at kayamanan kaysa sa katotohanan at katarungan.',
-    quote: '"Ang tagumpay ay nangangailangan ng tamang koneksyon, hindi lamang tamang gawa."'
-  },
-  {
-    emoji: '🌊',
-    name: 'Cabesang Tales',
-    alias: 'Tandang Tales',
-    role: 'Magsasaka',
-    traitClass: 'trait-protagonist',
-    traitLabel: 'Biktima',
-    bg: 'linear-gradient(160deg, #051a08, #030d05)',
-    bgHover: '#082510',
-    shortDesc: 'Isang masipag na magsasakang nawalan ng lupa dahil sa kasakiman ng mga prayle — naging tulisan ng kagubatan.',
-    attrs: [
-      { label: 'Hanapbuhay', value: 'Magsasaka, Dating Cabeza' },
-      { label: 'Anak', value: 'Juli (Juliana)' },
-      { label: 'Simbolo', value: 'Inaping Magsasaka' },
-      { label: 'Nagawa', value: 'Naging tulisan, nagbawi ng lupa' },
-    ],
-    desc: 'Si Cabesang Tales ay isang masipag na magsasakang nagpaguho ng kanyang buhay para linangin ang isang bukid — ngunit ang mga prayle ay naangkin ang lupa. Nang maulila ang kanyang pamilya at makulong ang anak na si Juli, wala na siyang ibang pagpipilian kundi ang maging tulisan. Kumakatawan siya sa lahat ng magsasakang Pilipinong inagaw ang karapatan.',
-    quote: '"Ang lupang aking inani ng pawis ay hindi ipagkakaloob ko kahit kanino."'
-  },
-  {
-    emoji: '🕊️',
-    name: 'Juli (Juliana)',
-    alias: 'Anak ni Cabesang Tales',
-    role: 'Biktima ng Lipunan',
-    traitClass: 'trait-love',
-    traitLabel: 'Trahedya',
-    bg: 'linear-gradient(160deg, #0f1520, #060a10)',
-    bgHover: '#151e2a',
-    shortDesc: 'Dalisay at matiisin na dalaga na nagbenta ng kalayaan para mailigtas ang ama — nagtapos sa trahedya.',
-    attrs: [
-      { label: 'Ama', value: 'Cabesang Tales' },
-      { label: 'Katayuan', value: 'Alipin sa Bahay-prayle' },
-      { label: 'Simbolo', value: 'Kababaihang Inalipin' },
-      { label: 'Katapusan', value: 'Nahulog mula sa bintana' },
-    ],
-    desc: 'Si Juli ay isang dalisay at magandang dalagang nagpakaalipin sa bahay ng mga prayle para mapalaya ang kanyang ama. Inilahad ni Rizal ang kanyang kapalaran bilang simbolo ng lahat ng kababaihang Pilipinong biktima ng mapang-aping sistema. Ang kanyang trahedya — paghulog sa bintana upang makaiwas sa pang-aabuso — ay isa sa pinaka-masakit na bahagi ng nobela.',
-    quote: '"Lalong malaya ang namatay kaysa nabuhay nang walang karangalan."'
-  },
+'use strict';
+
+// ═══════════════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════════════
+const CHARS = [
+  {id:'simoun',emoji:'🎩',name:'Simoun',alias:'Crisostomo Ibarra',role:'Pangunahing Tauhan',traitClass:'trait-p',traitLabel:'Protagonista',bg:'linear-gradient(160deg,#1f0e02,#0d0600)',filter:'protagonista',shortDesc:'Ang dating idealista na naging tagapanghiganti — nagbabalik bilang Simoun upang wasakin ang sistema ng pananakop.',attrs:[{label:'Tunay na Pangalan',value:'Crisostomo Ibarra'},{label:'Katayuan',value:'Mangangalakal, Rebolusyonaryo'},{label:'Simbolo',value:'Poot at Paghihiganti'},{label:'Kapalaran',value:'Namatay sa pampang ng dagat'}],desc:'Si Simoun ay bumalik sa Pilipinas bilang isang maimpluwensiyang mangangalakal. Sa ilalim ng kayamanan at kapangyarihan ay nagtatago ang isang lalaking puno ng galit at panghihiganti para sa bansang inapi.',quote:'"Ang mga luha ng dukha ay nagiging dugo ng mga makapangyarihan."',clues:{easy:['Ito ay isang mangangalakal na may itim na salamin at mahal na alahas.','Nagtatago siya ng isang sirang dibdib at malupit na plano.','Ang kanyang kayamanan ay ginagamit upang sisihin ang mga kaaway ng bansa.'],medium:['Siya ay dating estudyante na pinalayo ng mga Espanyol sa kanyang bayan.','Nagplano siya ng pagsabog sa isang kasalan upang pabaligtarin ang sistemang kolonyal.','Ang kanyang tunay na pangalan ay nasibulan mula sa kanyang nakaraan.'],hard:['Ito ang lalaking nagbenta ng mga alahas mula sa isang nawalan upang pondohan ang rebolusyon.','Sa kanyang huling paghinga, inamin niya sa isang paring Pilipino ang lahat ng kanyang nagawa.','Ang kanyang kaluluwa ay nagbago nang matuklasan niyang si Maria Clara ay naging madre na.']}},
+  {id:'basilio',emoji:'📿',name:'Basilio',alias:'Anak ni Sisa',role:'Pangunahing Tauhan',traitClass:'trait-p',traitLabel:'Protagonista',bg:'linear-gradient(160deg,#060c1a,#030609)',filter:'protagonista',shortDesc:'Matalino at matiisin na estudyante ng medisina na lumago mula sa kahirapan tungo sa kaalaman.',attrs:[{label:'Propesyon',value:'Estudyante ng Medisina'},{label:'Ina',value:'Sisa (Noli Me Tangere)'},{label:'Simbolo',value:'Kabataang Pilipino'},{label:'Katayuan',value:'Nadakip ng Guardia Civil'}],desc:'Si Basilio ay lumaki mula sa kahirapan at naulila pagkamatay ng kanyang ina na si Sisa. Sa pamamagitan ng sipag, naging estudyante siya ng medisina. Nalaman niya ang tunay na pagkakakilanlan ni Simoun.',quote:'"Ang aming mga pangarap ay hindi paunti-unti kundi sabay-sabay na nasisira."',clues:{easy:['Ito ay isang estudyante na nagaaral ng medisina.','Ang kanyang ina ay isang sikat na tauhan sa unang nobela.','Siya ay matalino at masipag kahit mahirap ang kanyang buhay.'],medium:['Nakilala niya ang isang mangangalakal na may lihim na pagkakakilanlan.','Ang kanyang ina ay nagsiraan ng isip at namatay nang malungkot.','Nadakip siya ng mga awtoridad dahil sa kanyang kaalaman tungkol sa isang rebolusyon.'],hard:['Siya ay ipinanganak nang mahirap at naglingkod sa bahay ng isang mabait na pamilya upang makaaral.','Ang kanyang pakikialam kay Simoun ay nagdulot ng kanyang pagkabilanggo.','Bago ang lahat ng ito, nakilala niya ang kalungkutan noong siya ay bata pa at nag-aalaga ng kanyang nangangarap na ina.']}},
+  {id:'isagani',emoji:'🔥',name:'Isagani',alias:'Ang Makatang Kabataan',role:'Mabuting Kaibigan',traitClass:'trait-p',traitLabel:'Rebolusyonaryo',bg:'linear-gradient(160deg,#1f0d03,#100500)',filter:'protagonista',shortDesc:'Makatang kabataan na nagsakripisyo ng lahat — inihagis ang bomba ni Simoun sa ilog para iligtas ang marami.',attrs:[{label:'Talento',value:'Makata at Mananalumpati'},{label:'Pagmamahal',value:'Paulita Gomez'},{label:'Simbolo',value:'Sana ng Kabataan'},{label:'Dakilang Gawa',value:'Iniligtas ang kasalan mula sa bomba'}],desc:'Si Isagani ay isang makabayang kabataang makata. Sa huling hatinggabi ng nobela, natagpuan niya ang granada ni Simoun at inihagis ito sa ilog — kaya nailigtas ang maraming buhay ngunit winasak ang plano ng rebolusyon.',quote:'"Ang Pilipinas ay hindi maliit na bansa para sa maliit na pangarap."',clues:{easy:['Ito ay isang makata na puno ng pag-asa para sa Pilipinas.','Siya ay lubos na nagmamahal sa isang magandang dalaga.','Ang kanyang damdamin ay malakas at maapoy tulad ng apoy.'],medium:['Pinigilan niya ang isang mapaminsalang pangyayari sa isang kasalan.','Ang kanyang puso ay nasira nang piliin ng kanyang minamahal ang ibang lalaki.','Siya ay tinutuligsang kaibigan ni Basilio sa loob ng nobela.'],hard:['Inihagis niya ang isang nakakalason na kandila sa ilog upang maiwasan ang pagpapatay ng maraming tao.','Ang kanyang pagmamahal kay Paulita ay hindi natupad dahil sa pagpili nito ng kayamanan.','Siya ang nagbukas ng mata ng mga mambabasa tungkol sa kahalagahan ng desisyon sa oras ng krisis.']}},
+  {id:'juli',emoji:'🕊️',name:'Juli (Juliana)',alias:'Anak ni Cabesang Tales',role:'Biktima ng Lipunan',traitClass:'trait-l',traitLabel:'Trahedya',bg:'linear-gradient(160deg,#0d1420,#060810)',filter:'biktima',shortDesc:'Dalisay na dalaga na nagbenta ng kalayaan para mailigtas ang ama — ang pinaka-masakit na kapalaran sa nobela.',attrs:[{label:'Ama',value:'Cabesang Tales'},{label:'Katayuan',value:'Alipin sa Bahay-prayle'},{label:'Simbolo',value:'Kababaihang Inalipin'},{label:'Katapusan',value:'Nahulog mula sa bintana'}],desc:'Si Juli ay isang dalisay at magandang dalagang nagpakaalipin sa bahay ng mga prayle para mapalaya ang kanyang ama. Ang kanyang trahedya — paghulog sa bintana — ay isa sa pinaka-masakit na bahagi ng nobela.',quote:'"Lalong malaya ang namatay kaysa nabuhay nang walang karangalan."',clues:{easy:['Ito ay isang batang dalaga na napakabanal at maamo.','Mahal na mahal niya ang kanyang ama.','Namatay siya nang malungkot sa isang tahanan ng mga prayle.'],medium:['Nagpakaalipin siya upang mapalaya ang kanyang ama mula sa pagkabilanggo.','Ang kanyang kapalaran ay isa sa pinakamalupit na kwento sa nobela.','Siya ang anak ng isang magsasakang naging tulisan.'],hard:['Sa halip na pahintulutan ang isang prayle na abusuhin siya, nahulog siya sa bintana.','Ang kanyang ama ay si Cabesang Tales na nawalan ng lupa dahil sa mga Dominikano.','Ang kanyang pagkamatay ay simbolo ng lahat ng kaalipin at kasaliw ng kababaihang Pilipino.']}},
+  {id:'padresalvi',emoji:'🎭',name:'Padre Salvi',alias:'Ang Mapanlinlang na Pari',role:'Antagonista',traitClass:'trait-a',traitLabel:'Antagonista',bg:'linear-gradient(160deg,#1f0000,#0d0000)',filter:'antagonista',shortDesc:'Ang mapanlinlang na prayling nagbabalik — gumagamit ng relihiyon bilang sandata ng kapangyarihan.',attrs:[{label:'Relihiyon',value:'Prayle (Pransiskano)'},{label:'Nakilala Sa',value:'Noli Me Tangere'},{label:'Simbolo',value:'Mapanlinlang na Kapangyarihan'},{label:'Katangian',value:'Mapanghimasok, Mapagsamantala'}],desc:'Si Padre Salvi ay bumalik sa ikalawang nobela bilang mas makapangyarihang pari. Patuloy siyang gumagamit ng relihiyon para kontrolin ang mga tao at mapangalagaan ang sariling kapakanan.',quote:'"Ang Diyos ay nasa aming panig — ang batas ay nasa aming mga kamay."',clues:{easy:['Ito ay isang prayle na may malaking kapangyarihan sa bayan.','Siya ay mapanlinlang at gumagamit ng relihiyon para sa sarili niyang interes.','Ito ay isang kilalang tauhan mula sa unang nobela na bumalik.'],medium:['Ginamit niya ang kanyang posisyon bilang pari para makontrol ang mga tao.','Siya ang isa sa mga dahilan kung bakit nagalit si Ibarra sa Noli Me Tangere.','Ang kanyang kapangyarihan ay mas lumaki sa ikalawang nobela.'],hard:['Sa Noli Me Tangere, nagmahal siya nang may maruming hangarin kay Maria Clara.','Ang kanyang pag-abuso ng kapangyarihan ay simbolo ng kasamaan ng mga prayle sa panahon ng kolonyal.','Siya ay isang Pransiskanong pari na mas pinahahalagahan ang sariling kapakanan kaysa sa serbisyo sa Diyos.']}},
+  {id:'mariclara',emoji:'🌺',name:'Maria Clara',alias:'Pinaka-Bantog na Pilipina',role:'Simbolikong Tauhan',traitClass:'trait-l',traitLabel:'Simbolo',bg:'linear-gradient(160deg,#1a0516,#0d000a)',filter:'simbolo',shortDesc:'Hindi lilitaw ngunit ang kanyang alaala ay nagtutulak kay Simoun sa landas ng paghihiganti.',attrs:[{label:'Nakilala Sa',value:'Noli Me Tangere'},{label:'Kasalukuyang Katayuan',value:'Mother Superior / Madre'},{label:'Simbolo',value:'Inang Pilipinas'},{label:'Epekto',value:'Pangunahing Dahilan ng Galit ni Simoun'}],desc:'Si Maria Clara ay hindi direktang lumalabas ngunit ang kanyang alaala ay isa sa pangunahing dahilan kung bakit nagpasyang gumanti si Ibarra bilang Simoun. Naging madre na siya — isang larawan ng kaalipin.',quote:'"Ang pagmamahal ay hindi natatapos sa pagkawala ng minamahal."',clues:{easy:['Ito ay isang magandang Pilipina na kilala sa buong bansa.','Siya ay naging madre sa isang kumbento.','Ang kanyang kagandahan ay simbolo ng kagandahan ng Pilipinas.'],medium:['Mahal siya ng lalaking naging Simoun nang walang hanggan.','Hindi siya direktang lumulabas sa ikalawang nobela ngunit ang kanyang impluwensya ay malaki.','Naging madre siya dahil sa mga nangyari sa kanya sa unang nobela.'],hard:['Ang pagkaalam ni Simoun na naging madre na siya ang nagpalakas ng kanyang galit at determinasyon.','Sa Noli Me Tangere, siya ang sentro ng kwento; sa El Filibusterismo, siya ay isang alaala lamang.','Ang kanyang pangalan ay naging simbolo ng kababaihang Pilipino — dalisay, nagdurusa, at ligaw sa sistemang kolonyal.']}},
+  {id:'tales',emoji:'🌊',name:'Cabesang Tales',alias:'Tandang Tales',role:'Magsasaka',traitClass:'trait-p',traitLabel:'Biktima',bg:'linear-gradient(160deg,#04180a,#020c05)',filter:'biktima',shortDesc:'Masipag na magsasakang nawalan ng lupa dahil sa kasakiman ng mga prayle — naging tulisan ng kagubatan.',attrs:[{label:'Hanapbuhay',value:'Magsasaka, Dating Cabeza'},{label:'Anak',value:'Juli (Juliana)'},{label:'Simbolo',value:'Inaping Magsasaka'},{label:'Nagawa',value:'Naging tulisan, nagbawi ng lupa'}],desc:'Si Cabesang Tales ay isang masipag na magsasakang nagpaguho ng kanyang buhay para linangin ang isang bukid ngunit ang mga prayle ay naangkin ang lupa. Naging tulisan siya nang wala nang ibang pagpipilian.',quote:'"Ang lupang aking inani ng pawis ay hindi ipagkakaloob ko kahit kanino."',clues:{easy:['Ito ay isang magsasakang nagtatrabaho nang husto sa kanyang bukid.','Ang kanyang anak ay isang magandang dalaga.','Nawalan siya ng lupa dahil sa kasamaan ng ibang tao.'],medium:['Naging tulisan siya nang masapanganib ang kanyang pamilya at lupa.','Ang mga Dominikano ang nagnanakaw ng kanyang pinaghirapang lupa.','Ang kanyang anak na si Juli ay nagsakripisyo para sa kanya.'],hard:['Kahit nagbigay siya ng lahat ng kanyang yaman upang mabawi ang lupa, hindi pa rin siya pinagbigyan.','Ang kanyang kwento ay repleksyon ng kalagayan ng libo-libong magsasakang Pilipino sa ilalim ng kolonyal na pamamahala.','Ang kanyang pagiging tulisan ay hindi bunga ng kasamaan kundi ng kawalan ng katarungan.']}},
+  {id:'florentino',emoji:'⛪',name:'Padre Florentino',alias:'Ang Paring Pilipino',role:'Marunong na Matanda',traitClass:'trait-r',traitLabel:'Relihiyoso',bg:'linear-gradient(160deg,#100e00,#080600)',filter:'relihiyoso',shortDesc:'Mapagmahal na paring Pilipino — siyang huling nakinig kay Simoun at nagbagsak ng kayamanan sa karagatan.',attrs:[{label:'Propesyon',value:'Paring Pilipino (Sekular)'},{label:'Tirahan',value:'Cavite (Dalampasigan)'},{label:'Simbolo',value:'Karunungan at Awa'},{label:'Papel',value:'Huling Tagapakinig ni Simoun'}],desc:'Si Padre Florentino ay kumakatawan sa perpektong paring Pilipino. Sa kanyang tahanan sa dalampasigan natanggap niya ang nahahabal na si Simoun. Ibinagsak niya ang kayamanan sa karagatan bilang alay sa bansa.',quote:'"Hindi pa panahon... Kung kailan ang tao ay handa nang magsakripisyo para sa lahat."',clues:{easy:['Ito ay isang mapagmahal na paring Pilipino.','Siya ay nakatira malapit sa dagat.','Tumanggap siya ng isang nahahabal na mangangalakal sa kanyang tahanan.'],medium:['Sa harap niya nagawa ang huling kumpisal ng isang rebolusyonaryo.','Ibinagsak niya ang kayamanan sa karagatan bilang simbolo ng pag-asa para sa susunod na henerasyon.','Siya ay isang paring sekular — hindi prayle — na nag-aaral ng sariling bayan.'],hard:['Siya ang tanging tauhang nakinig sa lahat ng kwento ni Simoun bago mamatay ito.','Ang kanyang pagbabagsak ng kayamanan sa dagat ay may malalim na simbolismo: ang pagpapalaya sa bansa mula sa kalapit ng materyal na mundo.','Ang kanyang pangwakas na pahayag tungkol sa "hindi pa panahon" ay isa sa pinaka-malalim na linya sa buong nobela.']}},
 ];
 
-const grid = document.getElementById('cardsGrid');
+const TIMELINE = [
+  {year:'1887',text:'Inilathala ang Noli Me Tangere sa Berlin, Germany — ang unang nobela ni Rizal na nagsilbing pundasyon ng El Filibusterismo.'},
+  {year:'1888',text:'Nagsimula si Rizal na sulatin ang El Filibusterismo habang siya ay nasa Europa.'},
+  {year:'1891',text:'Ipinagbili ni Rizal ang alahas ng kanyang kaibigan na si Valentin Ventura para mapondohan ang pag-imprenta.'},
+  {year:'Sep 18, 1891',text:'Inilathala ang El Filibusterismo sa Ghent, Belgium mula sa imprenta ni F. Meyer-Van Loo.'},
+  {year:'1892',text:'Ipinagbawal ng mga Espanyol ang nobela sa Pilipinas, ngunit nagkalat pa rin ito sa lihim.'},
+  {year:'1896',text:'Binaril si Rizal sa Bagumbayan (Luneta). Ang kanyang mga nobela ay naging sandata ng Rebolusyon.'},
+  {year:'Ngayon',text:'Bahagi ang El Filibusterismo ng curriculum ng lahat ng paaralang Pilipino at patuloy na pinag-aaralan.'},
+];
 
-characters.forEach((c, i) => {
-  const card = document.createElement('div');
-  card.className = 'char-card';
-  card.style.animationDelay = `${i * 0.07}s`;
-  card.innerHTML = `
-    <span class="card-role">${c.role}</span>
-    <div class="card-portrait">
-      <div class="card-portrait-bg" style="background:${c.bg}"></div>
-      <div class="card-portrait-emoji">${c.emoji}</div>
-    </div>
-    <div class="card-body">
-      <div class="card-name">${c.name}</div>
-      <div class="card-alias">${c.alias}</div>
-      <p class="card-desc">${c.shortDesc}</p>
-      <span class="card-trait ${c.traitClass}">${c.traitLabel}</span>
-    </div>
-  `;
-  card.addEventListener('click', () => openModal(c));
-  grid.appendChild(card);
-});
+// ═══════════════════════════════════════════════════
+// AUDIO ENGINE
+// ═══════════════════════════════════════════════════
+let audioCtx = null, musicPlaying = false, musicNodes = [];
 
-// Intersection Observer for card reveal
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.char-card').forEach(c => observer.observe(c));
-
-function openModal(c) {
-  document.getElementById('modalEmoji').textContent = c.emoji;
-  document.getElementById('modalName').textContent = c.name;
-  document.getElementById('modalAlias').textContent = c.alias;
-  document.getElementById('modalRole').textContent = c.role;
-  document.getElementById('modalDesc').textContent = c.desc;
-  document.getElementById('modalQuote').textContent = c.quote;
-
-  const attrs = document.getElementById('modalAttrs');
-  attrs.innerHTML = c.attrs.map(a => `
-    <div class="attr-item">
-      <span class="attr-label">${a.label}</span>
-      <span class="attr-value">${a.value}</span>
-    </div>
-  `).join('');
-
-  document.getElementById('modalOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
+function initAudio() {
+  if (audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 }
 
-function closeModal(e) {
-  if (e.target === document.getElementById('modalOverlay')) {
-    doClose();
+function buildScore() {
+  if (!audioCtx) return;
+  musicNodes.forEach(n => { try{n.stop()}catch(e){} });
+  musicNodes = [];
+  const master = audioCtx.createGain();
+  master.gain.setValueAtTime(0, audioCtx.currentTime);
+  master.gain.linearRampToValueAtTime(0.2, audioCtx.currentTime + 3);
+  master.connect(audioCtx.destination);
+  // Reverb
+  const rev = audioCtx.createConvolver();
+  const rl = audioCtx.sampleRate * 3.5;
+  const rb = audioCtx.createBuffer(2, rl, audioCtx.sampleRate);
+  for(let c=0;c<2;c++){const d=rb.getChannelData(c);for(let i=0;i<rl;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/rl,2.5)}
+  rev.buffer = rb;
+  const rg = audioCtx.createGain(); rg.gain.value = 0.32;
+  rev.connect(rg); rg.connect(master);
+  const lpf = audioCtx.createBiquadFilter(); lpf.type='lowpass'; lpf.frequency.value=1800;
+  lpf.connect(master); lpf.connect(rev);
+  const hpf = audioCtx.createBiquadFilter(); hpf.type='highpass'; hpf.frequency.value=65;
+  hpf.connect(lpf);
+  const chords=[[130.81,164.81,196],[110,138.59,164.81],[146.83,185,220],[123.47,155.56,185]];
+  const melody=[{f:392,t:0,d:1.2},{f:349.23,t:1.3,d:.8},{f:329.63,t:2.2,d:1},{f:293.66,t:3.4,d:1.4},{f:261.63,t:5,d:1.8},{f:293.66,t:7,d:1},{f:329.63,t:8.2,d:.8},{f:349.23,t:9.2,d:1},{f:392,t:10.4,d:2.2},{f:440,t:13,d:1},{f:415.3,t:14.2,d:.7},{f:392,t:15.1,d:1.5},{f:349.23,t:17,d:2.5},{f:329.63,t:20,d:1},{f:293.66,t:21.2,d:1.3},{f:261.63,t:22.8,d:3.5}];
+  function chord(t,ch,dur){ch.forEach((f,i)=>{const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=i===0?'sawtooth':'triangle';o.frequency.value=f;o.detune.value=(Math.random()-.5)*8;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.05-i*.01,t+1.2);g.gain.setValueAtTime(.05-i*.01,t+dur-1.5);g.gain.linearRampToValueAtTime(0,t+dur);o.connect(g);g.connect(hpf);o.start(t);o.stop(t+dur+.1);musicNodes.push(o)})}
+  function bass(t,f,dur){const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type='sine';o.frequency.value=f/2;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.065,t+2);g.gain.setValueAtTime(.065,t+dur-2);g.gain.linearRampToValueAtTime(0,t+dur);o.connect(g);g.connect(master);o.start(t);o.stop(t+dur+.1);musicNodes.push(o)}
+  function mel(off){melody.forEach(n=>{const t=audioCtx.currentTime+off+n.t,o=audioCtx.createOscillator(),g=audioCtx.createGain(),lfo=audioCtx.createOscillator(),lfog=audioCtx.createGain();lfo.frequency.value=5.5;lfog.gain.value=4;lfo.connect(lfog);lfog.connect(o.frequency);o.type='sine';o.frequency.value=n.f;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.08,t+.18);g.gain.setValueAtTime(.07,t+n.d-.15);g.gain.linearRampToValueAtTime(0,t+n.d);o.connect(g);g.connect(hpf);o.start(t);lfo.start(t);o.stop(t+n.d+.05);lfo.stop(t+n.d+.05);musicNodes.push(o,lfo)})}
+  const prog=[{c:chords[0],b:130.81},{c:chords[1],b:110},{c:chords[2],b:146.83},{c:chords[3],b:123.47}];
+  let t=audioCtx.currentTime+.2;
+  for(let loop=0;loop<4;loop++){prog.forEach(p=>{chord(t,p.c,6.5);bass(t,p.b,6.5);t+=6.5})}
+  mel(2);mel(28);mel(54);mel(80);
+  musicNodes.push(master,hpf,lpf,rev,rg);
+}
+
+function toggleMusic() {
+  initAudio();
+  if (!musicPlaying) {
+    if (audioCtx.state==='suspended') audioCtx.resume();
+    buildScore();
+    musicPlaying = true;
+    document.getElementById('navMusicBtn').textContent = '⏸';
+    document.querySelectorAll('.nav-eq-bar').forEach(b => b.classList.remove('paused'));
+  } else {
+    audioCtx.suspend();
+    musicPlaying = false;
+    document.getElementById('navMusicBtn').textContent = '▶';
+    document.querySelectorAll('.nav-eq-bar').forEach(b => b.classList.add('paused'));
   }
 }
-function closeModalBtn() { doClose(); }
-function doClose() {
-  document.getElementById('modalOverlay').classList.remove('open');
+
+// ═══════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════
+let currentPage = 'home';
+function nav(page) {
+  if (page === currentPage) return;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelector(`[data-page="${page}"]`)?.classList.add('active');
+  currentPage = page;
+  window.scrollTo({top:0,behavior:'smooth'});
+  if (page === 'characters') buildChars();
+  if (page === 'about') buildAbout();
+  if (page === 'kwento') buildKwento();
+  if (page === 'game') initGame();
+  if (page === 'video') buildVideo();
+}
+
+function toggleMobileNav() {
+  const mn = document.getElementById('mobileNav');
+  const hb = document.getElementById('hamburger');
+  mn.classList.toggle('open');
+  hb.classList.toggle('open');
+  document.body.style.overflow = mn.classList.contains('open') ? 'hidden' : '';
+}
+
+// ═══════════════════════════════════════════════════
+// CURSOR
+// ═══════════════════════════════════════════════════
+const cDot = document.getElementById('cDot');
+const cRing = document.getElementById('cRing');
+let mx=0,my=0,rx=0,ry=0,trailT=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cDot.style.transform=`translate(${mx}px,${my}px)`;
+  if(Date.now()-trailT>42){
+    trailT=Date.now();
+    const t=document.createElement('div');
+    t.style.cssText=`position:fixed;width:5px;height:5px;border-radius:50%;background:rgba(201,168,76,.4);left:${mx}px;top:${my}px;pointer-events:none;z-index:9996;animation:spark-a .7s ease-out forwards;transform:translate(-50%,-50%)`;
+    document.body.appendChild(t);setTimeout(()=>t.remove(),700);
+  }
+});
+(function rafC(){rx+=(mx-rx)*.14;ry+=(my-ry)*.14;cRing.style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(rafC)})();
+document.querySelectorAll('button,a,.char-card,.feat-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cRing.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>cRing.classList.remove('hov'));
+});
+
+// ═══════════════════════════════════════════════════
+// SPARKS
+// ═══════════════════════════════════════════════════
+function sparks(x,y,n=7) {
+  for(let i=0;i<n;i++){
+    const s=document.createElement('div');s.className='spark';
+    const a=(i/n)*Math.PI*2,d=30+Math.random()*55;
+    s.style.cssText=`left:${x}px;top:${y}px;--sx:${(Math.cos(a)*d).toFixed(0)}px;--sy:${(Math.sin(a)*d).toFixed(0)}px;width:${(2+Math.random()*4).toFixed(0)}px;height:${(2+Math.random()*4).toFixed(0)}px;background:hsl(${38+Math.random()*18},90%,${58+Math.random()*18}%)`;
+    document.body.appendChild(s);setTimeout(()=>s.remove(),600);
+  }
+}
+document.addEventListener('click',e=>{if(!e.target.closest('.modal')&&!e.target.closest('#mobileNav'))sparks(e.clientX,e.clientY,5)});
+document.addEventListener('touchend',e=>{const t=e.changedTouches[0];sparks(t.clientX,t.clientY,4)},{passive:true});
+
+// ═══════════════════════════════════════════════════
+// PARTICLES
+// ═══════════════════════════════════════════════════
+(function(){const w=document.getElementById('particles');for(let i=0;i<45;i++){const p=document.createElement('div');p.className='ptcl';const sz=(Math.random()*4+1.5).toFixed(1)+'px';p.style.cssText=`--size:${sz};--dur:${(Math.random()*10+7).toFixed(1)}s;--delay:${(Math.random()*12).toFixed(1)}s;--left:${(Math.random()*100).toFixed(1)}%;--dx:${(Math.random()*80-40).toFixed(0)}px`;w.appendChild(p)}})();
+
+// ═══════════════════════════════════════════════════
+// LANDING PAGE
+// ═══════════════════════════════════════════════════
+// Hero rings
+(function(){const w=document.getElementById('lheroRings');for(let i=1;i<=6;i++){const r=document.createElement('div');r.className='lhero-ring';const s=i*185;r.style.cssText=`width:${s}px;height:${s}px;animation-delay:${(i-1)*.75}s`;w.appendChild(r)}})();
+
+// Candles
+(function(){const row=document.getElementById('candleRow');const delays=[0,.35,.7,.35,0];for(let i=0;i<5;i++){const c=document.createElement('div');c.className='candle';c.innerHTML=`<div class="candle-flame" style="animation-delay:${delays[i]}s"></div><div class="candle-wick"></div><div class="candle-body"></div><div class="candle-base"></div><div class="candle-smoke" style="animation-delay:${i*.4}s"></div>`;c.addEventListener('click',e=>sparks(e.clientX,e.clientY,14));row.appendChild(c)}})();
+
+// Featured grid
+(function(){
+  const featured=[CHARS[0],CHARS[2],CHARS[3],CHARS[1],CHARS[4],CHARS[7]];
+  const g=document.getElementById('featGrid');
+  featured.forEach((c,i)=>{
+    const card=document.createElement('div');card.className='feat-card';
+    card.style.animationDelay=`${i*.07}s`;
+    card.innerHTML=`<div class="feat-emoji" style="background:${c.bg}">${c.emoji}</div><div class="feat-name">${c.name}</div>`;
+    card.addEventListener('click',e=>{sparks(e.clientX,e.clientY,8);openModal(c)});
+    g.appendChild(card);
+  });
+  const obs=new IntersectionObserver(ents=>{ents.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.1});
+  g.querySelectorAll('.feat-card').forEach(c=>obs.observe(c));
+})();
+
+// ═══════════════════════════════════════════════════
+// CHARACTERS PAGE
+// ═══════════════════════════════════════════════════
+let charsBuilt = false;
+function buildChars() {
+  if (charsBuilt) return; charsBuilt = true;
+  // Filter bar
+  const filters=['lahat','protagonista','antagonista','biktima','relihiyoso','simbolo'];
+  const fb=document.getElementById('filterBar');
+  filters.forEach((f,i)=>{
+    const b=document.createElement('button');
+    b.className='filter-btn'+(i===0?' active':'');
+    b.textContent=f.charAt(0).toUpperCase()+f.slice(1);
+    b.dataset.filter=f;
+    b.addEventListener('click',()=>{
+      document.querySelectorAll('.filter-btn').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      filterCards(f);
+    });
+    fb.appendChild(b);
+  });
+  // Cards
+  const grid=document.getElementById('cardsGrid');
+  CHARS.forEach((c,i)=>{
+    const card=document.createElement('div');
+    card.className='char-card';card.dataset.filter=c.filter;
+    card.style.animationDelay=`${i*.07}s`;
+    card.innerHTML=`<span class="card-role-tag">${c.role}</span><div class="card-portrait"><div class="card-portrait-bg" style="background:${c.bg}"></div><div class="card-emoji">${c.emoji}</div></div><div class="shimmer-l"></div><div class="card-body"><div class="card-name">${c.name}</div><div class="card-alias">${c.alias}</div><p class="card-desc">${c.shortDesc}</p><span class="card-trait ${c.traitClass}">${c.traitLabel}</span></div>`;
+    card.addEventListener('click',e=>{sparks(e.clientX,e.clientY,10);openModal(c)});
+    if(window.matchMedia('(min-width:769px)').matches){
+      card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();const dx=(e.clientX-r.left-r.width/2)/(r.width/2);const dy=(e.clientY-r.top-r.height/2)/(r.height/2);card.style.transform=`perspective(900px) rotateY(${dx*9}deg) rotateX(${-dy*7}deg) translateY(-8px) scale(1.015)`});
+      card.addEventListener('mouseenter',()=>{card.style.transition='transform .1s,box-shadow .3s,border-color .4s';cRing.classList.add('hov')});
+      card.addEventListener('mouseleave',()=>{card.style.transform='';card.style.transition='transform .6s var(--ease-expo),box-shadow .5s,border-color .4s';cRing.classList.remove('hov')});
+    }
+    card.addEventListener('touchstart',()=>card.style.transform='scale(.97)',{passive:true});
+    card.addEventListener('touchend',()=>card.style.transform='',{passive:true});
+    grid.appendChild(card);
+  });
+  const obs=new IntersectionObserver(ents=>{ents.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.08});
+  document.querySelectorAll('.char-card').forEach(c=>obs.observe(c));
+}
+
+function filterCards(f) {
+  document.querySelectorAll('.char-card').forEach(card=>{
+    const show=f==='lahat'||card.dataset.filter===f;
+    card.style.display=show?'':'none';
+  });
+}
+
+// ═══════════════════════════════════════════════════
+// ABOUT PAGE
+// ═══════════════════════════════════════════════════
+let aboutBuilt = false;
+function buildAbout() {
+  if (aboutBuilt) return; aboutBuilt = true;
+  const tl=document.getElementById('timeline');
+  TIMELINE.forEach(item=>{
+    const d=document.createElement('div');d.className='tl-item';
+    d.innerHTML=`<div class="tl-dot"></div><div class="tl-year">${item.year}</div><div class="tl-text">${item.text}</div>`;
+    tl.appendChild(d);
+  });
+  const obs=new IntersectionObserver(ents=>{ents.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');obs.unobserve(e.target)}})},{threshold:.1});
+  tl.querySelectorAll('.tl-item').forEach((el,i)=>{el.style.transitionDelay=`${i*.1}s`;obs.observe(el)});
+}
+
+// ═══════════════════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════════════════
+const overlay=document.getElementById('modalOverlay');
+function openModal(c){
+  document.getElementById('mEmoji').textContent=c.emoji;
+  document.getElementById('mName').textContent=c.name;
+  document.getElementById('mAlias').textContent=c.alias;
+  document.getElementById('mRole').textContent=c.role;
+  document.getElementById('mDesc').textContent=c.desc;
+  document.getElementById('mQuote').textContent=c.quote;
+  document.getElementById('mAttrs').innerHTML=c.attrs.map(a=>`<div class="modal-attr"><span class="modal-attr-label">${a.label}</span><span class="modal-attr-val">${a.value}</span></div>`).join('');
+  overlay.classList.add('open');document.body.style.overflow='hidden';
+}
+function closeModal(){overlay.classList.remove('open');document.body.style.overflow=''}
+document.getElementById('modalClose').addEventListener('click',closeModal);
+overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+// ═══════════════════════════════════════════════════
+// SCROLL EFFECTS
+// ═══════════════════════════════════════════════════
+window.addEventListener('scroll',()=>{
+  document.getElementById('readProg').style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);
+},{passive:true});
+
+// ═══════════════════════════════════════════════════
+// GAME ENGINE
+// ═══════════════════════════════════════════════════
+let gScore=0,gStreak=0,gHigh=0,gQ=0,gTotal=10,gDiff='easy',gAnswered=false,gTimer=null,gTimeLeft=30,gQuestions=[];
+let isSpeaking=false;
+
+function setDiff(d,btn){
+  gDiff=d;
+  document.querySelectorAll('.diff-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  gTimeLeft=d==='easy'?40:d==='medium'?30:20;
+}
+
+function initGame() {
+  gScore=0;gStreak=0;gQ=0;gAnswered=false;
+  loadHighScores();
+  buildQuestions();
+  showQuestion();
+}
+
+function buildQuestions() {
+  const shuffled=[...CHARS].sort(()=>Math.random()-.5);
+  gQuestions=shuffled.slice(0,Math.min(gTotal,CHARS.length)).map(c=>{
+    const clueArr=c.clues[gDiff];
+    const clue=clueArr[Math.floor(Math.random()*clueArr.length)];
+    // Wrong choices
+    const wrong=CHARS.filter(x=>x.id!==c.id).sort(()=>Math.random()-.5).slice(0,3);
+    const choices=[c,...wrong].sort(()=>Math.random()-.5);
+    return {char:c,clue,choices};
+  });
+  gTotal=gQuestions.length;
+}
+
+function showQuestion() {
+  if(gQ>=gTotal){endGame();return}
+  const q=gQuestions[gQ];
+  gAnswered=false;
+  document.getElementById('qNumVal').textContent=`${gQ+1}/${gTotal}`;
+  document.getElementById('clueNumber').textContent=`PAHIWATIG #${gQ+1}`;
+  document.getElementById('resultFb').classList.remove('show','correct-fb','wrong-fb');
+  document.getElementById('nextBtn').style.display='none';
+  // Typewriter effect
+  typewriterEffect(q.clue);
+  // Choices
+  const cg=document.getElementById('choicesGrid');cg.innerHTML='';
+  q.choices.forEach(c=>{
+    const btn=document.createElement('button');btn.className='choice-btn';
+    btn.innerHTML=`<span class="choice-emoji">${c.emoji}</span>${c.name}`;
+    btn.addEventListener('click',()=>answer(c,q.char,btn));
+    cg.appendChild(btn);
+  });
+  // Start timer
+  startTimer();
+}
+
+function typewriterEffect(text) {
+  const display=document.getElementById('clueDisplay');
+  const cursor=document.getElementById('clueCursor');
+  display.textContent='';cursor.style.display='inline-block';
+  let i=0;
+  const iv=setInterval(()=>{
+    display.textContent+=text[i]||'';
+    i++;
+    if(i>=text.length){clearInterval(iv);setTimeout(()=>cursor.style.display='none',800)}
+  },28);
+}
+
+function startTimer() {
+  clearInterval(gTimer);
+  const maxTime=gDiff==='easy'?40:gDiff==='medium'?30:20;
+  gTimeLeft=maxTime;
+  const arc=document.getElementById('countdownArc');
+  const num=document.getElementById('countdownNum');
+  const circ=2*Math.PI*20;
+  arc.style.strokeDasharray=circ;arc.classList.remove('urgent');
+  gTimer=setInterval(()=>{
+    gTimeLeft--;
+    num.textContent=gTimeLeft;
+    arc.style.strokeDashoffset=circ*(1-gTimeLeft/maxTime);
+    if(gTimeLeft<=8)arc.classList.add('urgent');
+    if(gTimeLeft<=0){clearInterval(gTimer);timeUp()}
+  },1000);
+}
+
+function timeUp(){
+  if(gAnswered)return;
+  gAnswered=true;gStreak=0;
+  showFeedback(false,'⏰ Naubos ang oras!');
+  highlightAnswer();
+  updateDisplay();
+  document.getElementById('nextBtn').style.display='';
+}
+
+function answer(chosen,correct,btn){
+  if(gAnswered)return;
+  gAnswered=true;clearInterval(gTimer);
+  const isRight=chosen.id===correct.id;
+  if(isRight){
+    gStreak++;
+    const pts=gDiff==='easy'?10:gDiff==='medium'?20:35;
+    const bonus=Math.floor(gTimeLeft/5)*2;
+    gScore+=pts+bonus;
+    btn.classList.add('correct');
+    showFeedback(true,`✦ Tama! +${pts+bonus} puntos (${bonus} bonus para sa bilis)`);
+    sparks(btn.getBoundingClientRect().left+btn.offsetWidth/2,btn.getBoundingClientRect().top,14);
+  } else {
+    gStreak=0;
+    btn.classList.add('wrong');
+    showFeedback(false,`✕ Mali. Ang tamang sagot ay ${correct.emoji} ${correct.name}`);
+    highlightAnswer(correct);
+  }
+  document.getElementById('nextBtn').style.display='';
+  updateDisplay();
+  if(gScore>gHigh){gHigh=gScore;document.getElementById('highVal').textContent=gHigh}
+}
+
+function highlightAnswer(correct=null){
+  const cg=document.getElementById('choicesGrid');
+  if(correct){
+    cg.querySelectorAll('.choice-btn').forEach(btn=>{
+      if(btn.textContent.includes(correct.name))btn.classList.add('correct');
+      btn.disabled=true;
+    });
+  } else {
+    cg.querySelectorAll('.choice-btn').forEach(btn=>btn.disabled=true);
+  }
+}
+
+function showFeedback(ok,msg){
+  const fb=document.getElementById('resultFb');
+  fb.textContent=msg;
+  fb.className='result-feedback show '+(ok?'correct-fb':'wrong-fb');
+}
+
+function updateDisplay(){
+  const sv=document.getElementById('scoreVal');sv.textContent=gScore;sv.classList.remove('pop');void sv.offsetWidth;sv.classList.add('pop');
+  document.getElementById('streakVal').textContent=gStreak+(gStreak>=3?'🔥':'');
+}
+
+function nextQuestion(){gQ++;showQuestion()}
+
+function endGame(){
+  clearInterval(gTimer);
+  const gc=document.getElementById('gameCard');
+  gc.innerHTML=`<div style="text-align:center;padding:1rem">
+    <div style="font-family:'Cinzel Decorative',serif;font-size:clamp(1.2rem,4vw,2rem);color:var(--gold-light);margin-bottom:1rem">Tapos na ang Laro!</div>
+    <div style="font-size:3rem;margin-bottom:1rem">🎉</div>
+    <div style="font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.3em;color:var(--gold);margin-bottom:.5rem">IYONG PUNTOS</div>
+    <div style="font-family:'Cinzel Decorative',serif;font-size:3rem;color:var(--gold-light);margin-bottom:1.5rem">${gScore}</div>
+    <div style="font-size:.95rem;color:rgba(245,234,208,.7);font-style:italic">${gScore>=150?'"Ikaw ay tunay na maalam tungkol sa El Filibusterismo!"':gScore>=80?'"Magaling! Matuto pa tungkol sa mga tauhan."':'"Subukan ulit! Marami pa kayong maaaring matutunan."'}</div>
+  </div>`;
+  document.getElementById('choicesGrid').innerHTML='';
+  document.getElementById('resultFb').classList.remove('show');
+  document.getElementById('nextBtn').style.display='none';
+  saveScore();
+  loadHighScores();
+}
+
+function resetGame(){initGame()}
+
+// ── High scores ──
+function saveScore(){
+  if(gScore===0)return;
+  let scores=JSON.parse(localStorage.getItem('elfili_scores')||'[]');
+  scores.push({score:gScore,date:new Date().toLocaleDateString('fil-PH')});
+  scores.sort((a,b)=>b.score-a.score);
+  scores=scores.slice(0,5);
+  localStorage.setItem('elfili_scores',JSON.stringify(scores));
+}
+function loadHighScores(){
+  let scores=[];
+  try{scores=JSON.parse(localStorage.getItem('elfili_scores')||'[]')}catch(e){}
+  const list=document.getElementById('hsList');list.innerHTML='';
+  if(!scores.length){list.innerHTML='<li class="hs-item"><span class="hs-name" style="opacity:.5;font-style:italic">Wala pang naitala</span></li>';return}
+  const medals=['🥇','🥈','🥉','4️⃣','5️⃣'];
+  scores.forEach((s,i)=>{
+    const li=document.createElement('li');li.className='hs-item';
+    li.innerHTML=`<span class="hs-rank">${medals[i]||i+1}</span><span class="hs-name">${s.date}</span><span class="hs-score">${s.score}</span>`;
+    list.appendChild(li);
+  });
+  if(scores.length)gHigh=scores[0].score;
+  document.getElementById('highVal').textContent=gHigh;
+}
+
+// ═══════════════════════════════════════════════════
+// VOICE — WEB SPEECH API (TTS)
+// ═══════════════════════════════════════════════════
+function speakClue(){
+  if(!window.speechSynthesis)return alert('Hindi sinusuportahan ng iyong browser ang Text-to-Speech.');
+  const text=document.getElementById('clueDisplay').textContent;
+  if(!text)return;
+  if(isSpeaking){window.speechSynthesis.cancel();isSpeaking=false;document.getElementById('voiceBtn').classList.remove('speaking');return}
+  const utt=new SpeechSynthesisUtterance(text);
+  // Try to find Filipino or Spanish voice
+  const voices=window.speechSynthesis.getVoices();
+  const filVoice=voices.find(v=>v.lang.includes('fil')||v.lang.includes('tl')||v.lang.includes('es'));
+  if(filVoice)utt.voice=filVoice;
+  utt.lang='fil-PH';utt.rate=0.88;utt.pitch=1;utt.volume=1;
+  utt.onstart=()=>{isSpeaking=true;document.getElementById('voiceBtn').classList.add('speaking');document.getElementById('voiceBtn').innerHTML='<span class="voice-icon">🔊</span> TITIGIL'};
+  utt.onend=utt.onerror=()=>{isSpeaking=false;document.getElementById('voiceBtn').classList.remove('speaking');document.getElementById('voiceBtn').innerHTML='<span class="voice-icon">🔊</span> BASAHIN'};
+  window.speechSynthesis.speak(utt);
+}
+
+// ═══════════════════════════════════════════════════
+// CLAUDE AI — Dynamic Clue Generation
+// ═══════════════════════════════════════════════════
+async function getAIClue(){
+  if(gAnswered)return;
+  const q=gQuestions[gQ];
+  if(!q)return;
+  const btn=document.getElementById('aiBtn');
+  const loading=document.getElementById('aiLoading');
+  const btnText=document.getElementById('aiBtnText');
+  btn.disabled=true;loading.style.display='inline-block';btnText.textContent='GUMAGAWA...';
+  try{
+    const resp=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:200,
+        system:'Ikaw ay isang Filipino literature expert. Gumawa ng isang pahiwatig (clue) tungkol sa isang tauhan mula sa El Filibusterismo ni Jose Rizal. Ang pahiwatig ay dapat sa wikang Filipino, 1-2 pangungusap lamang, hindi dapat sabihin ang pangalan ng tauhan, at dapat ay angkop sa kaalaman ng mga estudyante. Tumugon ng pahiwatig lamang, walang paliwanag o introduksyon.',
+        messages:[{role:'user',content:`Gumawa ng pahiwatig para sa tauhang ito mula El Filibusterismo: ${q.char.name} (${q.char.alias}). Ang kanyang papel sa nobela: ${q.char.shortDesc}. Gumawa ng bagong pahiwatig na hindi direktang nagsasabi ng pangalan.`}]
+      })
+    });
+    const data=await resp.json();
+    if(data.content&&data.content[0]){
+      const newClue=data.content[0].text.trim();
+      gQuestions[gQ].clue=newClue;
+      typewriterEffect(newClue);
+    }
+  }catch(e){
+    // Fallback to next preset clue
+    const arr=q.char.clues[gDiff];
+    const newClue=arr[Math.floor(Math.random()*arr.length)];
+    gQuestions[gQ].clue=newClue;
+    typewriterEffect(newClue);
+  }finally{
+    btn.disabled=false;loading.style.display='none';btnText.textContent='AI PAHIWATIG';
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════
+
+
+// ═══════════════════════════════════════════════════
+// CHAPTERS DATA — All 38 condensed to key chapters
+// ═══════════════════════════════════════════════════
+const CHAPTERS = [
+  { num:1, roman:'I', title:'Ang Bisita', emoji:'🚢', bg:'linear-gradient(160deg,#0a1a25,#020810)',
+    chars:['simoun','quiroga'], color:'#4080a0',
+    story:'Sa isang barko na papalapit sa baybayin ng Pilipinas, isang misteriyosong mangangalakal ang dumating — si Simoun, na suot ang itim na salamin at nagtatago ng mapait na lihim. Ang lahat ng may kapangyarihan ay nagkukumahog na makipagkaibigan sa kanya.',
+    scene:'Malayo sa baybayin, ang dampi ng alon ay naririnig. Sa deck ng barko, nakatayo ang isang lalaking nakabihis ng mahal — siya si Simoun. Sa kanyang mga mata, puro galit ang nakikita kung ang iyong pagtingin ay malalim.' },
+  { num:2, roman:'II', title:'Ang Konsultasyon', emoji:'🏛️', bg:'linear-gradient(160deg,#1a0d05,#0a0502)',
+    chars:['simoun','custodio'], color:'#c9a84c',
+    story:'Sa mga bulwagan ng kapangyarihan, lumalakad si Simoun nang may ganap na katiwala. Binibisita niya ang mga mataas na opisyal, nag-aalok ng mga regalo, nagbibili ng impluwensya — at sa bawat pakikitungo, tinatago niya ang kanyang tunay na layunin.',
+    scene:'Ang mga pasilyo ng palasyo ay nagniningning sa liwanag ng mga parol. Si Simoun at si Don Custodio ay nag-uusap nang tahimik — dalawang lalaking may magkaibang layunin ngunit magkasamang nakatayo sa iisang mundong puno ng kasinungalingan.' },
+  { num:3, roman:'III', title:'Ang Hapag-kainan', emoji:'🍽️', bg:'linear-gradient(160deg,#1a1505,#0a0c03)',
+    chars:['simoun','pelaez','paulita'], color:'#d4a840',
+    story:'Sa isang maringal na hapag-kainan, nagtitipon ang mga pinaka-impluwensiyal na tao ng kolonyal na lipunan. Ang tawa, ang alak, ang musika — lahat ito ay tanda ng isang mundo na hindi alam ang kanyang katapusan.',
+    scene:'Ang mga kandila ay nagsisindi sa malawak na sala. Si Simoun ay nakaupo sa dulo ng mesa, nagmamasid sa lahat. Sa kanyang isip, ang bawat tao sa mesa ay isang piraso ng kanyang malaking laruan — isang rebolusyon na hindi pa nagsisimula.' },
+  { num:4, roman:'IV', title:'Ang Estudyante', emoji:'📚', bg:'linear-gradient(160deg,#050a1a,#020508)',
+    chars:['basilio','macaraig','isagani'], color:'#6080c0',
+    story:'Sa mga paaralan ng Maynila, nagtitipon ang mga kabataang Pilipino. Si Basilio, si Isagani, si Macaraig — lahat sila ay may pangarap ng pagbabago. Ang kanilang boses ay malakas ngunit ang kanilang mga kamay ay hindi pa makapangyarihan.',
+    scene:'Sa umaga, ang mga estudyante ay nagsisiksikan sa mga bangko ng paaralan. Si Basilio ay nagbabasa nang mabilis — alam niya na ang kaalaman ay ang tanging sandata nila. Ngunit lihim sa kanyang puso ay ang takot na ang kaalaman ay hindi magiging sapat.' },
+  { num:5, roman:'V', title:'Ang Akademya', emoji:'🎓', bg:'linear-gradient(160deg,#100a1a,#080510)',
+    chars:['macaraig','isagani','custodio'], color:'#9060c0',
+    story:'Nagpanukala ang mga estudyante ng pagtatayo ng isang Akademya ng Wikang Kastila — isang lugar kung saan maaaring palakasin ng mga Pilipino ang kanilang mga boses. Ngunit ang mga may kapangyarihan ay hindi handang ibigay ang ganoong pagkakataon.',
+    scene:'Sa harap ng mataas na opisyal, nakatayo ang mga kabataan. Si Macaraig ay nagsalita nang may lakas — ngunit sa kanyang tabi, ang sagot ng sistema ay nakasulat na sa mukha ni Don Custodio: hindi.' },
+  { num:6, roman:'VI', title:'Si Isagani at Paulita', emoji:'🌹', bg:'linear-gradient(160deg,#1a0515,#0d000a)',
+    chars:['isagani','paulita'], color:'#c06090',
+    story:'Sa ilalim ng sikat ng buwan, nagkita sina Isagani at Paulita. Ang pag-ibig nila ay malakas ngunit ang mundo sa paligid nila ay gumagawa ng lahat para paghiwalayin sila — ang pera, ang posisyon, ang kapangyarihan.',
+    scene:'Sa hardin, ang mga bulaklak ay namumukadkad. Si Isagani ay hawak ang kamay ni Paulita, nagsasalita ng mga salitang puno ng pag-asa. Hindi pa niya alam na ang tagsibol na ito ay ang huli para sa kanilang pag-ibig.' },
+  { num:7, roman:'VII', title:'Ang Alahas ni Simoun', emoji:'💎', bg:'linear-gradient(160deg,#1a0a02,#0d0500)',
+    chars:['simoun'], color:'#f0d070',
+    story:'Sa loob ng kanyang kuwarto, binubuksan ni Simoun ang kanyang kahon ng mga alahas — ang kayamanan na magbibigay sa kanya ng kapangyarihan. Ngunit sa ilalim ng mga bato at ginto, nakatago ang isang bagay na mas mahalaga: ang kanyang nakaraan.',
+    scene:'Ang liwanag ng kandila ay gumagalaw sa mga diamante. Si Simoun ay nagmamasid sa bawat piraso — sa bawat alahas ay isang alaala, sa bawat gintong singsing ay isang naalab na damdamin. Ito ang kanyang mga armas.' },
+  { num:8, roman:'VIII', title:'Ang Lupa ni Tales', emoji:'🌾', bg:'linear-gradient(160deg,#04180a,#020c05)',
+    chars:['tales','juli'], color:'#40b060',
+    story:'Sa labas ng lungsod, si Cabesang Tales ay nagtatrabaho sa kanyang bukid. Ang lupa na kanyang pinagpaguran ay ang kanyang buhay. Ngunit ang mga prayle ay nagdeklara ng kanilang karapatan sa lupaing ito — at ang mundo ni Tales ay nagsimulang gumuho.',
+    scene:'Ang bukid ay berde at sagana. Si Tales ay nakatayo sa gitna ng kanyang mga pananim, ngunit sa kanyang mga mata ay nakikita ang takot. Isang sulat ang nasa kanyang kamay — isang sulat na nagsasabing ang lahat ng ito ay hindi na kanya.' },
+  { num:9, roman:'IX', title:'Ang Pagkabigo ni Tales', emoji:'🔒', bg:'linear-gradient(160deg,#0f1408,#080c04)',
+    chars:['tales','juli','florentino'], color:'#80a040',
+    story:'Kahit gaano siya kagalawa, ang sistema ay mas malakas. Si Tales ay hinarap ang mga korte, nagbigay ng lahat ng kanyang ipon — ngunit ang korte ay nasa kamay ng mga may kapangyarihan. Nawala ang lupa. Nawala ang kalayaan. Naiwan lamang ang galit.',
+    scene:'Sa labas ng korte, si Tales ay nakatayo nang walang magawa. Ang mga opisyal ay lumabas na may ngiti. Sa gilid ng landas, si Juli ay naghihintay sa kanyang ama — at sa kanyang mga mata ay ang katanungan: paano tayo mabubuhay?' },
+  { num:10, roman:'X', title:'Si Juli sa Kumbento', emoji:'🕊️', bg:'linear-gradient(160deg,#0d1420,#060810)',
+    chars:['juli','padresalvi'], color:'#8090c0',
+    story:'Para mapalaya ang kanyang ama, si Juli ay pumayag na maglingkod sa kumbento. Ang dalisay na dalagang ito ay pumasok sa mundong puno ng panganib — ang mundong kontrolado ng mga taong gumagamit ng relihiyon para sa sarili nilang kapakanan.',
+    scene:'Sa pintuan ng kumbento, si Juli ay humarap sa malaking mundo na kanyang pinasok. Ang mga pader ay matataas, ang mga daan ay mahaba. Hawak niya ang kanyang mga panalangin — ang tanging sandata na mayroon siya.' },
+  { num:11, roman:'XI', title:'Ang Trahedya ni Juli', emoji:'😢', bg:'linear-gradient(160deg,#150a18,#0a0510)',
+    chars:['juli','padresalvi'], color:'#a070b0',
+    story:'Sa loob ng kumbento, si Juli ay harap sa mapanganib na realidad. Ang prayle ay nagbanta. Ang dalisay na dalaga ay hinarap ang pinaka-mahirap na desisyon ng kanyang buhay — at sa pagitan ng dalawang kahirapan, pinili niya ang karangalan.',
+    scene:'Sa mataas na silid ng kumbento, si Juli ay nakatayo sa bintana. Sa ibaba, ang mundo ay patuloy na umiikot. Sa kanyang puso ay isang tahimik na pasya — at sa isang sandali, ang lahat ay naging maliwanag.' },
+  { num:12, roman:'XII', title:'Ang Pagbabalik sa Paaralan', emoji:'📖', bg:'linear-gradient(160deg,#050c18,#020610)',
+    chars:['basilio','isagani','macaraig'], color:'#5070c0',
+    story:'Sa kabila ng lahat ng nangyayari, ang mga estudyante ay nagpapatuloy ng kanilang buhay. Si Basilio ay nagaaral ng medisina, si Isagani ay nagsusulat ng tula, si Macaraig ay nagpaplano ng mga pagbabago — ang kabataan ay hindi madaling susuko.',
+    scene:'Sa library ng paaralan, ang mga libro ay nakahanay nang walang katapusan. Si Basilio ay nagbabasa sa ilalim ng liwanag ng kandila. Sa labas, ang lungsod ay natutulog. Ngunit sa loob, ang isang bagong mundo ay unti-unting nabubuo.' },
+  { num:13, roman:'XIII', title:'Si Simoun at si Basilio', emoji:'🎩', bg:'linear-gradient(160deg,#1a1005,#0d0802)',
+    chars:['simoun','basilio'], color:'#c08030',
+    story:'Sa isang lihim na pagpupulong, inihayag ni Simoun ang kanyang tunay na pagkakakilanlan kay Basilio. Ang dalawang lalaking ito — ang nagretso at ang naghiganti — ay nagkita sa isang punto ng kasaysayan. Handa ka bang makiisa?',
+    scene:'Sa dilim ng gabi, dalawang anino ang nagkita. Si Simoun ay naalis ng kanyang salamin — at sa ilalim, ang mukha ni Ibarra. Si Basilio ay namutla. Ang lalaking ito — ang binatang kanyang kilala mula sa mga kuwento — ay narito na.' },
+  { num:14, roman:'XIV', title:'Ang Plano ng Rebolusyon', emoji:'💣', bg:'linear-gradient(160deg,#1a0500,#0d0300)',
+    chars:['simoun','basilio'], color:'#e05020',
+    story:'Inilahad ni Simoun ang kanyang plano: isang bomba sa kasalan ng mataas na lipunan, isang pagsabog na magwawasak sa sistema ng kolonyalismo. Ang rebolusyon ay hindi magiging maayos — ito ay magiging apoy.',
+    scene:'Sa mapa, ang mga linya ay kumakatawan sa mga landas ng rebolusyon. Si Simoun ay nagturo ng bawat punto — ang kasalan, ang bomba, ang eksodo. Si Basilio ay nakikinig, at sa kanyang mukha ay isang katanungan: ito ba ang tamang daan?' },
+  { num:15, roman:'XV', title:'Ang Kasalan ng Pelaez', emoji:'💒', bg:'linear-gradient(160deg,#1a1508,#0d0c04)',
+    chars:['pelaez','paulita','isagani','simoun'], color:'#d4c030',
+    story:'Ang kasalan ni Juanito Pelaez at Paulita Gomez ay isa sa mga pinakamahalagang eksena sa nobela — isang pinagsama-samang pagdiriwang ng mataas na lipunan at isang mapanganib na plano ng isang lalaking naghahanap ng paghihiganti.',
+    scene:'Ang simbahan ay puno ng mga bulaklak. Ang mga kandila ay nagniningning. Si Paulita ay nakasuot ng puting damit — ngunit sa kanyang puso ay may isang lungkot na hindi maipaliwanag. Sa sulok ng simbahan, si Simoun ay nakangiti.' },
+  { num:16, roman:'XVI', title:'Ang Kandila ng Kamatayan', emoji:'🕯️', bg:'linear-gradient(160deg,#1a0800,#0d0400)',
+    chars:['simoun'], color:'#e87030',
+    story:'Sa ilalim ng altar, si Simoun ay naglagay ng isang espesyal na kandila — sa loob nito ay isang bomba. Kapag nasunog ang kandila, magsisimula ang rebolusyon. Ang oras ng paghihiganti ay malapit na.',
+    scene:'Sa kadiliman ng sagradong lugar, si Simoun ay gumagalaw nang dahan-dahan. Ang kanyang mga kamay ay hindi nanginginig — ang isang taong puno ng determinasyon ay hindi tumatakot. Ang kandila ay nakalagay na. Walang pabalik.' },
+  { num:17, roman:'XVII', title:'Si Isagani sa Simbahan', emoji:'🔥', bg:'linear-gradient(160deg,#1a0d03,#0d0802)',
+    chars:['isagani','simoun'], color:'#e87030',
+    story:'Sa huling sandali, si Isagani ay pumasok sa simbahan at nakita ang kandila ni Simoun. Sa kanyang puso ay isang agam-agam — ang pagmamahal sa bansa at ang pagmamahal sa buhay ng maraming tao ay nagtatunggali.',
+    scene:'Si Isagani ay nakatayo sa harap ng altar. Ang kandila ay nagsisindi na. Sa kanyang isip ay isang mabilis na desisyon: ang rebolusyon o ang buhay ng mga inosente? At sa isang galaw — inangat niya ang kandila.' },
+  { num:18, roman:'XVIII', title:'Ang Kandila sa Ilog', emoji:'🌊', bg:'linear-gradient(160deg,#020c18,#010810)',
+    chars:['isagani'], color:'#4090d0',
+    story:'Si Isagani ay lumabas ng simbahan at inihagis ang kandila sa ilog. Ang rebolusyon ni Simoun ay natapos bago pa man magsimula. Ngunit sa paggawa niya nito, winasak niya ang lahat — ang kanyang pag-ibig, ang kanyang kinabukasan, ang kanyang kaibigan.',
+    scene:'Sa gilid ng ilog, si Isagani ay nakatayo. Ang kandila ay kumikislap sa kanyang mga kamay. Sa bawat segundo, ang apoy ay lumalapit sa bomba. At sa isang sandali ng katahimikan, inihagis niya ito — at narinig ang splash ng tubig.' },
+  { num:19, roman:'XIX', title:'Ang Pagkabigo ni Simoun', emoji:'😔', bg:'linear-gradient(160deg,#1a0800,#0d0400)',
+    chars:['simoun','basilio'], color:'#a04020',
+    story:'Nabalitaan ni Simoun ang nangyari. Ang kanyang maingat na planong rebolusyon ay natapos dahil sa isang desisyon ng isang kabataang puno ng pag-ibig. Si Basilio ay nadakip. Ang lahat ay gumuho.',
+    scene:'Sa madilim na silid, si Simoun ay nakatayo nang mag-isa. Sa labas, ang lungsod ay patuloy na gumagalaw — hindi alam na ang isang mundo ay muntikang mabago. Sa kanyang mga kamay ay ang basag na pangarap ng kanyang rebolusyon.' },
+  { num:20, roman:'XX', title:'Ang Pagtatago ni Simoun', emoji:'🌙', bg:'linear-gradient(160deg,#05081a,#020410)',
+    chars:['simoun','florentino'], color:'#5060b0',
+    story:'Sugatan at natatakot, tumakas si Simoun patungo sa tahanan ng kanyang tanging kaibigan — si Padre Florentino. Ang paring Pilipino ay tinanggap siya nang walang tanong, nang may habag na hindi pa natutuklas ng marami.',
+    scene:'Sa gabi, ang mga bituin ay kaunti. Si Simoun ay humihingal habang lumalakad sa dalampasigan. Sa malayo, ang ilaw ni Padre Florentino ay kumikislap — isang maliit na pag-asa sa isang mundong puno ng kadiliman.' },
+  { num:21, roman:'XXI', title:'Ang Huling Kumpisal', emoji:'⛪', bg:'linear-gradient(160deg,#100e00,#080700)',
+    chars:['simoun','florentino'], color:'#a09040',
+    story:'Sa harap ni Padre Florentino, inamin ni Simoun ang lahat — ang kanyang tunay na pagkakakilanlan bilang si Crisostomo Ibarra, ang kanyang pagmamahal kay Maria Clara, ang kanyang galit, ang kanyang mga plano. Ang isang taong puno ng lihim ay nagsalita sa wakas.',
+    scene:'Sa silid ni Padre Florentino, ang dalawang lalaki ay nagharap. Ang isang boses ay nagsalita sa dilim — ang boses ng isang taong sa wakas ay napagod ng pagtatago. Ang paring nakinig ay hindi nagalit — nagsalita lamang nang tahimik tungkol sa pag-asa.' },
+  { num:22, roman:'XXII', title:'Ang Kamatayan ni Simoun', emoji:'🌅', bg:'linear-gradient(160deg,#180a02,#0c0500)',
+    chars:['simoun','florentino'], color:'#c07030',
+    story:'Sa hatinggabi, si Simoun ay humiga para sa huli. Ang lason na kanyang ininom ay mabilis na gumagawa ng kanyang trabaho. Sa kanyang huling hininga, si Simoun ay hindi nagsisi — ngunit natuklasan niya ang isang bagay na napalampas niya sa kanyang buhay ng paghihiganti.',
+    scene:'Sa dalampasigan, ang alon ay tumatahimik. Si Padre Florentino ay nakatayo sa tabi ni Simoun habang ang dating Crisostomo Ibarra ay unti-unting lumayo mula sa mundong ito. Ang gabi ay maliwanag ng mga bituin.' },
+  { num:23, roman:'XXIII', title:'Ang Kayamanan sa Karagatan', emoji:'🌊', bg:'linear-gradient(160deg,#020c18,#010810)',
+    chars:['florentino'], color:'#3080c0',
+    story:'Pagkamatay ni Simoun, kinuha ni Padre Florentino ang kanyang kahon ng kayamanan at tinanggal ito sa bahay. Sa dalampasigan, itinatapon niya ang ginto at mga alahas sa karagatan — isang simbolikong kilos na nagpapahayag ng pag-asa para sa susunod na henerasyon.',
+    scene:'Sa umaga, si Padre Florentino ay nakatayo sa gilid ng dagat. Sa kanyang mga kamay ay ang kahon ni Simoun. Isa-isa, ang mga alahas ay bumagsak sa tubig — hindi nawawala, kundi nagbabalik sa lupa na pinagmulan nito.' },
+  { num:24, roman:'XXIV', title:'Ang Epilogo — Hindi Pa Panahon', emoji:'🌄', bg:'linear-gradient(160deg,#100800,#080400)',
+    chars:['florentino'], color:'#c9a84c',
+    story:'"Hindi pa panahon," sabi ni Padre Florentino sa hangin. "Kapag ang mga tao ay handa na — kapag ang bawat Pilipino ay handang ibigay ang kanyang buhay para sa kabutihan ng lahat — saka lamang darating ang kalayaan." Ang nobela ay nagtatapos nang may pag-asa at pait.',
+    scene:'Sa dalampasigan, si Padre Florentino ay nag-iisa. Sa kalayuan, ang araw ay sumisinag sa kabila ng ulap. Ang tubig ay kumakaluskos sa mga bato. At sa hangin, parang naririnig pa rin ang boses ni Simoun — hindi ng galit, kundi ng isang taong sa wakas ay nakapagpahinga.' },
+];
+
+// ═══════════════════════════════════════════════════
+// STORY PAGE BUILD
+// ═══════════════════════════════════════════════════
+let kwentoBuilt = false;
+function buildKwento() {
+  if (kwentoBuilt) return; kwentoBuilt = true;
+  const list = document.getElementById('chapterList');
+  const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX','XXI','XXII','XXIII','XXIV'];
+  CHAPTERS.forEach((ch, i) => {
+    const item = document.createElement('div');
+    item.className = 'chapter-item';
+    item.dataset.idx = i;
+    const charTags = (ch.chars||[]).map(id => {
+      const c = CHARS.find(x=>x.id===id);
+      return c ? `<span class="ch-char-tag">${c.emoji} ${c.name}</span>` : '';
+    }).join('');
+    item.innerHTML = `
+      <div class="ch-num-col">
+        <div class="ch-roman">${ch.roman||ROMAN[i]||i+1}</div>
+        <div class="ch-num">KAB. ${ch.num||i+1}</div>
+      </div>
+      <div class="ch-content">
+        <div class="ch-emoji">${ch.emoji}</div>
+        <div class="ch-info">
+          <div class="ch-title">${ch.title}</div>
+          <div class="ch-preview">${ch.story.substring(0,80)}...</div>
+          <div class="ch-chars">${charTags}</div>
+        </div>
+        <div class="ch-arrow">›</div>
+      </div>`;
+    item.addEventListener('click', () => openScene(i));
+    list.appendChild(item);
+  });
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, idx) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.style.animation = 'card-reveal .5s var(--ease-expo) forwards', idx * 40);
+        e.target.style.opacity = '0';
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  list.querySelectorAll('.chapter-item').forEach(el => { el.style.opacity='0'; obs.observe(el); });
+}
+
+// ═══════════════════════════════════════════════════
+// SCENE VIEWER ENGINE
+// ═══════════════════════════════════════════════════
+let sceneIdx = 0, sceneAnimFrame = null, sceneAutoTimer = null;
+let sceneIsAuto = false, sceneIsSpeaking = false;
+
+// Canvas scene state
+let cvs, ctx2d, stageW, stageH;
+// Parallax layers
+let bgParticles = [], sceneEmbers = [], sceneCharLayers = [];
+// Animated values
+let bgOffset = {x:0, y:0}, mouseInfluence = {x:0, y:0};
+let targetBgOffset = {x:0, y:0};
+
+function openScene(idx) {
+  sceneIdx = idx;
+  document.getElementById('sceneViewer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  buildSceneUI();
+  initSceneCanvas();
+  renderScene(idx);
+  buildProgDots();
+  document.querySelectorAll('.chapter-item').forEach((el,i) => el.classList.toggle('active-ch', i===idx));
+}
+
+function closeScene() {
+  cancelAnimationFrame(sceneAnimFrame);
+  clearTimeout(sceneAutoTimer);
+  if (sceneIsSpeaking) { window.speechSynthesis?.cancel(); sceneIsSpeaking = false; }
+  document.getElementById('sceneViewer').classList.remove('open');
+  document.body.style.overflow = '';
+  sceneIsAuto = false;
+  document.getElementById('sceneAutoBtn').classList.remove('active');
+  document.getElementById('sceneAutoBtn').textContent = '▶ AUTO';
+}
+
+function initSceneCanvas() {
+  cvs = document.getElementById('sceneCanvas');
+  ctx2d = cvs.getContext('2d');
+  resizeScene();
+  window.addEventListener('resize', resizeScene);
+  // Mouse parallax
+  document.getElementById('sceneStage').addEventListener('mousemove', e => {
+    const r = cvs.getBoundingClientRect();
+    mouseInfluence.x = (e.clientX - r.width/2) / r.width;
+    mouseInfluence.y = (e.clientY - r.height/2) / r.height;
+  });
+  document.getElementById('sceneStage').addEventListener('touchmove', e => {
+    const t = e.touches[0];
+    const r = cvs.getBoundingClientRect();
+    mouseInfluence.x = (t.clientX - r.width/2) / r.width;
+    mouseInfluence.y = (t.clientY - r.height/2) / r.height;
+  }, {passive:true});
+}
+
+function resizeScene() {
+  if (!cvs) return;
+  stageW = cvs.width  = cvs.parentElement.offsetWidth;
+  stageH = cvs.height = cvs.parentElement.offsetHeight;
+}
+
+function renderScene(idx) {
+  cancelAnimationFrame(sceneAnimFrame);
+  const ch = CHAPTERS[idx];
+  if (!ch) return;
+
+  // Build canvas particles
+  bgParticles = [];
+  for (let i = 0; i < 60; i++) {
+    bgParticles.push({
+      x: Math.random(), y: Math.random() + .5,
+      vx: (Math.random()-.5)*.0003, vy: -(Math.random()*.001+.0003),
+      r: Math.random()*2.5+.8,
+      alpha: Math.random()*.5+.2,
+      hue: 38+Math.random()*16,
+      life:0, maxLife: 200+Math.random()*400
+    });
+  }
+
+  // Scene embers
+  sceneEmbers = [];
+  for (let i = 0; i < 12; i++) {
+    sceneEmbers.push({
+      x: Math.random(), y: .6+Math.random()*.4,
+      vy: -(Math.random()*.0015+.0005),
+      vx: (Math.random()-.5)*.0008,
+      r: Math.random()*4+2,
+      alpha:0, life:0, maxLife: 120+Math.random()*200,
+      delay: Math.random()*100
+    });
+  }
+
+  // Character emoji layers (parallax floating)
+  sceneCharLayers = [];
+  const charsForScene = (ch.chars||[]).slice(0,3).map(id => CHARS.find(c=>c.id===id)).filter(Boolean);
+  charsForScene.forEach((c, i) => {
+    sceneCharLayers.push({
+      emoji: c.emoji,
+      x: 0.15 + i * 0.32 + (Math.random()-.5)*.1,
+      y: 0.25 + (Math.random()-.5)*.15,
+      floatOffset: Math.random()*Math.PI*2,
+      floatSpeed: 0.6+Math.random()*.4,
+      floatAmp: 12+Math.random()*10,
+      swayAmp: 6+Math.random()*6,
+      swaySpeed: 0.4+Math.random()*.3,
+      swayOffset: Math.random()*Math.PI*2,
+      scale: 1,
+      alpha: 0,
+      targetAlpha: 1,
+      size: Math.min(stageW*.12, 80),
+    });
+  });
+
+  bgOffset = {x:0, y:0}; mouseInfluence = {x:0,y:0};
+  let t = 0;
+
+  function draw() {
+    if (!cvs || !ctx2d) return;
+    t++;
+    const W = stageW, H = stageH;
+    ctx2d.clearRect(0,0,W,H);
+
+    // Background gradient (Ken Burns pan)
+    const panX = Math.sin(t*0.004)*30 + mouseInfluence.x*25;
+    const panY = Math.cos(t*0.003)*15 + mouseInfluence.y*18;
+    const grd = ctx2d.createRadialGradient(W/2+panX, H*.35+panY, 0, W/2+panX, H/2, W*.85);
+    const [c1,c2,c3] = parseBg(ch.bg);
+    grd.addColorStop(0, c1);
+    grd.addColorStop(0.5, c2);
+    grd.addColorStop(1, c3);
+    ctx2d.fillStyle = grd;
+    ctx2d.fillRect(0,0,W,H);
+
+    // Subtle vignette
+    const vig = ctx2d.createRadialGradient(W/2,H/2,H*.25,W/2,H/2,H*.8);
+    vig.addColorStop(0,'rgba(0,0,0,0)');
+    vig.addColorStop(1,'rgba(0,0,0,.6)');
+    ctx2d.fillStyle = vig;
+    ctx2d.fillRect(0,0,W,H);
+
+    // Bokeh / floating light orbs
+    bgParticles.forEach(p => {
+      p.life++;
+      if (p.life > p.maxLife) {
+        p.x=Math.random(); p.y=1+Math.random()*.1;
+        p.life=0; p.maxLife=200+Math.random()*400;
+        p.alpha=0;
+      }
+      const lifeT = p.life/p.maxLife;
+      const a = lifeT < .15 ? (lifeT/.15)*p.alpha : lifeT > .8 ? ((1-lifeT)/.2)*p.alpha : p.alpha;
+      p.x += p.vx + Math.sin(t*.012+p.x*10)*.00015;
+      p.y += p.vy;
+      const px = p.x*W + panX*.3, py = p.y*H + panY*.2;
+      const grad = ctx2d.createRadialGradient(px,py,0,px,py,p.r*3);
+      grad.addColorStop(0,`hsla(${p.hue},75%,65%,${a})`);
+      grad.addColorStop(1,`hsla(${p.hue},75%,65%,0)`);
+      ctx2d.fillStyle = grad;
+      ctx2d.beginPath(); ctx2d.arc(px,py,p.r*3,0,Math.PI*2); ctx2d.fill();
+    });
+
+    // Ember particles from bottom
+    sceneEmbers.forEach(e => {
+      if (t < e.delay) return;
+      e.life++;
+      if (e.life > e.maxLife) {
+        e.x=Math.random(); e.y=.75+Math.random()*.25; e.life=0;
+        e.maxLife=120+Math.random()*200; e.delay=t+Math.random()*50;
+      }
+      const lt = e.life/e.maxLife;
+      const a = lt<.1?(lt/.1)*.9:lt>.75?((1-lt)/.25)*.9:.9;
+      e.x+=e.vx; e.y+=e.vy;
+      const ex=e.x*W+panX*.5, ey=e.y*H+panY*.4;
+      const hue=25+Math.random()*20;
+      ctx2d.save();
+      ctx2d.globalAlpha=a*0.85;
+      ctx2d.fillStyle=`hsl(${hue},90%,65%)`;
+      ctx2d.shadowBlur=e.r*3; ctx2d.shadowColor=`hsl(${hue},90%,65%)`;
+      ctx2d.beginPath(); ctx2d.arc(ex,ey,e.r,0,Math.PI*2); ctx2d.fill();
+      ctx2d.restore();
+    });
+
+    // Character emoji layers with parallax float
+    sceneCharLayers.forEach((layer, i) => {
+      layer.alpha += (layer.targetAlpha - layer.alpha) * .04;
+      const floatY = Math.sin(t*.02*layer.floatSpeed + layer.floatOffset) * layer.floatAmp;
+      const swayX = Math.sin(t*.015*layer.swaySpeed + layer.swayOffset) * layer.swayAmp;
+      const px = layer.x*W + swayX + mouseInfluence.x*(-20*(i+1));
+      const py = layer.y*H + floatY + mouseInfluence.y*(-10*(i+1));
+      const sz = Math.min(W*.13, 90);
+      ctx2d.save();
+      ctx2d.globalAlpha = layer.alpha;
+      ctx2d.font = `${sz}px serif`;
+      ctx2d.textAlign = 'center'; ctx2d.textBaseline = 'middle';
+      // Glow
+      ctx2d.shadowBlur = 40; ctx2d.shadowColor = ch.color || '#c9a84c';
+      ctx2d.fillText(layer.emoji, px, py);
+      ctx2d.shadowBlur = 0;
+      ctx2d.restore();
+    });
+
+    // Horizontal light rays
+    if (t % 180 < 90) {
+      ctx2d.save();
+      ctx2d.globalAlpha = .025 * (1 - Math.abs(t%180-45)/45);
+      ctx2d.fillStyle = ch.color || '#c9a84c';
+      for (let r = 0; r < 5; r++) {
+        const rx = W*(.1+r*.2)+panX, ry = -50;
+        ctx2d.beginPath();
+        ctx2d.moveTo(rx,ry); ctx2d.lineTo(rx-80,H+50); ctx2d.lineTo(rx+80,H+50); ctx2d.closePath();
+        ctx2d.fill();
+      }
+      ctx2d.restore();
+    }
+
+    sceneAnimFrame = requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// Helper: parse bg gradient to 3 colors
+function parseBg(bg) {
+  // Extract colors from linear-gradient string
+  const matches = bg.match(/#[0-9a-f]{6}/gi) || [];
+  if (matches.length >= 2) return [matches[0]+'cc', matches[0]+'88', matches[1]+'ff'];
+  return ['#1a0a02', '#0a0501', '#020100'];
+}
+
+function buildSceneUI() {
+  const ch = CHAPTERS[sceneIdx];
+  if (!ch) return;
+  // Flash transition
+  const flash = document.getElementById('sceneFlash');
+  flash.classList.add('flash-out');
+  setTimeout(()=>flash.classList.remove('flash-out'),350);
+  // Text
+  document.getElementById('sceneChTag').textContent = `Kabanata ${ch.num||sceneIdx+1} — ${ch.roman||''}`;
+  document.getElementById('sceneTitle').textContent = ch.title;
+  document.getElementById('sceneBody').textContent = ch.scene;
+  // Char pills
+  const row = document.getElementById('sceneCharsRow'); row.innerHTML='';
+  (ch.chars||[]).forEach(id => {
+    const c = CHARS.find(x=>x.id===id);
+    if (!c) return;
+    const pill = document.createElement('div'); pill.className='scene-char-pill';
+    pill.innerHTML=`<span class="scene-char-pill-emoji">${c.emoji}</span><span class="scene-char-pill-name">${c.name}</span>`;
+    pill.addEventListener('click', ()=>{ closeScene(); openModal(c); });
+    row.appendChild(pill);
+  });
+  // Nav buttons
+  document.getElementById('scenePrevBtn').disabled = sceneIdx === 0;
+  document.getElementById('sceneNextBtn').disabled = sceneIdx === CHAPTERS.length-1;
+  // Animate text in
+  ['sceneChTag','sceneTitle','sceneBody'].forEach((id,i) => {
+    const el=document.getElementById(id);
+    el.style.animation='none'; void el.offsetWidth;
+    el.style.animation=`scene-text-in .6s ${i*.12}s var(--ease-expo) both`;
+  });
+  // Update active dot
+  document.querySelectorAll('.scene-prog-dot').forEach((d,i)=>d.classList.toggle('active',i===sceneIdx));
+  document.querySelectorAll('.chapter-item').forEach((el,i)=>el.classList.toggle('active-ch',i===sceneIdx));
+}
+
+function buildProgDots() {
+  const wrap = document.getElementById('sceneProgDots'); wrap.innerHTML='';
+  CHAPTERS.forEach((_,i) => {
+    const d=document.createElement('div'); d.className='scene-prog-dot'+(i===sceneIdx?' active':'');
+    d.addEventListener('click',()=>sceneNav(i-sceneIdx));
+    wrap.appendChild(d);
+  });
+}
+
+function sceneNav(delta) {
+  const next = sceneIdx + delta;
+  if (next<0||next>=CHAPTERS.length) return;
+  sceneIdx = next;
+  buildSceneUI();
+  renderScene(sceneIdx);
+}
+
+function toggleAutoPlay() {
+  sceneIsAuto = !sceneIsAuto;
+  const btn = document.getElementById('sceneAutoBtn');
+  if (sceneIsAuto) {
+    btn.classList.add('active'); btn.textContent='⏸ AUTO';
+    autoAdvance();
+  } else {
+    btn.classList.remove('active'); btn.textContent='▶ AUTO';
+    clearTimeout(sceneAutoTimer);
+  }
+}
+
+function autoAdvance() {
+  if (!sceneIsAuto) return;
+  sceneAutoTimer = setTimeout(()=>{
+    if (sceneIdx < CHAPTERS.length-1) { sceneIdx++; buildSceneUI(); renderScene(sceneIdx); autoAdvance(); }
+    else { sceneIsAuto=false; document.getElementById('sceneAutoBtn').classList.remove('active'); document.getElementById('sceneAutoBtn').textContent='▶ AUTO'; }
+  }, 7000);
+}
+
+function sceneSpeak() {
+  if (!window.speechSynthesis) return;
+  const text = CHAPTERS[sceneIdx]?.scene || '';
+  if (!text) return;
+  if (sceneIsSpeaking) { window.speechSynthesis.cancel(); sceneIsSpeaking=false; document.getElementById('sceneVoiceBtn').classList.remove('active'); document.getElementById('sceneVoiceBtn').textContent='🔊 BOSES'; return; }
+  const utt = new SpeechSynthesisUtterance(text);
+  const voices = window.speechSynthesis.getVoices();
+  const v = voices.find(v=>v.lang.includes('fil')||v.lang.includes('tl')||v.lang.includes('es'));
+  if (v) utt.voice=v;
+  utt.lang='fil-PH'; utt.rate=.88; utt.pitch=1;
+  utt.onstart=()=>{ sceneIsSpeaking=true; document.getElementById('sceneVoiceBtn').classList.add('active'); document.getElementById('sceneVoiceBtn').textContent='⏹ TITIGIL'; };
+  utt.onend=utt.onerror=()=>{ sceneIsSpeaking=false; document.getElementById('sceneVoiceBtn').classList.remove('active'); document.getElementById('sceneVoiceBtn').textContent='🔊 BOSES'; };
+  window.speechSynthesis.speak(utt);
+}
+
+
+// ═══════════════════════════════════════════════════
+// VIDEO PAGE
+// ═══════════════════════════════════════════════════
+const VIDEOS = [
+  // ── Documentaries ──
+  { id:'dXefBvqHJlg', cat:'dokumentaryo', badge:'doc', badgeLabel:'DOC',
+    title:'Jose Rizal: The Movie (1998) Full Film',
+    desc:'Ang opisyal na pelikula ni Jose Rizal na ginawa ni Marilou Diaz-Abaya — ang buhay at kamatayan ng bayaning Pilipino.',
+    source:'YouTube', lang:'Filipino/English', dur:'2h 15m' },
+  { id:'fLeE-PnFMlc', cat:'dokumentaryo', badge:'doc', badgeLabel:'DOC',
+    title:'Noli Me Tangere at El Filibusterismo — Explainer',
+    desc:'Isang malalim na pagsusuri ng dalawang dakilang nobela ni Rizal at ang kanilang papel sa Rebolusyong Pilipino.',
+    source:'YouTube', lang:'Filipino', dur:'18m' },
+  { id:'gGe9bm9ESVE', cat:'dokumentaryo', badge:'doc', badgeLabel:'DOC',
+    title:'El Filibusterismo: Buod at Pagsusuri',
+    desc:'Kompletong buod ng El Filibusterismo na may pagsusuri ng mga pangunahing tema at tauhan.',
+    source:'YouTube', lang:'Filipino', dur:'22m' },
+  { id:'JVqzDbkOFPo', cat:'dokumentaryo', badge:'doc', badgeLabel:'DOC',
+    title:'Rizal sa Dapitan — Dokumentaryo',
+    desc:'Ang buhay ni Rizal sa kanyang mga taon ng pagkatapon sa Dapitan, Mindanao — isang panahon ng paglikha at pag-aaral.',
+    source:'YouTube', lang:'Filipino', dur:'45m' },
+
+  // ── Lectures / Educational ──
+  { id:'Ox-fDDtoggI', cat:'lektura', badge:'lec', badgeLabel:'LEKTURA',
+    title:'El Filibusterismo — Mga Pangunahing Tema',
+    desc:'Propesyonal na lektura tungkol sa mga pangunahing temang panlipunan at pampolitika sa El Filibusterismo.',
+    source:'YouTube', lang:'Filipino', dur:'35m' },
+  { id:'T6kPPMz8sTE', cat:'lektura', badge:'lec', badgeLabel:'LEKTURA',
+    title:'Talambuhay ni Jose Rizal — Kumpletong Kasaysayan',
+    desc:'Mula sa kanyang pagsilang hanggang sa kanyang kamatayan sa Luneta — ang buong kwento ng pambansang bayani.',
+    source:'YouTube', lang:'Filipino', dur:'1h 2m' },
+  { id:'s9JBbG-VNuc', cat:'lektura', badge:'lec', badgeLabel:'LEKTURA',
+    title:'Ang Kahulugan ng El Filibusterismo Ngayon',
+    desc:'Isang modernong pagtingin sa kaugnayan ng nobela sa kasalukuyang lipunang Pilipino.',
+    source:'YouTube', lang:'Filipino', dur:'28m' },
+  { id:'dBGpixiX9L4', cat:'lektura', badge:'lec', badgeLabel:'LEKTURA',
+    title:'Rizal Course — Lecture Series',
+    desc:'Serye ng mga lektura tungkol sa buhay, mga akda, at pamana ni Jose Rizal para sa mga estudyante.',
+    source:'YouTube', lang:'Filipino/English', dur:'55m' },
+
+  // ── Film Adaptations ──
+  { id:'Bks_0sTFMkQ', cat:'pelikula', badge:'film', badgeLabel:'PELIKULA',
+    title:'Ilustrado (El Filibusterismo Adaptation)',
+    desc:'Isang makabagong interpretasyon ng El Filibusterismo sa pamamagitan ng visual storytelling at sining.',
+    source:'YouTube', lang:'Filipino', dur:'1h 30m' },
+  { id:'7Kp_bAmaVY8', cat:'pelikula', badge:'film', badgeLabel:'PELIKULA',
+    title:'Noli at Fili — Animated Short',
+    desc:'Animated na maikling pelikula na nagpapakita ng mga pangunahing eksena ng dalawang nobela ni Rizal.',
+    source:'YouTube', lang:'Filipino', dur:'12m' },
+
+  // ── Animated / Summary ──
+  { id:'_Hk3kxcjmmc', cat:'animated', badge:'ani', badgeLabel:'ANIMATED',
+    title:'El Filibusterismo — Chapter Summary (Animated)',
+    desc:'Animated na buod ng bawat kabanata ng El Filibusterismo — perpekto para sa mabilis na pag-aaral.',
+    source:'YouTube', lang:'Filipino', dur:'20m' },
+  { id:'ueZ1lGajkHE', cat:'animated', badge:'ani', badgeLabel:'ANIMATED',
+    title:'Sino si Simoun? — Character Deep Dive',
+    desc:'Isang malalim na pagsusuri ng character ni Simoun — ang kanyang motivasyon, trahedya, at kahulugan.',
+    source:'YouTube', lang:'Filipino', dur:'15m' },
+];
+
+const VID_CATS = [
+  { key:'lahat', label:'Lahat' },
+  { key:'dokumentaryo', label:'Dokumentaryo' },
+  { key:'lektura', label:'Lektura' },
+  { key:'pelikula', label:'Pelikula' },
+  { key:'animated', label:'Animated' },
+];
+
+let videoBuilt = false;
+function buildVideo() {
+  if (videoBuilt) return; videoBuilt = true;
+
+  // Tabs
+  const tabs = document.getElementById('vidTabs');
+  VID_CATS.forEach((c,i) => {
+    const btn = document.createElement('button');
+    btn.className = 'vid-tab' + (i===0?' active':'');
+    btn.textContent = c.label; btn.dataset.cat = c.key;
+    btn.addEventListener('click', () => {
+      tabs.querySelectorAll('.vid-tab').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active'); filterVids(c.key);
+    });
+    tabs.appendChild(btn);
+  });
+
+  // Cards
+  const grid = document.getElementById('vidGrid');
+  VIDEOS.forEach((v,i) => {
+    const card = document.createElement('div');
+    card.className = 'vid-card'; card.dataset.cat = v.cat;
+    card.style.animationDelay = i*.055+'s';
+    card.innerHTML = `
+      <div class="vid-thumb">
+        <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg"
+             alt="${v.title}" loading="lazy"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="vid-thumb-placeholder" style="display:none">🎬</div>
+        <div class="vid-play-icon">
+          <div class="vid-play-circle"><div class="vid-play-triangle"></div></div>
+        </div>
+        <span class="vid-duration">${v.dur}</span>
+        <span class="vid-badge badge-${v.badge}">${v.badgeLabel}</span>
+      </div>
+      <div class="vid-info">
+        <div class="vid-cat">${v.cat.toUpperCase()}</div>
+        <div class="vid-title">${v.title}</div>
+        <div class="vid-desc">${v.desc}</div>
+        <div class="vid-meta">
+          <span class="vid-source">${v.source}</span>
+          <span class="vid-lang">${v.lang}</span>
+        </div>
+      </div>`;
+    card.addEventListener('click', () => openLightbox(v));
+    grid.appendChild(card);
+  });
+
+  // Observe
+  const obs = new IntersectionObserver(ents => {
+    ents.forEach(e => { if(e.isIntersecting){ e.target.classList.add('vis'); obs.unobserve(e.target); } });
+  }, {threshold:.08});
+  grid.querySelectorAll('.vid-card').forEach(c=>obs.observe(c));
+}
+
+function filterVids(cat) {
+  document.querySelectorAll('.vid-card').forEach(c => {
+    c.style.display = (cat==='lahat'||c.dataset.cat===cat) ? '' : 'none';
+  });
+}
+
+function openLightbox(v) {
+  document.getElementById('vidLbFrame').src =
+    'https://www.youtube.com/embed/' + v.id + '?autoplay=1&rel=0&modestbranding=1';
+  document.getElementById('vidLbTitle').textContent = v.title;
+  document.getElementById('vidLightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('vidLbFrame').src = '';
+  document.getElementById('vidLightbox').classList.remove('open');
   document.body.style.overflow = '';
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') doClose(); });
+// Close on backdrop click
+document.getElementById('vidLightbox').addEventListener('click', e => {
+  if (e.target === document.getElementById('vidLightbox')) closeLightbox();
+});
+
+
+// ═══════════════════════════════════════════════════
+// GOOGLE SHEETS CONFIG
+// Replace SHEET_URL with your deployed Apps Script URL
+// ═══════════════════════════════════════════════════
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxPLACEHOLDER_REPLACE_THIS/exec';
+
+// ═══════════════════════════════════════════════════
+// PLAYER DATA
+// ═══════════════════════════════════════════════════
+let gPlayer = null; // { name, age, gender, section, school, region }
+
+function loadPlayer() {
+  try {
+    const p = localStorage.getItem('elfili_player');
+    if (p) gPlayer = JSON.parse(p);
+  } catch(e) {}
+}
+
+function savePlayer(p) {
+  gPlayer = p;
+  localStorage.setItem('elfili_player', JSON.stringify(p));
+}
+
+// ── Registration screen ──
+function showReg() {
+  document.getElementById('regScreen').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  // Pre-fill if existing player
+  if (gPlayer) {
+    document.getElementById('regName').value    = gPlayer.name    || '';
+    document.getElementById('regAge').value     = gPlayer.age     || '';
+    document.getElementById('regGender').value  = gPlayer.gender  || '';
+    document.getElementById('regSection').value = gPlayer.section || '';
+    document.getElementById('regSchool').value  = gPlayer.school  || '';
+    document.getElementById('regRegion').value  = gPlayer.region  || '';
+  }
+  setTimeout(()=>document.getElementById('regName').focus(), 300);
+}
+
+function hideReg() {
+  document.getElementById('regScreen').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+async function submitReg() {
+  // Validate
+  const name    = document.getElementById('regName').value.trim();
+  const age     = parseInt(document.getElementById('regAge').value);
+  const gender  = document.getElementById('regGender').value;
+  const section = document.getElementById('regSection').value.trim();
+  const school  = document.getElementById('regSchool').value.trim();
+  const region  = document.getElementById('regRegion').value;
+
+  let ok = true;
+  const nameErr = document.getElementById('regNameErr');
+  const ageErr  = document.getElementById('regAgeErr');
+  nameErr.classList.remove('show'); ageErr.classList.remove('show');
+
+  if (!name) { nameErr.classList.add('show'); ok = false; }
+  if (!age || age < 5 || age > 99) { ageErr.classList.add('show'); ok = false; }
+  if (!ok) return;
+
+  const player = { name, age, gender, section, school, region };
+  savePlayer(player);
+  updatePlayerBadge();
+
+  // Confetti
+  for (let i = 0; i < 18; i++) {
+    setTimeout(() => {
+      const d = document.createElement('div');
+      d.className = 'confetti-dot';
+      const cx = window.innerWidth/2 + (Math.random()-0.5)*300;
+      const cy = window.innerHeight/2 + (Math.random()-0.5)*200;
+      d.style.cssText = `left:${cx}px;top:${cy}px;background:hsl(${Math.random()*60+30},90%,65%)`;
+      document.body.appendChild(d);
+      setTimeout(()=>d.remove(), 900);
+    }, i * 40);
+  }
+
+  hideReg();
+  // Small delay then start game
+  setTimeout(() => { initGame(); loadGlobalBoard(); }, 200);
+}
+
+function updatePlayerBadge() {
+  if (!gPlayer) return;
+  const badge = document.getElementById('playerBadge');
+  badge.style.display = 'flex';
+  document.getElementById('playerAvatar').textContent = gPlayer.name.charAt(0).toUpperCase();
+  document.getElementById('playerName').textContent   = gPlayer.name;
+  const meta = [gPlayer.age && (gPlayer.age + ' taong gulang'), gPlayer.section, gPlayer.region].filter(Boolean).join(' · ');
+  document.getElementById('playerMeta').textContent = meta || (gPlayer.school || '');
+}
+
+// ── Override initGame to require player ──
+const _origInitGame = initGame;
+function initGame() {
+  loadPlayer();
+  if (!gPlayer) {
+    // Show registration first
+    showReg();
+    return;
+  }
+  updatePlayerBadge();
+  _origInitGame();
+  loadGlobalBoard();
+}
+
+// ── Override saveScore to also push to Google Sheets ──
+const _origSaveScore = saveScore;
+function saveScore() {
+  _origSaveScore(); // local first
+  if (gScore === 0 || !gPlayer) return;
+  pushToSheet({
+    name:    gPlayer.name,
+    age:     gPlayer.age     || '',
+    gender:  gPlayer.gender  || '',
+    section: gPlayer.section || '',
+    school:  gPlayer.school  || '',
+    region:  gPlayer.region  || '',
+    score:   gScore,
+    streak:  gStreak,
+    diff:    gDiff,
+    date:    new Date().toLocaleString('fil-PH'),
+  });
+}
+
+// ── Push record to Google Sheets via Apps Script ──
+async function pushToSheet(data) {
+  try {
+    const params = new URLSearchParams({ action: 'addScore', ...data });
+    await fetch(SHEET_URL + '?' + params.toString(), { method: 'GET', mode: 'no-cors' });
+    // no-cors = fire-and-forget; Google Script handles it
+    setTimeout(() => loadGlobalBoard(), 2000); // reload after 2s
+  } catch(e) {
+    console.log('Sheet push failed (offline?):', e);
+  }
+}
+
+// ── Fetch & render global leaderboard ──
+async function loadGlobalBoard() {
+  const body = document.getElementById('glbBody');
+  const btn  = document.getElementById('glbRefreshBtn');
+  if (!body) return;
+  btn.classList.add('spinning');
+  body.innerHTML = '<div class="glb-loading"><div class="glb-loading-spin"></div>Nilo-load...</div>';
+  try {
+    const url = SHEET_URL + '?action=getScores&limit=20&t=' + Date.now();
+    const res  = await fetch(url);
+    const data = await res.json();
+    renderGlobalBoard(data);
+  } catch(e) {
+    // Fallback: show local scores only
+    renderLocalFallback();
+  } finally {
+    btn.classList.remove('spinning');
+  }
+}
+
+function renderGlobalBoard(rows) {
+  const body = document.getElementById('glbBody');
+  if (!rows || !rows.length) {
+    body.innerHTML = '<div class="glb-empty">Wala pang naitala. Ikaw ang maging una!</div>';
+    return;
+  }
+  const medals = ['🥇','🥈','🥉'];
+  const topCls  = ['top1','top2','top3'];
+  body.innerHTML = rows.map((r, i) => {
+    const isMe = gPlayer && r.name === gPlayer.name && r.school === (gPlayer.school||'');
+    const rank = medals[i] || (i+1);
+    const info = [r.age && r.age+'y', r.section, r.region].filter(Boolean).join(' · ');
+    return `<div class="glb-row ${isMe?'me':''}">
+      <div class="glb-rank ${topCls[i]||''}">${rank}</div>
+      <div class="glb-player">
+        <div class="glb-player-name">${escHtml(r.name)} ${isMe?'<span style="color:var(--gold);font-size:.6rem">(Ikaw)</span>':''}</div>
+        <div class="glb-player-info">${escHtml(info||r.school||'')}</div>
+      </div>
+      <div class="glb-score">${r.score}<small>${r.diff||''}</small></div>
+    </div>`;
+  }).join('');
+}
+
+function renderLocalFallback() {
+  const body = document.getElementById('glbBody');
+  let scores = [];
+  try { scores = JSON.parse(localStorage.getItem('elfili_scores') || '[]'); } catch(e){}
+  if (!scores.length) {
+    body.innerHTML = '<div class="glb-error">Hindi ma-connect sa server. Walang lokal na datos.</div>';
+    return;
+  }
+  const medals = ['🥇','🥈','🥉'];
+  body.innerHTML = `<div style="text-align:center;padding:.5rem 1rem .2rem;font-size:.7rem;color:rgba(201,168,76,.4);font-style:italic">⚠ Offline mode — lokal na datos</div>` +
+    scores.map((s,i) => `<div class="glb-row">
+      <div class="glb-rank ${['top1','top2','top3'][i]||''}">${medals[i]||i+1}</div>
+      <div class="glb-player">
+        <div class="glb-player-name">${escHtml(gPlayer?.name||'Ikaw')}</div>
+        <div class="glb-player-info">${s.date}</div>
+      </div>
+      <div class="glb-score">${s.score}</div>
+    </div>`).join('');
+}
+
+function escHtml(s) {
+  return String(s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// Allow Enter key to submit reg form
+document.getElementById('regScreen').addEventListener('keydown', e => {
+  if (e.key === 'Enter') submitReg();
+});
+
+window.addEventListener('load',()=>{
+  // voices may need a moment to load
+  window.speechSynthesis&&window.speechSynthesis.getVoices();
+  setTimeout(()=>window.speechSynthesis&&window.speechSynthesis.getVoices(),500);
+});
 </script>
+
+<!-- ══════════════════════════════════════
+     PLAYER REGISTRATION SCREEN
+     ══════════════════════════════════════ -->
+<div class="reg-screen hidden" id="regScreen">
+  <div class="reg-box">
+    <p class="reg-eyeline">El Filibusterismo — Laro</p>
+    <h2 class="reg-title">Sino Ka?</h2>
+    <p class="reg-sub">Pumasok ang iyong impormasyon bago maglaro</p>
+    <div class="reg-divider"><span>✦</span></div>
+
+    <div class="reg-field">
+      <label class="reg-label" for="regName">Pangalan</label>
+      <input class="reg-input" id="regName" type="text" placeholder="Ilagay ang iyong pangalan..." maxlength="40" autocomplete="name">
+      <div class="reg-error" id="regNameErr">Pakisulat ang iyong pangalan.</div>
+    </div>
+
+    <div class="reg-row">
+      <div class="reg-field">
+        <label class="reg-label" for="regAge">Edad</label>
+        <input class="reg-input" id="regAge" type="number" placeholder="Hal. 16" min="5" max="99">
+        <div class="reg-error" id="regAgeErr">Ilagay ang tamang edad (5–99).</div>
+      </div>
+      <div class="reg-field">
+        <label class="reg-label" for="regGender">Kasarian</label>
+        <select class="reg-select" id="regGender">
+          <option value="">— Piliin —</option>
+          <option value="Lalaki">Lalaki</option>
+          <option value="Babae">Babae</option>
+          <option value="Iba pa">Iba pa</option>
+          <option value="Ayaw sabihin">Ayaw sabihin</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="reg-row">
+      <div class="reg-field">
+        <label class="reg-label" for="regSection">Seksiyon / Kurso</label>
+        <input class="reg-input" id="regSection" type="text" placeholder="Hal. Gr.10 Narra" maxlength="30">
+      </div>
+      <div class="reg-field">
+        <label class="reg-label" for="regSchool">Paaralan</label>
+        <input class="reg-input" id="regSchool" type="text" placeholder="Pangalan ng paaralan" maxlength="50">
+      </div>
+    </div>
+
+    <div class="reg-field">
+      <label class="reg-label" for="regRegion">Rehiyon</label>
+      <select class="reg-select" id="regRegion">
+        <option value="">— Piliin —</option>
+        <option>NCR — Metro Manila</option>
+        <option>Region I — Ilocos</option>
+        <option>Region II — Cagayan Valley</option>
+        <option>Region III — Central Luzon</option>
+        <option>Region IV-A — CALABARZON</option>
+        <option>Region IV-B — MIMAROPA</option>
+        <option>Region V — Bicol</option>
+        <option>Region VI — Western Visayas</option>
+        <option>Region VII — Central Visayas</option>
+        <option>Region VIII — Eastern Visayas</option>
+        <option>Region IX — Zamboanga Peninsula</option>
+        <option>Region X — Northern Mindanao</option>
+        <option>Region XI — Davao</option>
+        <option>Region XII — SOCCSKSARGEN</option>
+        <option>Region XIII — Caraga</option>
+        <option>BARMM</option>
+        <option>CAR — Cordillera</option>
+        <option>Ibang Bansa</option>
+      </select>
+    </div>
+
+    <button class="reg-submit" id="regSubmitBtn" onclick="submitReg()">
+      <span id="regBtnText">MAGSIMULA NA ✦</span>
+      <span class="reg-spin" id="regSpin"></span>
+    </button>
+  </div>
+</div>
+
 </body>
 </html>
