@@ -1,30 +1,67 @@
-PLAYER REGISTRATION + GOOGLE SHEETS BOARD
-   ═══════════════════════════════════════════ */
+/* PLAYER REGISTRATION + GOOGLE SHEETS BOARD */
 
 /* Registration screen */
 .reg-screen {
   position:fixed; inset:0; z-index:9700;
-  background:rgba(2,1,0,.97);
+  background:rgba(2,1,0,.88);
   display:flex; align-items:center; justify-content:center;
-  padding:1.5rem; backdrop-filter:blur(18px);
+  padding:1.5rem; backdrop-filter:blur(14px);
+  overflow-y:auto;
 }
 .reg-screen.hidden { display:none }
 
 .reg-box {
   background:linear-gradient(155deg,#1e1208,#0d0700);
   border:1px solid rgba(201,168,76,.3);
-  border-radius:5px; width:100%; max-width:480px;
-  padding:2.5rem 2.2rem 2rem;
-  box-shadow:0 40px 120px rgba(0,0,0,.9), 0 0 60px rgba(201,168,76,.06);
+  border-radius:6px; width:100%; max-width:500px;
+  padding: 20px;;
+  box-shadow:0 32px 100px rgba(0,0,0,.95), 0 0 0 1px rgba(201,168,76,.08);
   position:relative; overflow:hidden;
-  animation:modal-in .5s var(--ease-expo) both;
+  margin:auto;
 }
+/* window chrome corners */
 .reg-box::before,.reg-box::after {
   content:''; position:absolute;
-  width:28px; height:28px; border-color:var(--gold); border-style:solid; opacity:.3;
+  width:24px; height:24px; border-color:rgba(201,168,76,.25); border-style:solid; opacity:1;
+  pointer-events:none; z-index:2;
 }
-.reg-box::before { top:10px; left:10px; border-width:1px 0 0 1px }
+.reg-box::before { top:56px; left:10px; border-width:1px 0 0 1px }
 .reg-box::after  { bottom:10px; right:10px; border-width:0 1px 1px 0 }
+
+/* Window title bar */
+.reg-titlebar {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.75rem 1.2rem;
+  background:rgba(201,168,76,.07);
+  border-bottom:1px solid rgba(201,168,76,.15);
+  user-select:none;
+}
+.reg-titlebar-dots { display:flex; gap:.4rem; align-items:center }
+.reg-titlebar-dot {
+  width:11px; height:11px; border-radius:50%;
+  background:rgba(201,168,76,.2); border:1px solid rgba(201,168,76,.35);
+}
+.reg-titlebar-dot.close {
+  background:rgba(224,80,80,.5); border-color:rgba(224,80,80,.6); cursor:pointer;
+  transition:background .2s;
+}
+.reg-titlebar-dot.close:hover { background:rgba(224,80,80,.9) }
+.reg-titlebar-label {
+  font-family:'Cinzel',serif; font-size:.55rem; letter-spacing:.35em;
+  color:rgba(201,168,76,.45); text-transform:uppercase;
+}
+.reg-titlebar-spacer { width:52px }
+
+/* Scrollable inner body */
+.reg-body {
+  padding:2rem 2.2rem 2rem;
+  max-height:calc(100vh - 140px);
+  overflow-y:auto;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(201,168,76,.3) transparent;
+}
+.reg-body::-webkit-scrollbar { width:4px }
+.reg-body::-webkit-scrollbar-thumb { background:rgba(201,168,76,.3); border-radius:2px }
 
 .reg-eyeline {
   font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.45em;
@@ -94,12 +131,17 @@ PLAYER REGISTRATION + GOOGLE SHEETS BOARD
   transition:transform .2s var(--ease-spring), box-shadow .3s;
   display:flex; align-items:center; justify-content:center; gap:.6rem;
 }
-.reg-submit:hover { transform:scale(1.03); box-shadow:0 8px 30px rgba(201,168,76,.35) }
-.reg-submit:active { transform:scale(.98) }
-.reg-submit:disabled { opacity:.5; cursor:not-allowed; transform:none }
-.reg-spin { width:15px; height:15px; border:2px solid rgba(4,2,0,.3);
-  border-top-color:var(--ink); border-radius:50%; animation:spin .7s linear infinite;
-  display:none }
+.reg-submit:hover:not(:disabled) { transform:scale(1.03); box-shadow:0 8px 30px rgba(201,168,76,.35) }
+.reg-submit:active:not(:disabled) { transform:scale(.98) }
+.reg-submit:disabled { opacity:.6; cursor:not-allowed; transform:none }
+.reg-spin {
+  width:15px; height:15px;
+  border:2px solid rgba(4,2,0,.25);
+  border-top-color:var(--ink);
+  border-radius:50%;
+  animation:spin .7s linear infinite;
+  display:none; flex-shrink:0;
+}
 
 /* Player badge (top of game) */
 .player-badge {
@@ -151,7 +193,7 @@ PLAYER REGISTRATION + GOOGLE SHEETS BOARD
   border-radius:20px; transition:all .25s; text-transform:uppercase;
 }
 .glb-refresh:hover { border-color:var(--gold); color:var(--gold) }
-.glb-refresh.spinning { animation:spin 1s linear infinite; pointer-events:none }
+.glb-refresh.spinning { opacity:.5; pointer-events:none; cursor:not-allowed }
 
 .glb-body { padding:.5rem 0 }
 .glb-row {

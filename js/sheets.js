@@ -108,25 +108,38 @@ function saveScore() {
 
 async function pushToSheet() {
   if (!gPlayer || !SHEET_URL || SHEET_URL.includes('PASTE_YOUR')) return;
+
+  const params = new URLSearchParams({
+    action:  'addScore',
+    name:    gPlayer.name,
+    age:     gPlayer.age     || '',
+    gender:  gPlayer.gender  || '',
+    section: gPlayer.section || '',
+    school:  gPlayer.school  || '',
+    region:  gPlayer.region  || '',
+    score:   gScore,
+    streak:  gStreak,
+    diff:    gDiff,
+    date:    new Date().toLocaleString('fil-PH'),
+  });
+
+  const url = SHEET_URL + '?' + params.toString();
+
+  // Method 1: fetch with no-cors (fire-and-forget, always works cross-origin)
   try {
-    const params = new URLSearchParams({
-      action:  'addScore',
-      name:    gPlayer.name,
-      age:     gPlayer.age     || '',
-      gender:  gPlayer.gender  || '',
-      section: gPlayer.section || '',
-      school:  gPlayer.school  || '',
-      region:  gPlayer.region  || '',
-      score:   gScore,
-      streak:  gStreak,
-      diff:    gDiff,
-      date:    new Date().toLocaleString('fil-PH'),
-    });
-    // Must use no-cors for Apps Script (response is opaque but data IS written)
-    await fetch(SHEET_URL + '?' + params, { method:'GET', mode:'no-cors' });
-    // Wait for sheet to process, then reload leaderboard
-    setTimeout(loadGlobalBoard, 2500);
-  } catch(e) { console.warn('Sheet push failed:', e); }
+    await fetch(url, { method: 'GET', mode: 'no-cors' });
+    console.log('Score pushed via fetch (no-cors)');
+  } catch(e) {
+    // Method 2: image ping fallback (works even when fetch is blocked)
+    try {
+      const img = new Image();
+      img.src = url;
+      console.log('Score pushed via image ping');
+    } catch(e2) { console.warn('Push failed:', e2); }
+  }
+
+  // Reload leaderboard after a short delay to let sheet process
+  setTimeout(loadGlobalBoard, 3000);
 }
 
 async function loadGlobalBoard() {
@@ -134,28 +147,46 @@ async function loadGlobalBoard() {
   const btn  = document.getElementById('glbRefreshBtn');
   if (!body) return;
 
-  if (SHEET_URL.includes('PASTE_YOUR')) {
-    body.innerHTML = '<div class="glb-error" style="display:block;text-align:center;padding:1.5rem">⚠ I-setup muna ang Google Sheets URL sa SHEET_URL variable sa code.</div>';
+  if (!SHEET_URL || SHEET_URL.includes('PASTE_YOUR')) {
+    body.innerHTML = '<div class="glb-error" style="text-align:center;padding:1.5rem">⚠ I-setup muna ang Google Sheets URL.</div>';
     return;
   }
 
-  btn.classList.add('spinning');
+  btn.disabled = true;
+  btn.textContent = 'Nilo-load...';
   body.innerHTML = '<div class="glb-loading"><div class="glb-loading-spin"></div>Nilo-load ang leaderboard...</div>';
 
-  try {
-    // Use a CORS proxy pattern: append callback for JSONP, or use direct fetch
-    // Apps Script with "Anyone" access allows direct GET with cors
-    const url = SHEET_URL + '?action=getScores&limit=20&t=' + Date.now();
-    const res  = await fetch(url, { method: 'GET' }); // no mode:'no-cors' so we CAN read
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
-    renderGlobalBoard(Array.isArray(data) ? data : []);
-  } catch(e) {
-    console.warn('Leaderboard fetch error:', e);
-    renderLocalFallback();
-  } finally {
-    btn.classList.remove('spinning');
-  }
+  // Use JSONP to bypass CORS — Apps Script returns callback(json)
+  const cbName = 'elfili_lb_' + Date.now();
+  const url = SHEET_URL + '?action=getScores&limit=20&callback=' + cbName + '&t=' + Date.now();
+
+  await new Promise((resolve) => {
+    const timeout = setTimeout(() => {
+      cleanup(); renderLocalFallback(); resolve();
+    }, 8000);
+
+    window[cbName] = (data) => {
+      cleanup();
+      renderGlobalBoard(Array.isArray(data) ? data : []);
+      resolve();
+    };
+
+    function cleanup() {
+      clearTimeout(timeout);
+      delete window[cbName];
+      const s = document.getElementById('elfili_jsonp_script');
+      if (s) s.remove();
+    }
+
+    const script = document.createElement('script');
+    script.id  = 'elfili_jsonp_script';
+    script.src = url;
+    script.onerror = () => { cleanup(); renderLocalFallback(); resolve(); };
+    document.head.appendChild(script);
+  });
+
+  btn.disabled = false;
+  btn.textContent = '↺ I-refresh';
 }
 
 function renderGlobalBoard(rows) {
@@ -204,9 +235,13 @@ function escHtml(s) {
   return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
-// Enter key on reg screen
+// Enter = submit · Escape = close (only if already registered) · backdrop click = close
 document.getElementById('regScreen').addEventListener('keydown', e => {
   if (e.key === 'Enter') submitReg();
+  if (e.key === 'Escape' && gPlayer) hideReg();
+});
+document.getElementById('regScreen').addEventListener('click', e => {
+  if (e.target === document.getElementById('regScreen') && gPlayer) hideReg();
 });
 
 window.addEventListener('load',()=>{
