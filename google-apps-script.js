@@ -33,36 +33,17 @@ const HEADERS = [
 
 // ── ENTRY POINT ──────────────────────────────────────────────
 function doGet(e) {
-  // Guard: e or e.parameter may be undefined when run inside the editor
-  const params = (e && e.parameter) ? e.parameter : {};
-  const action = (params.action || '').toLowerCase();
+  const action = (e.parameter.action || '').toLowerCase();
 
   if (action === 'addscore') {
-    return addScore(params);
+    return addScore(e.parameter);
   }
   if (action === 'getscores') {
-    const limit = parseInt(params.limit) || 20;
+    const limit = parseInt(e.parameter.limit) || 20;
     return getScores(limit);
   }
-  // Default: health check
-  return jsonResponse({ status: 'ok', message: 'El Filibusterismo Leaderboard API is running.' });
-}
-
-// ── TEST FUNCTION (run this inside the editor to verify) ──────
-function testScript() {
-  // Simulate addScore
-  const addResult = doGet({ parameter: {
-    action: 'addScore',
-    name: 'Test Player', age: '16', gender: 'Lalaki',
-    section: 'Gr10-Narra', school: 'Test School',
-    region: 'NCR — Metro Manila', score: '120',
-    streak: '3', diff: 'easy', date: new Date().toLocaleString()
-  }});
-  Logger.log('addScore result: ' + addResult.getContent());
-
-  // Simulate getScores
-  const getResult = doGet({ parameter: { action: 'getScores', limit: '5' } });
-  Logger.log('getScores result: ' + getResult.getContent());
+  // Default: return status
+  return jsonResponse({ status: 'ok', message: 'El Filibusterismo Leaderboard API' });
 }
 
 // ── ADD SCORE ────────────────────────────────────────────────
