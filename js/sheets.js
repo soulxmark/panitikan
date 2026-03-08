@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════
 // GOOGLE SHEETS CONFIG — paste your Web App URL below
 // ═══════════════════════════════════════════════════
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwEgdKusVkXRqhss2kwL8X0fP1Z8XkQGhMmq64QpPAiyYArFf8_KUFVL5JFjLpAynp-/exec';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxyzcWIbkZjA22Arsr97DxnkVPYxr3E353Xd30d681ZkgUWjI2oTgjEPou_ZJoglqW7/exec';
 
 // ═══════════════════════════════════════════════════
 // PLAYER DATA
