@@ -14,7 +14,7 @@
   background:linear-gradient(155deg,#1e1208,#0d0700);
   border:1px solid rgba(201,168,76,.3);
   border-radius:6px; width:100%; max-width:500px;
-  padding: 20px;;
+  padding:0;
   box-shadow:0 32px 100px rgba(0,0,0,.95), 0 0 0 1px rgba(201,168,76,.08);
   position:relative; overflow:hidden;
   margin:auto;

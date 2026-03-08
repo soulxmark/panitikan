@@ -14,6 +14,28 @@ function setDiff(d,btn){
 /* initGame defined below in the Sheets/Player section */
 function startFreshGame_core() {
   gScore=0;gStreak=0;gQ=0;gAnswered=false;
+  // Restore gameCard structure (endGame replaces it with score screen)
+  const gc = document.getElementById('gameCard');
+  if (gc) gc.innerHTML = `<div class="clue-number" id="clueNumber">PAHIWATIG #1</div>
+      <div class="clue-text" id="clueText"><span id="clueDisplay"></span><span class="clue-cursor" id="clueCursor"></span></div>
+      <div class="voice-row">
+        <button class="voice-btn" id="voiceBtn" onclick="speakClue()"><span class="voice-icon">🔊</span> BASAHIN</button>
+        <button class="ai-btn"    id="aiBtn"    onclick="getAIClue()"><span>✦</span> <span id="aiBtnText">AI PAHIWATIG</span> <span class="ai-loading" id="aiLoading"></span></button>
+      </div>
+      <div class="countdown-wrap" id="countdownWrap">
+        <svg class="countdown-svg" width="46" height="46" viewBox="0 0 46 46">
+          <circle class="countdown-bg"  cx="23" cy="23" r="20"/>
+          <circle class="countdown-arc" id="countdownArc" cx="23" cy="23" r="20"/>
+        </svg>
+        <div class="countdown-num" id="countdownNum">30</div>
+      </div>`;
+  // Reset UI controls
+  const nb = document.getElementById('nextBtn');
+  if (nb) nb.style.display = 'none';
+  const rf = document.getElementById('resultFb');
+  if (rf) rf.classList.remove('show');
+  const cg = document.getElementById('choicesGrid');
+  if (cg) cg.innerHTML = '';
   loadHighScores();
   buildQuestions();
   showQuestion();
