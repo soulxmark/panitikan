@@ -1,0 +1,115 @@
+/* ═══════════════════════════════════
+   GAME PAGE
+   ═══════════════════════════════════ */
+.game-hero{padding:4rem 2rem 2rem;text-align:center}
+.game-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.8rem,5vw,3.2rem);background:linear-gradient(160deg,#f0d070,#c9a84c 50%,#9a7830);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.4rem}
+.game-subtitle{font-style:italic;color:rgba(212,184,122,.7);font-size:clamp(.88rem,2vw,1rem);margin-bottom:1.5rem}
+
+.game-wrap{max-width:800px;margin:0 auto;padding:1rem 2rem 5rem}
+@media(max-width:600px){.game-wrap{padding:1rem 1rem 4rem}}
+
+/* Score bar */
+.score-bar{display:flex;align-items:center;justify-content:space-between;background:var(--ink-3);border:1px solid rgba(201,168,76,.18);border-radius:3px;padding:.8rem 1.4rem;margin-bottom:2rem}
+.score-item{text-align:center}
+.score-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.28em;color:rgba(201,168,76,.55);text-transform:uppercase;display:block;margin-bottom:.2rem}
+.score-val{font-family:'Cinzel Decorative',serif;font-size:1.6rem;color:var(--gold-light)}
+.score-val.pop{animation:score-pop .4s var(--ease-spring)}
+
+/* Difficulty */
+.diff-row{display:flex;gap:.7rem;justify-content:center;margin-bottom:2rem;flex-wrap:wrap}
+.diff-btn{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.22em;padding:.4rem .9rem;border:1px solid rgba(201,168,76,.25);color:rgba(201,168,76,.6);background:none;cursor:pointer;text-transform:uppercase;transition:all .25s;border-radius:20px}
+.diff-btn:hover,.diff-btn.active{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.07)}
+
+/* Game card */
+.game-card{
+  background:linear-gradient(145deg,#1e1208,#0d0800);
+  border:1px solid rgba(201,168,76,.22);border-radius:4px;
+  padding:2.5rem 2rem 2rem;margin-bottom:1.5rem;
+  position:relative;overflow:hidden;
+  animation:glow-pulse 4s ease-in-out infinite;
+  min-height:220px;
+}
+.game-card::before,.game-card::after{content:'';position:absolute;width:28px;height:28px;border-color:var(--gold);border-style:solid;opacity:.3;pointer-events:none}
+.game-card::before{top:10px;left:10px;border-width:1px 0 0 1px}
+.game-card::after{bottom:10px;right:10px;border-width:0 1px 1px 0}
+
+.clue-number{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.35em;color:rgba(201,168,76,.55);text-transform:uppercase;margin-bottom:1rem}
+.clue-text{font-family:'EB Garamond',serif;font-size:clamp(1rem,2.5vw,1.22rem);font-style:italic;line-height:1.85;color:rgba(245,234,208,.88);min-height:80px}
+.clue-cursor{display:inline-block;width:2px;height:1em;background:var(--gold);vertical-align:middle;animation:cursor-blink 1s infinite;margin-left:2px}
+
+/* Voice controls */
+.voice-row{display:flex;align-items:center;gap:1rem;margin-top:1.5rem;flex-wrap:wrap}
+.voice-btn{
+  display:flex;align-items:center;gap:.5rem;
+  font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.25em;
+  padding:.55rem 1.2rem;border:1px solid rgba(201,168,76,.35);
+  color:var(--gold);background:none;cursor:pointer;
+  text-transform:uppercase;transition:all .3s;border-radius:20px;
+}
+.voice-btn:hover{border-color:var(--gold);background:rgba(201,168,76,.07)}
+.voice-btn.speaking{border-color:var(--ember);color:var(--ember);animation:voice-pulse 1s ease-in-out infinite}
+.voice-icon{font-size:1rem}
+.ai-btn{
+  display:flex;align-items:center;gap:.5rem;
+  font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.22em;
+  padding:.55rem 1.2rem;
+  background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.25));
+  border:1px solid rgba(201,168,76,.5);color:var(--gold-light);
+  cursor:pointer;text-transform:uppercase;transition:all .3s;border-radius:20px;
+}
+.ai-btn:hover{background:linear-gradient(135deg,rgba(201,168,76,.25),rgba(201,168,76,.4));box-shadow:0 0 20px rgba(201,168,76,.2)}
+.ai-btn:disabled{opacity:.4;cursor:not-allowed}
+.ai-loading{display:none;width:14px;height:14px;border:1.5px solid rgba(201,168,76,.3);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Countdown ring */
+.countdown-wrap{position:absolute;top:1rem;right:1rem;width:46px;height:46px}
+.countdown-svg{transform:rotate(-90deg)}
+.countdown-bg{fill:none;stroke:rgba(201,168,76,.12);stroke-width:3}
+.countdown-arc{fill:none;stroke:var(--gold);stroke-width:3;stroke-linecap:round;stroke-dasharray:283;stroke-dashoffset:0;transition:stroke-dashoffset .1s linear,stroke .3s}
+.countdown-arc.urgent{stroke:var(--ember)}
+.countdown-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:.75rem;color:var(--gold)}
+
+/* Answer choices */
+.choices-grid{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:1.5rem}
+@media(max-width:480px){.choices-grid{grid-template-columns:1fr}}
+.choice-btn{
+  font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.1em;
+  padding:.9rem 1rem;text-align:left;
+  border:1px solid rgba(201,168,76,.2);
+  background:rgba(201,168,76,.04);color:var(--parchment-dark);
+  cursor:pointer;border-radius:3px;
+  transition:all .25s;display:flex;align-items:center;gap:.7rem;
+}
+.choice-btn:hover:not(:disabled){border-color:var(--gold);background:rgba(201,168,76,.1);color:var(--gold-light);transform:translateX(4px)}
+.choice-btn.correct{border-color:#4a9a4a;background:rgba(74,154,74,.12);color:#7acc7a;pointer-events:none}
+.choice-btn.wrong{border-color:#9a2020;background:rgba(154,32,32,.12);color:#cc5050;pointer-events:none;animation:wrong-shake .4s ease}
+.choice-btn:disabled{opacity:.5;cursor:not-allowed}
+.choice-emoji{font-size:1.2rem}
+
+/* Result feedback */
+.result-feedback{
+  display:none;text-align:center;padding:1.2rem;
+  border-radius:3px;margin-bottom:1.2rem;
+  font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.2em;
+}
+.result-feedback.show{display:block;animation:fade-up .4s var(--ease-expo)}
+.result-feedback.correct-fb{background:rgba(74,154,74,.1);border:1px solid rgba(74,154,74,.3);color:#7acc7a}
+.result-feedback.wrong-fb{background:rgba(154,32,32,.1);border:1px solid rgba(154,32,32,.3);color:#cc5050}
+
+/* Game controls */
+.game-ctrl{display:flex;gap:.9rem;flex-wrap:wrap}
+.ctrl-btn{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.28em;padding:.7rem 1.6rem;border:1px solid rgba(201,168,76,.35);color:var(--gold);background:none;cursor:pointer;text-transform:uppercase;transition:all .3s;border-radius:2px}
+.ctrl-btn:hover{border-color:var(--gold);background:rgba(201,168,76,.07)}
+.ctrl-btn.primary{background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:var(--ink);border-color:transparent;font-weight:600}
+.ctrl-btn.primary:hover{transform:scale(1.04);box-shadow:0 6px 24px rgba(201,168,76,.3)}
+
+/* High scores */
+.highscores{margin-top:2.5rem;background:var(--ink-3);border:1px solid rgba(201,168,76,.15);border-radius:3px;padding:1.5rem 1.8rem}
+.hs-title{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.35em;color:var(--gold);text-transform:uppercase;margin-bottom:1rem}
+.hs-list{list-style:none}
+.hs-item{display:flex;align-items:center;gap:1rem;padding:.5rem 0;border-bottom:1px solid rgba(201,168,76,.07)}
+.hs-item:last-child{border-bottom:none}
+.hs-rank{font-family:'Cinzel Decorative',serif;font-size:.8rem;color:var(--gold-dim);width:24px;text-align:center}
+.hs-name{flex:1;font-size:.9rem;color:var(--parchment-dark)}
+.hs-score{font-family:'Cinzel',serif;font-size:.78rem;color:var(--gold)}

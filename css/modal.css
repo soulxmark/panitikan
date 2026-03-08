@@ -1,0 +1,29 @@
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(3,1,0,.95);backdrop-filter:blur(10px) saturate(.6);z-index:8000;display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity .35s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal{background:linear-gradient(155deg,#1e1208,#0d0700);border:1px solid rgba(201,168,76,.28);border-radius:4px;max-width:660px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 55px 130px rgba(0,0,0,.97);opacity:0}
+.modal-overlay.open .modal{animation:modal-in .4s var(--ease-expo) forwards}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:rgba(201,168,76,.42);font-size:1.3rem;cursor:pointer;transition:color .2s,transform .3s;z-index:3}
+.modal-close:hover{color:var(--gold);transform:rotate(90deg)}
+.modal-header{padding:2.2rem 2.2rem 1.6rem;border-bottom:1px solid rgba(201,168,76,.12);display:flex;gap:1.4rem;align-items:flex-start;position:relative;overflow:hidden}
+.modal-header::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 0% 50%,rgba(201,168,76,.04),transparent 65%);pointer-events:none}
+.modal-emoji{font-size:3.8rem;flex-shrink:0;filter:drop-shadow(0 6px 16px rgba(0,0,0,.6));animation:float-s 3s ease-in-out infinite}
+.modal-name{font-family:'Cinzel',serif;font-size:clamp(1.2rem,4vw,1.55rem);color:var(--gold-light);margin-bottom:.2rem;animation:ink-reveal .6s var(--ease-expo) forwards}
+.modal-alias{font-style:italic;font-size:.88rem;color:rgba(201,168,76,.55);margin-bottom:.55rem}
+.modal-role-tag{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.25em;padding:3px 10px;border:1px solid rgba(201,168,76,.45);color:var(--gold);text-transform:uppercase;display:inline-block}
+.modal-body{padding:1.6rem 2.2rem 2.2rem}
+@media(max-width:600px){.modal-header{padding:1.5rem;flex-direction:column;gap:.8rem}.modal-body{padding:1.2rem 1.5rem 1.8rem}.modal{max-height:95vh}}
+.modal-sec-label{font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.38em;color:var(--gold);text-transform:uppercase;margin:1.3rem 0 .55rem}
+.modal-attrs{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+@media(max-width:480px){.modal-attrs{grid-template-columns:1fr}}
+.modal-attr{background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.1);padding:.55rem .9rem;border-radius:2px;transition:background .3s,border-color .3s}
+.modal-attr:hover{background:rgba(201,168,76,.08);border-color:rgba(201,168,76,.25)}
+.modal-attr-label{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.2em;color:var(--gold-dim);display:block;margin-bottom:.15rem;text-transform:uppercase}
+.modal-attr-val{font-size:.86rem;color:var(--parchment-dark)}
+.modal-desc{font-size:.96rem;line-height:1.8;color:rgba(245,234,208,.8)}
+.modal-quote{border-left:2px solid var(--gold-dim);padding:.4rem 0 .4rem 1rem;font-style:italic;color:rgba(201,168,76,.65);font-size:.9rem;line-height:1.75;margin-top:1.1rem}
+
+/* Particles */
+#particles{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden}
+.ptcl{position:absolute;bottom:-5px;border-radius:50%;background:radial-gradient(circle,#f0d070,#c9a84c 50%,transparent);animation:float-p var(--dur) var(--delay) ease-in infinite;left:var(--left);width:var(--size);height:var(--size);opacity:0}
+.spark{position:fixed;width:5px;height:5px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:9997;animation:spark-a .55s ease-out forwards}

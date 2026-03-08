@@ -1,0 +1,76 @@
+<!-- ══════════════════════════════════════
+     PLAYER REGISTRATION SCREEN
+     ══════════════════════════════════════ -->
+<div class="reg-screen hidden" id="regScreen">
+  <div class="reg-box">
+    <p class="reg-eyeline">El Filibusterismo — Laro</p>
+    <h2 class="reg-title">Sino Ka?</h2>
+    <p class="reg-sub">Pumasok ang iyong impormasyon bago maglaro</p>
+    <div class="reg-divider"><span>✦</span></div>
+
+    <div class="reg-field">
+      <label class="reg-label" for="regName">Pangalan</label>
+      <input class="reg-input" id="regName" type="text" placeholder="Ilagay ang iyong pangalan..." maxlength="40" autocomplete="name">
+      <div class="reg-error" id="regNameErr">Pakisulat ang iyong pangalan.</div>
+    </div>
+
+    <div class="reg-row">
+      <div class="reg-field">
+        <label class="reg-label" for="regAge">Edad</label>
+        <input class="reg-input" id="regAge" type="number" placeholder="Hal. 16" min="5" max="99">
+        <div class="reg-error" id="regAgeErr">Ilagay ang tamang edad (5–99).</div>
+      </div>
+      <div class="reg-field">
+        <label class="reg-label" for="regGender">Kasarian</label>
+        <select class="reg-select" id="regGender">
+          <option value="">— Piliin —</option>
+          <option value="Lalaki">Lalaki</option>
+          <option value="Babae">Babae</option>
+          <option value="Iba pa">Iba pa</option>
+          <option value="Ayaw sabihin">Ayaw sabihin</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="reg-row">
+      <div class="reg-field">
+        <label class="reg-label" for="regSection">Seksiyon / Kurso</label>
+        <input class="reg-input" id="regSection" type="text" placeholder="Hal. Gr.10 Narra" maxlength="30">
+      </div>
+      <div class="reg-field">
+        <label class="reg-label" for="regSchool">Paaralan</label>
+        <input class="reg-input" id="regSchool" type="text" placeholder="Pangalan ng paaralan" maxlength="50">
+      </div>
+    </div>
+
+    <div class="reg-field">
+      <label class="reg-label" for="regRegion">Rehiyon</label>
+      <select class="reg-select" id="regRegion">
+        <option value="">— Piliin —</option>
+        <option>NCR — Metro Manila</option>
+        <option>Region I — Ilocos</option>
+        <option>Region II — Cagayan Valley</option>
+        <option>Region III — Central Luzon</option>
+        <option>Region IV-A — CALABARZON</option>
+        <option>Region IV-B — MIMAROPA</option>
+        <option>Region V — Bicol</option>
+        <option>Region VI — Western Visayas</option>
+        <option>Region VII — Central Visayas</option>
+        <option>Region VIII — Eastern Visayas</option>
+        <option>Region IX — Zamboanga Peninsula</option>
+        <option>Region X — Northern Mindanao</option>
+        <option>Region XI — Davao</option>
+        <option>Region XII — SOCCSKSARGEN</option>
+        <option>Region XIII — Caraga</option>
+        <option>BARMM</option>
+        <option>CAR — Cordillera</option>
+        <option>Ibang Bansa</option>
+      </select>
+    </div>
+
+    <button class="reg-submit" id="regSubmitBtn" onclick="submitReg()">
+      <span id="regBtnText">MAGSIMULA NA ✦</span>
+      <span class="reg-spin" id="regSpin"></span>
+    </button>
+  </div>
+</div>

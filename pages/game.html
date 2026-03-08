@@ -1,0 +1,87 @@
+<div id="page-game" class="page">
+  <div class="game-hero">
+    <h1 class="game-title">Sino Ako?</h1>
+    <p class="game-subtitle">Hulaan ang tauhan mula sa mga pahiwatig · May Boses na AI</p>
+  </div>
+  <div class="game-wrap">
+    <!-- Player Badge -->
+    <div class="player-badge" id="playerBadge" style="display:none">
+      <div class="player-avatar" id="playerAvatar">?</div>
+      <div class="player-info">
+        <div class="player-name" id="playerName">—</div>
+        <div class="player-meta" id="playerMeta">—</div>
+      </div>
+      <button class="player-change-btn" onclick="showReg()">Baguhin</button>
+    </div>
+
+    <!-- Score -->
+    <div class="score-bar">
+      <div class="score-item"><span class="score-label">Puntos</span><span class="score-val" id="scoreVal">0</span></div>
+      <div class="score-item"><span class="score-label">Streak</span><span class="score-val" id="streakVal">0🔥</span></div>
+      <div class="score-item"><span class="score-label">Tanong</span><span class="score-val" id="qNumVal">1/10</span></div>
+      <div class="score-item"><span class="score-label">Pinakamataas</span><span class="score-val" id="highVal">0</span></div>
+    </div>
+
+    <!-- Difficulty -->
+    <div class="diff-row">
+      <button class="diff-btn active" onclick="setDiff('easy',this)">Madali</button>
+      <button class="diff-btn" onclick="setDiff('medium',this)">Katamtaman</button>
+      <button class="diff-btn" onclick="setDiff('hard',this)">Mahirap</button>
+    </div>
+
+    <!-- Game card -->
+    <div class="game-card" id="gameCard">
+      <div class="clue-number" id="clueNumber">PAHIWATIG #1</div>
+      <div class="clue-text" id="clueText"><span id="clueDisplay"></span><span class="clue-cursor" id="clueCursor"></span></div>
+      <div class="voice-row">
+        <button class="voice-btn" id="voiceBtn" onclick="speakClue()"><span class="voice-icon">🔊</span> BASAHIN</button>
+        <button class="ai-btn" id="aiBtn" onclick="getAIClue()"><span>✦</span> <span id="aiBtnText">AI PAHIWATIG</span> <span class="ai-loading" id="aiLoading"></span></button>
+      </div>
+      <!-- Countdown -->
+      <div class="countdown-wrap" id="countdownWrap">
+        <svg class="countdown-svg" width="46" height="46" viewBox="0 0 46 46">
+          <circle class="countdown-bg" cx="23" cy="23" r="20"/>
+          <circle class="countdown-arc" id="countdownArc" cx="23" cy="23" r="20"/>
+        </svg>
+        <div class="countdown-num" id="countdownNum">30</div>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div class="result-feedback" id="resultFb"></div>
+
+    <!-- Choices -->
+    <div class="choices-grid" id="choicesGrid"></div>
+
+    <!-- Controls -->
+    <div class="game-ctrl">
+      <button class="ctrl-btn primary" id="nextBtn" onclick="nextQuestion()" style="display:none">Susunod →</button>
+      <button class="ctrl-btn" onclick="resetGame()">↺ Magsimula Ulit</button>
+    </div>
+
+    <!-- Local high scores -->
+    <div class="highscores">
+      <div class="hs-title">⭐ Iyong mga Naitala</div>
+      <ul class="hs-list" id="hsList"></ul>
+    </div>
+
+    <!-- Global leaderboard -->
+    <div class="global-lb" id="globalLb">
+      <div class="glb-header">
+        <div class="glb-title-wrap">
+          <span class="glb-icon">🌍</span>
+          <div>
+            <div class="glb-title">Global Leaderboard</div>
+            <div class="glb-sub">Pinakamataas na Puntos — Lahat ng Manlalaro</div>
+          </div>
+        </div>
+        <button class="glb-refresh" id="glbRefreshBtn" onclick="loadGlobalBoard()">↺ I-refresh</button>
+      </div>
+      <div class="glb-body" id="glbBody">
+        <div class="glb-loading"><div class="glb-loading-spin"></div>Nilo-load ang leaderboard...</div>
+      </div>
+    </div>
+  </div>
+  <footer class="footer"><span>✦</span>&nbsp; El Filibusterismo — Jose Rizal — 1891 &nbsp;<span>✦</span></footer>
+</div>
+</div>

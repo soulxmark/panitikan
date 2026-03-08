@@ -1,0 +1,3 @@
+/* ── PAGES ── */
+.page{display:none;min-height:100vh;padding-top:var(--nav-h)}
+.page.active{display:block;animation:slide-page .55s var(--ease-expo) forwards}
