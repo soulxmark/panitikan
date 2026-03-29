@@ -11,7 +11,7 @@
  *
  *  TEST inside editor: run testScript() — NOT doGet()
  */
-
+ 
 const SHEET_ID   = '1pemyeNapgMJ-C1FzOmQc8XmmmCi9rSHmK4e33jq2xRc';
 const SHEET_NAME = 'Leaderboard';
 const MAX_ROWS   = 1000;
