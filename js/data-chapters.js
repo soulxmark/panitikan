@@ -2,100 +2,172 @@
 // CHAPTERS DATA — All 38 condensed to key chapters
 // ═══════════════════════════════════════════════════
 const CHAPTERS = [
-  { num:1, roman:'I', title:'Ang Bisita', emoji:'🚢', bg:'linear-gradient(160deg,#0a1a25,#020810)',
+  { 
+    num:1, roman:'I', title:'Ang Bisita', 
+    imgSrc: './panitikan/Images/padreCamorra.webp',
     chars:['simoun','quiroga'], color:'#4080a0',
-    story:'Sa isang barko na papalapit sa baybayin ng Pilipinas, isang misteriyosong mangangalakal ang dumating — si Simoun, na suot ang itim na salamin at nagtatago ng mapait na lihim. Ang lahat ng may kapangyarihan ay nagkukumahog na makipagkaibigan sa kanya.',
-    scene:'Malayo sa baybayin, ang dampi ng alon ay naririnig. Sa deck ng barko, nakatayo ang isang lalaking nakabihis ng mahal — siya si Simoun. Sa kanyang mga mata, puro galit ang nakikita kung ang iyong pagtingin ay malalim.' },
-  { num:2, roman:'II', title:'Ang Konsultasyon', emoji:'🏛️', bg:'linear-gradient(160deg,#1a0d05,#0a0502)',
+    story:'Sa isang barko na papalapit sa baybayin ng Pilipinas, isang misteriyosong mangangalakal ang dumating — si Simoun, na suot ang itim na salamin at nagtatago ng mapait na lihim.',
+    scene:'Malayo sa baybayin, ang dampi ng alon ay naririnig. Sa deck ng barko, nakatayo ang isang lalaking nakabihis ng mahal — siya si Simoun.' 
+  },
+  { 
+    num:2, roman:'II', title:'Ang Konsultasyon', 
+    imgSrc: './panitikan/Images/donCustodio.webp',
     chars:['simoun','custodio'], color:'#c9a84c',
-    story:'Sa mga bulwagan ng kapangyarihan, lumalakad si Simoun nang may ganap na katiwala. Binibisita niya ang mga mataas na opisyal, nag-aalok ng mga regalo, nagbibili ng impluwensya — at sa bawat pakikitungo, tinatago niya ang kanyang tunay na layunin.',
-    scene:'Ang mga pasilyo ng palasyo ay nagniningning sa liwanag ng mga parol. Si Simoun at si Don Custodio ay nag-uusap nang tahimik — dalawang lalaking may magkaibang layunin ngunit magkasamang nakatayo sa iisang mundong puno ng kasinungalingan.' },
-  { num:3, roman:'III', title:'Ang Hapag-kainan', emoji:'🍽️', bg:'linear-gradient(160deg,#1a1505,#0a0c03)',
+    story:'Sa mga bulwagan ng kapangyarihan, lumalakad si Simoun nang may ganap na katiwala. Binibisita niya ang mga mataas na opisyal, nag-aalok ng mga regalo, at nagbibili ng impluwensya.',
+    scene:'Ang mga pasilyo ng palasyo ay nagniningning sa liwanag ng mga parol. Si Simoun at si Don Custodio ay nag-uusap nang tahimik.' 
+  },
+  { 
+    num:3, roman:'III', title:'Ang Hapag-kainan', 
+    imgSrc: './panitikan/Images/hapagkainan.webp',
     chars:['simoun','pelaez','paulita'], color:'#d4a840',
-    story:'Sa isang maringal na hapag-kainan, nagtitipon ang mga pinaka-impluwensiyal na tao ng kolonyal na lipunan. Ang tawa, ang alak, ang musika — lahat ito ay tanda ng isang mundo na hindi alam ang kanyang katapusan.',
-    scene:'Ang mga kandila ay nagsisindi sa malawak na sala. Si Simoun ay nakaupo sa dulo ng mesa, nagmamasid sa lahat. Sa kanyang isip, ang bawat tao sa mesa ay isang piraso ng kanyang malaking laruan — isang rebolusyon na hindi pa nagsisimula.' },
-  { num:4, roman:'IV', title:'Ang Estudyante', emoji:'📚', bg:'linear-gradient(160deg,#050a1a,#020508)',
+    story:'Sa isang maringal na hapag-kainan, nagtitipon ang mga pinaka-impluwensiyal na tao ng kolonyal na lipunan.',
+    scene:'Ang mga kandila ay nagsisindi sa malawak na sala. Si Simoun ay nakaupo sa dulo ng mesa, nagmamasid sa lahat.' 
+  },
+  { 
+    num:4, roman:'IV', title:'Ang Estudyante', 
+    imgSrc: './panitikan/Images/basilio.webp',
     chars:['basilio','macaraig','isagani'], color:'#6080c0',
-    story:'Sa mga paaralan ng Maynila, nagtitipon ang mga kabataang Pilipino. Si Basilio, si Isagani, si Macaraig — lahat sila ay may pangarap ng pagbabago. Ang kanilang boses ay malakas ngunit ang kanilang mga kamay ay hindi pa makapangyarihan.',
-    scene:'Sa umaga, ang mga estudyante ay nagsisiksikan sa mga bangko ng paaralan. Si Basilio ay nagbabasa nang mabilis — alam niya na ang kaalaman ay ang tanging sandata nila. Ngunit lihim sa kanyang puso ay ang takot na ang kaalaman ay hindi magiging sapat.' },
-  { num:5, roman:'V', title:'Ang Akademya', emoji:'🎓', bg:'linear-gradient(160deg,#100a1a,#080510)',
+    story:'Sa mga paaralan ng Maynila, nagtitipon ang mga kabataang Pilipino na may pangarap ng pagbabago.',
+    scene:'Sa umaga, ang mga estudyante ay nagsisiksikan sa mga bangko ng paaralan. Si Basilio ay nagbabasa nang mabilis.' 
+  },
+  { 
+    num:5, roman:'V', title:'Ang Akademya', 
+    imgSrc: './panitikan/Images/akademya.webp',
     chars:['macaraig','isagani','custodio'], color:'#9060c0',
-    story:'Nagpanukala ang mga estudyante ng pagtatayo ng isang Akademya ng Wikang Kastila — isang lugar kung saan maaaring palakasin ng mga Pilipino ang kanilang mga boses. Ngunit ang mga may kapangyarihan ay hindi handang ibigay ang ganoong pagkakataon.',
-    scene:'Sa harap ng mataas na opisyal, nakatayo ang mga kabataan. Si Macaraig ay nagsalita nang may lakas — ngunit sa kanyang tabi, ang sagot ng sistema ay nakasulat na sa mukha ni Don Custodio: hindi.' },
-  { num:6, roman:'VI', title:'Si Isagani at Paulita', emoji:'🌹', bg:'linear-gradient(160deg,#1a0515,#0d000a)',
+    story:'Nagpanukala ang mga estudyante ng pagtatayo ng isang Akademya ng Wikang Kastila, ngunit ang mga may kapangyarihan ay hindi handang ibigay ito.',
+    scene:'Sa harap ng mataas na opisyal, nakatayo ang mga kabataan. Ang sagot ng sistema ay nakasulat na sa mukha ni Don Custodio: hindi.' 
+  },
+  { 
+    num:6, roman:'VI', title:'Si Isagani at Paulita', 
+    imgSrc: './panitikan/Images/isaganiPaulita.webp',
     chars:['isagani','paulita'], color:'#c06090',
-    story:'Sa ilalim ng sikat ng buwan, nagkita sina Isagani at Paulita. Ang pag-ibig nila ay malakas ngunit ang mundo sa paligid nila ay gumagawa ng lahat para paghiwalayin sila — ang pera, ang posisyon, ang kapangyarihan.',
-    scene:'Sa hardin, ang mga bulaklak ay namumukadkad. Si Isagani ay hawak ang kamay ni Paulita, nagsasalita ng mga salitang puno ng pag-asa. Hindi pa niya alam na ang tagsibol na ito ay ang huli para sa kanilang pag-ibig.' },
-  { num:7, roman:'VII', title:'Ang Alahas ni Simoun', emoji:'💎', bg:'linear-gradient(160deg,#1a0a02,#0d0500)',
+    story:'Sa ilalim ng sikat ng buwan, nagkita sina Isagani at Paulita. Ang pag-ibig nila ay malakas ngunit ang mundo ay gumagawa ng paraan para paghiwalayin sila.',
+    scene:'Sa hardin, ang mga bulaklak ay namumukadkad. Si Isagani ay hawak ang kamay ni Paulita, nagsasalita ng mga salitang puno ng pag-asa.' 
+  },
+  { 
+    num:7, roman:'VII', title:'Ang Alahas ni Simoun', 
+    imgSrc: './panitikan/Images/alahas.webp',
     chars:['simoun'], color:'#f0d070',
-    story:'Sa loob ng kanyang kuwarto, binubuksan ni Simoun ang kanyang kahon ng mga alahas — ang kayamanan na magbibigay sa kanya ng kapangyarihan. Ngunit sa ilalim ng mga bato at ginto, nakatago ang isang bagay na mas mahalaga: ang kanyang nakaraan.',
-    scene:'Ang liwanag ng kandila ay gumagalaw sa mga diamante. Si Simoun ay nagmamasid sa bawat piraso — sa bawat alahas ay isang alaala, sa bawat gintong singsing ay isang naalab na damdamin. Ito ang kanyang mga armas.' },
-  { num:8, roman:'VIII', title:'Ang Lupa ni Tales', emoji:'🌾', bg:'linear-gradient(160deg,#04180a,#020c05)',
+    story:'Sa loob ng kanyang kuwarto, binubuksan ni Simoun ang kanyang kahon ng mga alahas — ang kayamanan na magbibigay sa kanya ng kapangyarihan.',
+    scene:'Ang liwanag ng kandila ay gumagalaw sa mga diamante. Sa bawat alahas ay isang alaala, sa bawat gintong singsing ay isang naalab na damdamin.' 
+  },
+  { 
+    num:8, roman:'VIII', title:'Ang Lupa ni Tales', 
+    imgSrc: './panitikan/Images/tales.webp',
     chars:['tales','juli'], color:'#40b060',
-    story:'Sa labas ng lungsod, si Cabesang Tales ay nagtatrabaho sa kanyang bukid. Ang lupa na kanyang pinagpaguran ay ang kanyang buhay. Ngunit ang mga prayle ay nagdeklara ng kanilang karapatan sa lupaing ito — at ang mundo ni Tales ay nagsimulang gumuho.',
-    scene:'Ang bukid ay berde at sagana. Si Tales ay nakatayo sa gitna ng kanyang mga pananim, ngunit sa kanyang mga mata ay nakikita ang takot. Isang sulat ang nasa kanyang kamay — isang sulat na nagsasabing ang lahat ng ito ay hindi na kanya.' },
-  { num:9, roman:'IX', title:'Ang Pagkabigo ni Tales', emoji:'🔒', bg:'linear-gradient(160deg,#0f1408,#080c04)',
+    story:'Si Cabesang Tales ay nagtatrabaho sa kanyang bukid. Ngunit ang mga prayle ay nagdeklara ng kanilang karapatan sa lupaing ito.',
+    scene:'Ang bukid ay berde at sagana. Si Tales ay nakatayo sa gitna ng kanyang mga pananim, ngunit sa kanyang mga mata ay nakikita ang takot.' 
+  },
+  { 
+    num:9, roman:'IX', title:'Ang Pagkabigo ni Tales', 
+    imgSrc: './panitikan/Images/talesFail.webp',
     chars:['tales','juli','florentino'], color:'#80a040',
-    story:'Kahit gaano siya kagalawa, ang sistema ay mas malakas. Si Tales ay hinarap ang mga korte, nagbigay ng lahat ng kanyang ipon — ngunit ang korte ay nasa kamay ng mga may kapangyarihan. Nawala ang lupa. Nawala ang kalayaan. Naiwan lamang ang galit.',
-    scene:'Sa labas ng korte, si Tales ay nakatayo nang walang magawa. Ang mga opisyal ay lumabas na may ngiti. Sa gilid ng landas, si Juli ay naghihintay sa kanyang ama — at sa kanyang mga mata ay ang katanungan: paano tayo mabubuhay?' },
-  { num:10, roman:'X', title:'Si Juli sa Kumbento', emoji:'🕊️', bg:'linear-gradient(160deg,#0d1420,#060810)',
+    story:'Kahit gaano siya kagalawa, ang sistema ay mas malakas. Nawala ang lupa. Nawala ang kalayaan. Naiwan lamang ang galit.',
+    scene:'Sa labas ng korte, si Tales ay nakatayo nang walang magawa. Sa gilid ng landas, si Juli ay naghihintay sa kanyang ama.' 
+  },
+  { 
+    num:10, roman:'X', title:'Si Juli sa Kumbento', 
+    imgSrc: './panitikan/Images/juli.webp',
     chars:['juli','padresalvi'], color:'#8090c0',
-    story:'Para mapalaya ang kanyang ama, si Juli ay pumayag na maglingkod sa kumbento. Ang dalisay na dalagang ito ay pumasok sa mundong puno ng panganib — ang mundong kontrolado ng mga taong gumagamit ng relihiyon para sa sarili nilang kapakanan.',
-    scene:'Sa pintuan ng kumbento, si Juli ay humarap sa malaking mundo na kanyang pinasok. Ang mga pader ay matataas, ang mga daan ay mahaba. Hawak niya ang kanyang mga panalangin — ang tanging sandata na mayroon siya.' },
-  { num:11, roman:'XI', title:'Ang Trahedya ni Juli', emoji:'😢', bg:'linear-gradient(160deg,#150a18,#0a0510)',
+    story:'Para mapalaya ang kanyang ama, si Juli ay pumayag na maglingkod sa kumbento sa ilalim ng mga taong gumagamit ng relihiyon para sa sariling kapakanan.',
+    scene:'Sa pintuan ng kumbento, si Juli ay humarap sa malaking mundo. Hawak niya ang kanyang mga panalangin — ang tanging sandata niya.' 
+  },
+  { 
+    num:11, roman:'XI', title:'Ang Trahedya ni Juli', 
+    imgSrc: './panitikan/Images/juliTragedy.webp',
     chars:['juli','padresalvi'], color:'#a070b0',
-    story:'Sa loob ng kumbento, si Juli ay harap sa mapanganib na realidad. Ang prayle ay nagbanta. Ang dalisay na dalaga ay hinarap ang pinaka-mahirap na desisyon ng kanyang buhay — at sa pagitan ng dalawang kahirapan, pinili niya ang karangalan.',
-    scene:'Sa mataas na silid ng kumbento, si Juli ay nakatayo sa bintana. Sa ibaba, ang mundo ay patuloy na umiikot. Sa kanyang puso ay isang tahimik na pasya — at sa isang sandali, ang lahat ay naging maliwanag.' },
-  { num:12, roman:'XII', title:'Ang Pagbabalik sa Paaralan', emoji:'📖', bg:'linear-gradient(160deg,#050c18,#020610)',
+    story:'Sa loob ng kumbento, hinarap ni Juli ang pinakamahirap na desisyon ng kanyang buhay — pinili niya ang kanyang karangalan.',
+    scene:'Sa mataas na silid ng kumbento, si Juli ay nakatayo sa bintana. Sa kanyang puso ay isang tahimik na pasya.' 
+  },
+  { 
+    num:12, roman:'XII', title:'Ang Pagbabalik sa Paaralan', 
+    imgSrc: './panitikan/Images/paaralan.webp',
     chars:['basilio','isagani','macaraig'], color:'#5070c0',
-    story:'Sa kabila ng lahat ng nangyayari, ang mga estudyante ay nagpapatuloy ng kanilang buhay. Si Basilio ay nagaaral ng medisina, si Isagani ay nagsusulat ng tula, si Macaraig ay nagpaplano ng mga pagbabago — ang kabataan ay hindi madaling susuko.',
-    scene:'Sa library ng paaralan, ang mga libro ay nakahanay nang walang katapusan. Si Basilio ay nagbabasa sa ilalim ng liwanag ng kandila. Sa labas, ang lungsod ay natutulog. Ngunit sa loob, ang isang bagong mundo ay unti-unting nabubuo.' },
-  { num:13, roman:'XIII', title:'Si Simoun at si Basilio', emoji:'🎩', bg:'linear-gradient(160deg,#1a1005,#0d0802)',
+    story:'Sa kabila ng lahat, ang mga estudyante ay nagpapatuloy. Si Basilio ay nagaaral ng medisina, si Isagani ay nagsusulat ng tula.',
+    scene:'Sa library ng paaralan, si Basilio ay nagbabasa sa ilalim ng liwanag ng kandila habang ang lungsod ay natutulog.' 
+  },
+  { 
+    num:13, roman:'XIII', title:'Si Simoun at si Basilio', 
+    imgSrc: './panitikan/Images/simounBasilio.webp',
     chars:['simoun','basilio'], color:'#c08030',
-    story:'Sa isang lihim na pagpupulong, inihayag ni Simoun ang kanyang tunay na pagkakakilanlan kay Basilio. Ang dalawang lalaking ito — ang nagretso at ang naghiganti — ay nagkita sa isang punto ng kasaysayan. Handa ka bang makiisa?',
-    scene:'Sa dilim ng gabi, dalawang anino ang nagkita. Si Simoun ay naalis ng kanyang salamin — at sa ilalim, ang mukha ni Ibarra. Si Basilio ay namutla. Ang lalaking ito — ang binatang kanyang kilala mula sa mga kuwento — ay narito na.' },
-  { num:14, roman:'XIV', title:'Ang Plano ng Rebolusyon', emoji:'💣', bg:'linear-gradient(160deg,#1a0500,#0d0300)',
+    story:'Inihayag ni Simoun ang kanyang tunay na pagkakakilanlan kay Basilio. Ang dalawang lalaking ito ay nagkita sa isang punto ng kasaysayan.',
+    scene:'Sa dilim ng gabi, si Simoun ay nag-alis ng kanyang salamin — at sa ilalim ay ang mukha ni Ibarra.' 
+  },
+  { 
+    num:14, roman:'XIV', title:'Ang Plano ng Rebolusyon', 
+    imgSrc: './panitikan/Images/plano.webp',
     chars:['simoun','basilio'], color:'#e05020',
-    story:'Inilahad ni Simoun ang kanyang plano: isang bomba sa kasalan ng mataas na lipunan, isang pagsabog na magwawasak sa sistema ng kolonyalismo. Ang rebolusyon ay hindi magiging maayos — ito ay magiging apoy.',
-    scene:'Sa mapa, ang mga linya ay kumakatawan sa mga landas ng rebolusyon. Si Simoun ay nagturo ng bawat punto — ang kasalan, ang bomba, ang eksodo. Si Basilio ay nakikinig, at sa kanyang mukha ay isang katanungan: ito ba ang tamang daan?' },
-  { num:15, roman:'XV', title:'Ang Kasalan ng Pelaez', emoji:'💒', bg:'linear-gradient(160deg,#1a1508,#0d0c04)',
+    story:'Inilahad ni Simoun ang kanyang plano: isang bomba sa isang kasalan na magwawasak sa sistema ng kolonyalismo.',
+    scene:'Sa mapa, ang mga linya ay kumakatawan sa mga landas ng rebolusyon. Si Basilio ay nakikinig nang may pag-aalinlangan.' 
+  },
+  { 
+    num:15, roman:'XV', title:'Ang Kasalan ng Pelaez', 
+    imgSrc: './panitikan/Images/kasalan.webp',
     chars:['pelaez','paulita','isagani','simoun'], color:'#d4c030',
-    story:'Ang kasalan ni Juanito Pelaez at Paulita Gomez ay isa sa mga pinakamahalagang eksena sa nobela — isang pinagsama-samang pagdiriwang ng mataas na lipunan at isang mapanganib na plano ng isang lalaking naghahanap ng paghihiganti.',
-    scene:'Ang simbahan ay puno ng mga bulaklak. Ang mga kandila ay nagniningning. Si Paulita ay nakasuot ng puting damit — ngunit sa kanyang puso ay may isang lungkot na hindi maipaliwanag. Sa sulok ng simbahan, si Simoun ay nakangiti.' },
-  { num:16, roman:'XVI', title:'Ang Kandila ng Kamatayan', emoji:'🕯️', bg:'linear-gradient(160deg,#1a0800,#0d0400)',
+    story:'Ang kasalan ni Juanito Pelaez at Paulita Gomez — isang pagdiriwang ng mataas na lipunan at isang mapanganib na plano ng paghihiganti.',
+    scene:'Ang simbahan ay puno ng mga bulaklak. Si Paulita ay nakasuot ng puti, ngunit sa sulok, si Simoun ay nakangiti.' 
+  },
+  { 
+    num:16, roman:'XVI', title:'Ang Kandila ng Kamatayan', 
+    imgSrc: './panitikan/Images/lampara.webp',
     chars:['simoun'], color:'#e87030',
-    story:'Sa ilalim ng altar, si Simoun ay naglagay ng isang espesyal na kandila — sa loob nito ay isang bomba. Kapag nasunog ang kandila, magsisimula ang rebolusyon. Ang oras ng paghihiganti ay malapit na.',
-    scene:'Sa kadiliman ng sagradong lugar, si Simoun ay gumagalaw nang dahan-dahan. Ang kanyang mga kamay ay hindi nanginginig — ang isang taong puno ng determinasyon ay hindi tumatakot. Ang kandila ay nakalagay na. Walang pabalik.' },
-  { num:17, roman:'XVII', title:'Si Isagani sa Simbahan', emoji:'🔥', bg:'linear-gradient(160deg,#1a0d03,#0d0802)',
+    story:'Sa ilalim ng altar, si Simoun ay naglagay ng isang espesyal na lampara na may bomba. Ang oras ng paghihiganti ay malapit na.',
+    scene:'Sa kadiliman ng sagradong lugar, si Simoun ay gumagalaw nang dahan-dahan. Ang kanyang mga kamay ay hindi nanginginig.' 
+  },
+  { 
+    num:17, roman:'XVII', title:'Si Isagani sa Simbahan', 
+    imgSrc: './panitikan/Images/isaganiSimbahan.webp',
     chars:['isagani','simoun'], color:'#e87030',
-    story:'Sa huling sandali, si Isagani ay pumasok sa simbahan at nakita ang kandila ni Simoun. Sa kanyang puso ay isang agam-agam — ang pagmamahal sa bansa at ang pagmamahal sa buhay ng maraming tao ay nagtatunggali.',
-    scene:'Si Isagani ay nakatayo sa harap ng altar. Ang kandila ay nagsisindi na. Sa kanyang isip ay isang mabilis na desisyon: ang rebolusyon o ang buhay ng mga inosente? At sa isang galaw — inangat niya ang kandila.' },
-  { num:18, roman:'XVIII', title:'Ang Kandila sa Ilog', emoji:'🌊', bg:'linear-gradient(160deg,#020c18,#010810)',
+    story:'Sa huling sandali, nakita ni Isagani ang lampara. Ang pagmamahal sa bansa at ang pagmamahal sa buhay ng marami ay nagtatunggali.',
+    scene:'Si Isagani ay nakatayo sa harap ng altar. Ang kandila ay nagsisindi na. Sa isang mabilis na galaw — inangat niya ang lampara.' 
+  },
+  { 
+    num:18, roman:'XVIII', title:'Ang Kandila sa Ilog', 
+    imgSrc: './panitikan/Images/ilog.webp',
     chars:['isagani'], color:'#4090d0',
-    story:'Si Isagani ay lumabas ng simbahan at inihagis ang kandila sa ilog. Ang rebolusyon ni Simoun ay natapos bago pa man magsimula. Ngunit sa paggawa niya nito, winasak niya ang lahat — ang kanyang pag-ibig, ang kanyang kinabukasan, ang kanyang kaibigan.',
-    scene:'Sa gilid ng ilog, si Isagani ay nakatayo. Ang kandila ay kumikislap sa kanyang mga kamay. Sa bawat segundo, ang apoy ay lumalapit sa bomba. At sa isang sandali ng katahimikan, inihagis niya ito — at narinig ang splash ng tubig.' },
-  { num:19, roman:'XIX', title:'Ang Pagkabigo ni Simoun', emoji:'😔', bg:'linear-gradient(160deg,#1a0800,#0d0400)',
+    story:'Inihagis ni Isagani ang lampara sa ilog. Ang rebolusyon ay natapos bago pa magsimula, ngunit winasak nito ang kanyang kinabukasan.',
+    scene:'Sa gilid ng ilog, narinig ang splash ng tubig. Ang apoy ay namatay sa ilalim ng madilim na agos.' 
+  },
+  { 
+    num:19, roman:'XIX', title:'Ang Pagkabigo ni Simoun', 
+    imgSrc: './panitikan/Images/simounKabiguan.webp',
     chars:['simoun','basilio'], color:'#a04020',
-    story:'Nabalitaan ni Simoun ang nangyari. Ang kanyang maingat na planong rebolusyon ay natapos dahil sa isang desisyon ng isang kabataang puno ng pag-ibig. Si Basilio ay nadakip. Ang lahat ay gumuho.',
-    scene:'Sa madilim na silid, si Simoun ay nakatayo nang mag-isa. Sa labas, ang lungsod ay patuloy na gumagalaw — hindi alam na ang isang mundo ay muntikang mabago. Sa kanyang mga kamay ay ang basag na pangarap ng kanyang rebolusyon.' },
-  { num:20, roman:'XX', title:'Ang Pagtatago ni Simoun', emoji:'🌙', bg:'linear-gradient(160deg,#05081a,#020410)',
+    story:'Nabalitaan ni Simoun ang nangyari. Ang lahat ng kanyang maingat na plano ay gumuho dahil sa isang desisyon ng pag-ibig.',
+    scene:'Sa madilim na silid, si Simoun ay nakatayo nang mag-isa. Sa kanyang mga kamay ay ang basag na pangarap ng kanyang rebolusyon.' 
+  },
+  { 
+    num:20, roman:'XX', title:'Ang Pagtatago ni Simoun', 
+    imgSrc: './panitikan/Images/pagtakas.webp',
     chars:['simoun','florentino'], color:'#5060b0',
-    story:'Sugatan at natatakot, tumakas si Simoun patungo sa tahanan ng kanyang tanging kaibigan — si Padre Florentino. Ang paring Pilipino ay tinanggap siya nang walang tanong, nang may habag na hindi pa natutuklas ng marami.',
-    scene:'Sa gabi, ang mga bituin ay kaunti. Si Simoun ay humihingal habang lumalakad sa dalampasigan. Sa malayo, ang ilaw ni Padre Florentino ay kumikislap — isang maliit na pag-asa sa isang mundong puno ng kadiliman.' },
-  { num:21, roman:'XXI', title:'Ang Huling Kumpisal', emoji:'⛪', bg:'linear-gradient(160deg,#100e00,#080700)',
+    story:'Sugatan at natatakot, tumakas si Simoun patungo sa tahanan ni Padre Florentino, ang paring tumanggap sa kanya nang may habag.',
+    scene:'Si Simoun ay humihingal habang lumalakad sa dalampasigan. Sa malayo, ang ilaw ni Padre Florentino ay kumikislap.' 
+  },
+  { 
+    num:21, roman:'XXI', title:'Ang Huling Kumpisal', 
+    imgSrc: './panitikan/Images/kumpisal.webp',
     chars:['simoun','florentino'], color:'#a09040',
-    story:'Sa harap ni Padre Florentino, inamin ni Simoun ang lahat — ang kanyang tunay na pagkakakilanlan bilang si Crisostomo Ibarra, ang kanyang pagmamahal kay Maria Clara, ang kanyang galit, ang kanyang mga plano. Ang isang taong puno ng lihim ay nagsalita sa wakas.',
-    scene:'Sa silid ni Padre Florentino, ang dalawang lalaki ay nagharap. Ang isang boses ay nagsalita sa dilim — ang boses ng isang taong sa wakas ay napagod ng pagtatago. Ang paring nakinig ay hindi nagalit — nagsalita lamang nang tahimik tungkol sa pag-asa.' },
-  { num:22, roman:'XXII', title:'Ang Kamatayan ni Simoun', emoji:'🌅', bg:'linear-gradient(160deg,#180a02,#0c0500)',
+    story:'Inamin ni Simoun ang lahat — ang kanyang tunay na pagkatao, ang kanyang galit, at ang kanyang mga plano para sa bansa.',
+    scene:'Sa silid ni Padre Florentino, ang isang boses ay nagsalita sa dilim — ang boses ng isang taong sa wakas ay napagod.' 
+  },
+  { 
+    num:22, roman:'XXII', title:'Ang Kamatayan ni Simoun', 
+    imgSrc: './panitikan/Images/kamatayanSimoun.webp',
     chars:['simoun','florentino'], color:'#c07030',
-    story:'Sa hatinggabi, si Simoun ay humiga para sa huli. Ang lason na kanyang ininom ay mabilis na gumagawa ng kanyang trabaho. Sa kanyang huling hininga, si Simoun ay hindi nagsisi — ngunit natuklasan niya ang isang bagay na napalampas niya sa kanyang buhay ng paghihiganti.',
-    scene:'Sa dalampasigan, ang alon ay tumatahimik. Si Padre Florentino ay nakatayo sa tabi ni Simoun habang ang dating Crisostomo Ibarra ay unti-unting lumayo mula sa mundong ito. Ang gabi ay maliwanag ng mga bituin.' },
-  { num:23, roman:'XXIII', title:'Ang Kayamanan sa Karagatan', emoji:'🌊', bg:'linear-gradient(160deg,#020c18,#010810)',
+    story:'Uminom ng lason si Simoun. Sa kanyang huling hininga, natuklasan niya ang isang bagay na napalampas niya sa buhay ng paghihiganti.',
+    scene:'Sa dalampasigan, ang alon ay tumatahimik habang ang dating Crisostomo Ibarra ay unti-unting lumayo mula sa mundong ito.' 
+  },
+  { 
+    num:23, roman:'XXIII', title:'Ang Kayamanan sa Karagatan', 
+    imgSrc: './panitikan/Images/kayamanan.webp',
     chars:['florentino'], color:'#3080c0',
-    story:'Pagkamatay ni Simoun, kinuha ni Padre Florentino ang kanyang kahon ng kayamanan at tinanggal ito sa bahay. Sa dalampasigan, itinatapon niya ang ginto at mga alahas sa karagatan — isang simbolikong kilos na nagpapahayag ng pag-asa para sa susunod na henerasyon.',
-    scene:'Sa umaga, si Padre Florentino ay nakatayo sa gilid ng dagat. Sa kanyang mga kamay ay ang kahon ni Simoun. Isa-isa, ang mga alahas ay bumagsak sa tubig — hindi nawawala, kundi nagbabalik sa lupa na pinagmulan nito.' },
-  { num:24, roman:'XXIV', title:'Ang Epilogo — Hindi Pa Panahon', emoji:'🌄', bg:'linear-gradient(160deg,#100800,#080400)',
+    story:'Itinatapon ni Padre Florentino ang ginto at mga alahas ni Simoun sa karagatan — isang simbolikong kilos ng pag-asa.',
+    scene:'Sa umaga, isa-isang bumagsak ang mga alahas sa tubig — nagbabalik sa lupa na pinagmulan nito.' 
+  },
+  { 
+    num:24, roman:'XXIV', title:'Ang Epilogo', 
+    imgSrc: './panitikan/Images/epilogo.webp',
     chars:['florentino'], color:'#c9a84c',
-    story:'"Hindi pa panahon," sabi ni Padre Florentino sa hangin. "Kapag ang mga tao ay handa na — kapag ang bawat Pilipino ay handang ibigay ang kanyang buhay para sa kabutihan ng lahat — saka lamang darating ang kalayaan." Ang nobela ay nagtatapos nang may pag-asa at pait.',
-    scene:'Sa dalampasigan, si Padre Florentino ay nag-iisa. Sa kalayuan, ang araw ay sumisinag sa kabila ng ulap. Ang tubig ay kumakaluskos sa mga bato. At sa hangin, parang naririnig pa rin ang boses ni Simoun — hindi ng galit, kundi ng isang taong sa wakas ay nakapagpahinga.' },
+    story:'"Hindi pa panahon," sabi ni Padre Florentino. Darating ang kalayaan kapag ang bawat Pilipino ay handang magsakripisyo para sa lahat.',
+    scene:'Sa dalampasigan, ang araw ay sumisinag sa kabila ng ulap. Sa hangin, naririnig ang katahimikan ng pagpapahinga.' 
+  }
 ];

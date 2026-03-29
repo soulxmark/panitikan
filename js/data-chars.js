@@ -1,162 +1,227 @@
 const CHARS = [
-  {id:'simoun',emoji:'🎩',name:'Simoun',alias:'Crisostomo Ibarra',role:'Pangunahing Tauhan',traitClass:'trait-p',traitLabel:'Protagonista',bg:'linear-gradient(160deg,#1f0e02,#0d0600)',filter:'protagonista',
-  shortDesc:'A wealthy jeweler who is actually Crisostomo Ibarra in disguise, returning to plot a revolution and rescue Maria Clara.',
-  attrs:[{label:'Real Name',value:'Crisostomo Ibarra'},{label:'Status',value:'Jeweler / Revolutionary'},{label:'Symbol',value:'Vengeance & Gold'},{label:'Fate',value:'Died in Padre Florentino\'s house'}],
-  desc:'Simoun returned to the Philippines as an influential jeweler. Beneath wealth and power hides a man consumed by rage and revenge for his oppressed nation. He is Crisostomo Ibarra reborn — idealism turned to fire.',
-  quote:'"Ang mga luha ng dukha ay nagiging dugo ng mga makapangyarihan."',
-  clues:{easy:['He is a jeweler known for his black sunglasses and expensive gems.','He hides a broken heart and a ruthless plan beneath wealth.','His riches are used to topple the enemies of the nation.'],medium:['He was once a student exiled by the Spaniards from his hometown.','He planned a bombing at a wedding to overturn the colonial system.','His true name is hidden behind his disguise.'],hard:['He sold jewels from a stolen treasure to fund the revolution.','In his final breaths he confessed everything to a Filipino priest.','He chose to drink poison rather than be captured by the authorities.']}},
-
-  {id:'basilio',emoji:'📿',name:'Basilio',alias:'Anak ni Sisa',role:'Pangunahing Tauhan',traitClass:'trait-p',traitLabel:'Protagonista',bg:'linear-gradient(160deg,#060c1a,#030609)',filter:'protagonista',
-  shortDesc:'Son of Sisa and a promising medical student mentored by Captain Tiago, who grew from poverty to learning.',
-  attrs:[{label:'Profession',value:'Medical Student'},{label:'Mother',value:'Sisa (Noli Me Tangere)'},{label:'Mentor',value:'Captain Tiago'},{label:'Fate',value:'Released and joined Simoun'}],
-  desc:'Basilio grew up in poverty and was orphaned when his mother Sisa died. Through determination he became a medical student under Captain Tiago\'s patronage. He discovered Simoun\'s true identity — and paid dearly for it.',
-  quote:'"Ang aming mga pangarap ay hindi paunti-unti kundi sabay-sabay na nasisira."',
-  clues:{easy:['He is a hardworking medical student despite coming from poverty.','His mother is a famous character from the first novel.','He is intelligent and kind-hearted.'],medium:['He met a jeweler with a hidden identity.','His mother lost her mind and died tragically.','He was arrested for knowing too much about a revolution.'],hard:['He was born poor and served a kind family to afford his studies.','His involvement with Simoun led to his imprisonment.','After Juli\'s death, he abandoned his neutrality to join the revolution.']}},
-
-  {id:'isagani',emoji:'🔥',name:'Isagani',alias:'Ang Makatang Kabataan',role:'Kaibigan ni Basilio',traitClass:'trait-p',traitLabel:'Idealista',bg:'linear-gradient(160deg,#1f0d03,#100500)',filter:'protagonista',
-  shortDesc:'A poet and Basilio\'s best friend — the idealistic nephew of Father Florentino and boyfriend of Paulita Gomez.',
-  attrs:[{label:'Talent',value:'Poet & Orator'},{label:'Love',value:'Paulita Gomez'},{label:'Uncle',value:'Padre Florentino'},{label:'Heroic Act',value:'Saved the wedding from the bomb'}],
-  desc:'Isagani is a patriotic young poet full of idealism. In the novel\'s climax he found Simoun\'s grenade and threw it into the river — saving many lives but destroying the revolutionary plan.',
-  quote:'"Ang Pilipinas ay hindi maliit na bansa para sa maliit na pangarap."',
-  clues:{easy:['He is a hopeful young poet who loves his country.','He is deeply in love with a beautiful young woman.','His feelings are passionate and fiery.'],medium:['He stopped a catastrophe at a wedding reception.','His heart was broken when his beloved chose another man.','He is Basilio\'s closest friend throughout the novel.'],hard:['He threw a disguised lamp into the river to prevent mass murder.','His love for Paulita went unfulfilled because she chose wealth.','He is the nephew of the honorable Filipino priest Padre Florentino.']}},
-
-  {id:'tales',emoji:'🌊',name:'Kabesang Tales',alias:'Tandang Tales / Matanglawin',role:'Magsasaka',traitClass:'trait-p',traitLabel:'Biktima',bg:'linear-gradient(160deg,#04180a,#020c05)',filter:'biktima',
-  shortDesc:'A former barangay head who became the outlaw Matanglawin after friars stripped him of his farmland.',
-  attrs:[{label:'Occupation',value:'Farmer, Former Cabeza'},{label:'Daughter',value:'Juli (Juliana)'},{label:'Symbol',value:'Oppressed Farmer'},{label:'Alias',value:'Matanglawin (outlaw)'}],
-  desc:'Kabesang Tales was a hardworking farmer who cleared land and built a life — only to have the Dominican friars seize it. When justice failed him, he became the feared outlaw Matanglawin.',
-  quote:'"Ang lupang aking inani ng pawis ay hindi ipagkakaloob ko kahit kanino."',
-  clues:{easy:['He is a farmer who worked incredibly hard on his land.','His daughter is a beautiful and devoted young woman.','He lost his land to powerful people.'],medium:['He became an outlaw when his family and land were threatened.','Dominican friars stole the farm he had built with his own hands.','His daughter Juli sacrificed herself for his freedom.'],hard:['Even after giving all his savings to reclaim his land, he was denied.','His story mirrors thousands of Filipino farmers under colonial rule.','He took revenge by killing the friar-administrator and the new tenant.']}},
-
-  {id:'tandangselo',emoji:'👴',name:'Tandang Selo',alias:'Ama ni Kabesang Tales',role:'Matandang Tauhan',traitClass:'trait-l',traitLabel:'Trahedya',bg:'linear-gradient(160deg,#0f0a00,#070500)',filter:'biktima',
-  shortDesc:'Father of Kabesang Tales who raised Basilio when he was a child and witnessed his family\'s destruction.',
-  attrs:[{label:'Son',value:'Kabesang Tales'},{label:'Role',value:'Raised young Basilio'},{label:'Symbol',value:'Silent Suffering'},{label:'Fate',value:'Killed by his own grandson'}],
-  desc:'Tandang Selo is the quiet grandfather who raised Basilio after the boy was left alone. He watched helplessly as his family was torn apart. He eventually lost the will to speak and joined the outlaws, only to die tragically in battle.',
-  quote:'"Walang salitang sapat para sa luha na ito."',
-  clues:{easy:['He is an old man who took care of a young orphan boy.','He is the father of a farmer who lost his land.','He is kind and quiet.'],medium:['He raised Basilio when Basilio had no one else.','He watched his entire family suffer and fall apart.','He eventually stopped speaking from grief.'],hard:['He was accidentally shot by Tano, his grandson, who was a Civil Guard.','He represents the silent elders who suffer as colonialism destroys families.','He went mute after seeing his son become an outlaw and his granddaughter die.']}},
-
-  {id:'juli',emoji:'🕊️',name:'Juli',alias:'Juliana de Dios',role:'Biktima ng Lipunan',traitClass:'trait-l',traitLabel:'Trahedya',bg:'linear-gradient(160deg,#0d1420,#060810)',filter:'biktima',
-  shortDesc:'Daughter of Kabesang Tales and devoted girlfriend of Basilio who sold her freedom to save her father.',
-  attrs:[{label:'Father',value:'Kabesang Tales'},{label:'Boyfriend',value:'Basilio'},{label:'Symbol',value:'Women Enslaved by the System'},{label:'Fate',value:'Fell from a window'}],
-  desc:'Juli is a pure and beautiful young woman who enslaved herself to buy her father\'s freedom. Her tragic end — jumping from a window to escape a friar — is one of the most heartbreaking moments in the novel.',
-  quote:'"Lalong malaya ang namatay kaysa nabuhay nang walang karangalan."',
-  clues:{easy:['She is a young, deeply religious and gentle woman.','She loves her father dearly.','She died tragically inside a friar\'s residence.'],medium:['She became a servant to free her father from prison.','Her fate is one of the most cruel stories in the novel.','She is the daughter of a farmer turned outlaw.'],hard:['Rather than allow a friar to abuse her, she leapt from a window.','She sought help from Padre Camorra to free Basilio from jail.','Her death symbolizes the purity of the Filipino spirit crushed by the friars.']}},
-
-  {id:'florentino',emoji:'⛪',name:'Padre Florentino',alias:'Ang Paring Pilipino',role:'Marunong na Matanda',traitClass:'trait-r',traitLabel:'Relihiyoso',bg:'linear-gradient(160deg,#100e00,#080600)',filter:'relihiyoso',
-  shortDesc:'A kind and honorable Filipino priest who provided refuge to Simoun during his final moments.',
-  attrs:[{label:'Profession',value:'Filipino Secular Priest'},{label:'Nephew',value:'Isagani'},{label:'Symbol',value:'Wisdom & Compassion'},{label:'Role',value:'Simoun\'s final confessor'}],
-  desc:'Padre Florentino represents the ideal Filipino priest. He sheltered the dying Simoun at his coastal home and listened to his final confession. He cast Simoun\'s treasure into the sea as an offering for the nation\'s future.',
-  quote:'"Nasaan ang kabataang mag-aalay ng kanilang ginintuang sandali para sa bayan?"',
-  clues:{easy:['He is a kind Filipino priest who lives near the sea.','He sheltered a dying man in his home.','He is the uncle of a young idealistic poet.'],medium:['He heard the final confession of a revolutionary jeweler.','He threw a chest of treasure into the sea as a symbol of hope.','He is a secular priest — not a friar — who loves his country.'],hard:['He is the only character who heard Simoun\'s complete story before death.','His casting of the treasure into the sea symbolizes freeing the nation from greed.','He was forced into the priesthood by his mother, giving up his true love.']}},
-
-  {id:'camorra',emoji:'😈',name:'Padre Camorra',alias:'Ang Mahalay na Pari',role:'Antagonista',traitClass:'trait-a',traitLabel:'Antagonista',bg:'linear-gradient(160deg,#200000,#0d0000)',filter:'antagonista',
-  shortDesc:'A lustful and cruel friar who caused great suffering for many, including Juli.',
-  attrs:[{label:'Order',value:'Augustinian Friar'},{label:'Vice',value:'Lust and cruelty'},{label:'Symbol',value:'Clerical Abuse'},{label:'Victim',value:'Juli and others'}],
-  desc:'Padre Camorra is the embodiment of the corrupt friar — driven by lust and cruelty. He is the direct cause of Juli\'s tragic death, having targeted her when she came to ask for Basilio\'s release.',
-  quote:'"Ang batas ay para sa mahihirap lamang."',
-  clues:{easy:['He is a cruel and powerful friar.','He abused his position to harm innocent people.','A young woman suffered greatly because of him.'],medium:['He targeted Juli while she was seeking mercy.','His cruelty directly led to one of the novel\'s most tragic deaths.','He represents the worst kind of friar in the colonial system.'],hard:['His pursuit of Juli in the convent forced her to jump from the window.','He is an Augustinian friar stationed in Tiani.','His character is a direct indictment of clerical abuse under Spanish colonialism.']}},
-
-  {id:'irene',emoji:'📜',name:'Padre Irene',alias:'Ang Mapagkunwaring Pari',role:'Panig ng Mga Prayle',traitClass:'trait-a',traitLabel:'Antagonista',bg:'linear-gradient(160deg,#12100a,#080704)',filter:'antagonista',
-  shortDesc:'A priest who maintained a close relationship with Captain Tiago and acted as executor of his will.',
-  attrs:[{label:'Role',value:'Captain Tiago\'s confidant'},{label:'Act',value:'Executor of Captain Tiago\'s will'},{label:'Symbol',value:'Hypocritical Clergy'},{label:'Nature',value:'Smooth-talking manipulator'}],
-  desc:'Padre Irene appears friendly and cooperative but ultimately serves the interests of the friars. He ingratiated himself with Captain Tiago and became his will executor — a man of the cloth driven by self-interest.',
-  quote:'"Ang mabuting ugali ay sapat na maskara para sa lahat."',
-  clues:{easy:['He is a priest who was close to a wealthy Filipino patron.','He seemed kind and approachable on the surface.','He handled the affairs of a dying rich man.'],medium:['He became the executor of Captain Tiago\'s last will and testament.','Despite appearing helpful to students, he ultimately served the friars\' interests.','He is smooth-talking and politically shrewd.'],hard:['He falsified or manipulated Captain Tiago\'s will to favor the Church.','He represents the clergy who use friendship and trust as tools of manipulation.','He appeared to sympathize with the students\' academy petition but did nothing to truly help.']}},
-
-  {id:'salvi',emoji:'🎭',name:'Padre Salvi',alias:'Ang Mapanlinlang na Pari',role:'Antagonista',traitClass:'trait-a',traitLabel:'Antagonista',bg:'linear-gradient(160deg,#1f0000,#0d0000)',filter:'antagonista',
-  shortDesc:'Former parish priest of San Diego, now a powerful figure in Manila with a dark past involving Maria Clara.',
-  attrs:[{label:'Order',value:'Franciscan Friar'},{label:'Known From',value:'Noli Me Tangere'},{label:'Symbol',value:'Corrupt Power'},{label:'Dark Secret',value:'Obsession with Maria Clara'}],
-  desc:'Padre Salvi returns in the second novel as a more powerful figure. He continues using religion to control people and guard his own interests, carrying his dark obsession with Maria Clara.',
-  quote:'"Ang Diyos ay nasa aming panig — ang batas ay nasa aming mga kamay."',
-  clues:{easy:['He is a powerful friar with great influence in Manila.','He is deceptive and uses religion for personal gain.','He is a returning villain from the first novel.'],medium:['He abused his priestly position to control and manipulate.','He is one of the reasons Ibarra became enraged in Noli Me Tangere.','His power grew even greater in the second novel.'],hard:['In Noli Me Tangere he harbored a sinister obsession with Maria Clara.','He nearly fainted when he realized the lamp at the wedding was a bomb.','He is a Franciscan priest who values personal gain over service to God.']}},
-
-  {id:'sibyla',emoji:'🏛️',name:'Padre Sibyla',alias:'Bise-Rektor ng Unibersidad',role:'Antagonista',traitClass:'trait-a',traitLabel:'Antagonista',bg:'linear-gradient(160deg,#0a0a18,#050510)',filter:'antagonista',
-  shortDesc:'A Dominican priest and vice-rector of the university who represented the interests of the friars against students.',
-  attrs:[{label:'Order',value:'Dominican Friar'},{label:'Position',value:'Vice-Rector of the University'},{label:'Symbol',value:'Institutional Oppression'},{label:'Role',value:'Opposed the Language Academy'}],
-  desc:'Padre Sibyla is a shrewd and calculating Dominican friar who uses his position as vice-rector to block the students\' petition for a Spanish Language Academy. He is a master of institutional obstruction.',
-  quote:'"Ang bago ay kaaway ng naitatag."',
-  clues:{easy:['He is a high-ranking friar at the university.','He opposed the students\' requests.','He is calculating and cold.'],medium:['He is the Dominican vice-rector who blocked the academy petition.','He debated against the students\' cause in the novel.','He represents the Church\'s grip on education.'],hard:['He and Padre Fernandez represent two opposing faces of the Dominican order.','He used procedural delay and institutional power to kill the students\' hopes.','His character critiques how the Church controlled Philippine education under Spain.']}},
-
-  {id:'fernandez',emoji:'📖',name:'Padre Fernandez',alias:'Ang Bukas-Isipang Pari',role:'Katamtamang Tauhan',traitClass:'trait-r',traitLabel:'Relihiyoso',bg:'linear-gradient(160deg,#0e1408,#070a04)',filter:'relihiyoso',
-  shortDesc:'A Dominican priest known for being open-minded and willing to engage in dialogue with students.',
-  attrs:[{label:'Order',value:'Dominican Friar'},{label:'Nature',value:'Open-minded, dialogue-oriented'},{label:'Symbol',value:'Hope Within the System'},{label:'Role',value:'Debated fairly with Isagani'}],
-  desc:'Padre Fernandez stands apart from most friars in the novel. He engages with students honestly and admits the flaws of the system. His dialogue with Isagani is one of the most intellectually rich scenes in the book.',
-  quote:'"Ang katotohanan ay hindi natatakot sa tanong."',
-  clues:{easy:['He is a priest who actually listened to the students.','He is more open-minded than most friars.','He engaged in honest conversation.'],medium:['He had a notable intellectual debate with a young poet.','He acknowledged that the colonial system had problems.','He is a Dominican friar, unlike most of his order in the novel.'],hard:['His debate with Isagani is one of the most philosophically rich passages in the novel.','He represents the possibility of reform within the institution — but also its limits.','His openness contrasts sharply with Padre Sibyla\'s rigidity.']}},
-
-  {id:'custodio',emoji:'🎪',name:'Don Custodio',alias:'Ang Palaging May Plano',role:'Opisyal',traitClass:'trait-s',traitLabel:'Satiriko',bg:'linear-gradient(160deg,#0d0800,#060400)',filter:'satiriko',
-  shortDesc:'A high-ranking official known for being indecisive and for coming up with many "plans" that never went anywhere.',
-  attrs:[{label:'Position',value:'High Government Official'},{label:'Known For',value:'Endless useless plans'},{label:'Symbol',value:'Colonial Bureaucracy'},{label:'Comedy',value:'Master of procrastination'}],
-  desc:'Don Custodio is Rizal\'s satirical jab at colonial bureaucrats. He is always coming up with elaborate plans and recommendations — but nothing ever gets done. The students\' petition for an academy lands on his desk, where it dies.',
-  quote:'"May plano ako para diyan... bukas na lang nating pag-usapan."',
-  clues:{easy:['He is an important official who talks a lot but does little.','He is known for making plans that never happen.','He is a funny but frustrating character.'],medium:['The students\' petition for a language academy was referred to him.','He represents the uselessness of colonial government officials.','His "brilliant plans" are a running joke in the novel.'],hard:['Rizal used him to satirize the Filipino ilustrado class that collaborated with Spain.','His indecision on the academy petition symbolizes the colonial government\'s bad faith.','His character is one of the sharpest pieces of political satire in the entire novel.']}},
-
-  {id:'benzayb',emoji:'📰',name:'Ben Zayb',alias:'Ang Manunulat na Prayle-Tagasuporta',role:'Mamamahayag',traitClass:'trait-a',traitLabel:'Antagonista',bg:'linear-gradient(160deg,#0a0a00,#050500)',filter:'antagonista',
-  shortDesc:'A Spanish journalist who wrote biased and exaggerated news favoring the colonial government.',
-  attrs:[{label:'Profession',value:'Journalist / Columnist'},{label:'Bias',value:'Pro-colonial, anti-Filipino'},{label:'Symbol',value:'Fake News & Propaganda'},{label:'Name',value:'Anagram of "Zab Nyb" (Isabelo)'}],
-  desc:'Ben Zayb is the colonial media mouthpiece. His articles are filled with propaganda praising Spanish rule and belittling Filipinos. Rizal used him to critique how the press was weaponized against the natives.',
-  quote:'"Ang pindutin ang pluma ay gawa ng mga bayani."',
-  clues:{easy:['He writes articles for a newspaper in Manila.','He always sides with the colonial government.','He is biased against Filipinos.'],medium:['He wrote flattering stories about Spanish officials to gain favor.','His pen name is an anagram of a real person Rizal was satirizing.','He represents the corrupt press under Spanish rule.'],hard:['His character is based on a real Spanish journalist named Ibanez.','He glorified the colonial system and dismissed native culture as inferior.','Rizal used him to show how media can be a tool of oppression.']}},
-
-  {id:'paulita',emoji:'💐',name:'Paulita Gomez',alias:'Pamangkin ni Doña Victorina',role:'Pag-ibig ni Isagani',traitClass:'trait-l',traitLabel:'Trahedya',bg:'linear-gradient(160deg,#1a0516,#0d000a)',filter:'biktima',
-  shortDesc:'The beautiful niece of Doña Victorina who eventually chose to marry Juanito Pelaez for convenience over Isagani.',
-  attrs:[{label:'Aunt',value:'Doña Victorina'},{label:'First Love',value:'Isagani'},{label:'Husband',value:'Juanito Pelaez'},{label:'Symbol',value:'Pragmatism over Love'}],
-  desc:'Paulita is beautiful and charming but ultimately pragmatic. She abandons the idealistic Isagani for the wealthy Juanito Pelaez — choosing social stability over true love.',
-  quote:'"Ang puso ay sumusunod sa isip, at ang isip ay sumusunod sa kalagayan."',
-  clues:{easy:['She is a beautiful young woman admired by many.','She has a colorful aunt who pretends to be Spanish.','She left her first love for a richer man.'],medium:['She ended her relationship with a young poet to marry a wealthy student.','Her choice to marry for status broke the poet\'s heart.','She is the niece of a social-climbing Filipina.'],hard:['She chose Juanito Pelaez — son of the banquet host — over the idealist Isagani.','Her decision symbolizes how colonialism distorted Filipino values and romantic choices.','Her character critiques women who prioritized Spanish social prestige over genuine love.']}},
-
-  {id:'victorina',emoji:'🎀',name:'Doña Victorina',alias:'Ang Nagpapanggap na Espanyola',role:'Komedya',traitClass:'trait-s',traitLabel:'Satiriko',bg:'linear-gradient(160deg,#180010,#0d0008)',filter:'satiriko',
-  shortDesc:'A Filipina woman who pretended to be Spanish and was obsessed with social status.',
-  attrs:[{label:'Nationality',value:'Filipina (pretending to be Spanish)'},{label:'Husband',value:'Don Tiburcio (fake doctor)'},{label:'Symbol',value:'Colonial Mentality'},{label:'Obsession',value:'Spanish social prestige'}],
-  desc:'Doña Victorina is Rizal\'s comic but pointed satire of Filipinos who idolize and imitate Spanish culture. She powders her face, changes her name, and constantly looks down on other Filipinos.',
-  quote:'"Ako ay Espanyola — huwag akong ituring na katulad ninyong mga Indio."',
-  clues:{easy:['She pretends to be Spanish even though she is Filipino.','She is obsessed with appearing wealthy and important.','She is married to a man who pretends to be a doctor.'],medium:['She is the aunt of Paulita Gomez.','She speaks in a fake Spanish accent and looks down on other Filipinos.','She appeared first in Noli Me Tangere.'],hard:['Her character is Rizal\'s sharpest satire of the "colonial mentality" — Filipinos who worship Spain.','Her husband Don Tiburcio has no real medical degree but she calls him Doctor.','She represents the social climbers who aided Spanish colonialism by despising their own race.']}},
-
-  {id:'tiburcio',emoji:'🩺',name:'Don Tiburcio',alias:'Ang Pekeng Doktor',role:'Asawa ni Doña Victorina',traitClass:'trait-s',traitLabel:'Satiriko',bg:'linear-gradient(160deg,#100800,#060400)',filter:'satiriko',
-  shortDesc:'The henpecked and fake-doctor husband of Doña Victorina who endures her domineering personality.',
-  attrs:[{label:'Wife',value:'Doña Victorina'},{label:'Fake Title',value:'\"Doctor\" (no real degree)'},{label:'Symbol',value:'Weak, dominated husband'},{label:'Trait',value:'Henpecked and pitiful'}],
-  desc:'Don Tiburcio is the long-suffering husband of Doña Victorina. He has no real medical credentials — his wife simply calls him "Doctor." He is dominated completely by her and is mostly a figure of pity and comedy.',
-  quote:'"Oo, mahal ko... kung ano ang gusto mo."',
-  clues:{easy:['He is a husband who is bossed around by his wife.','He is called a doctor but is not really one.','He appears in both of Rizal\'s novels.'],medium:['He has no real medical degree — his wife gave him the title.','His wife is the social-climbing Doña Victorina.','He is mostly a figure of quiet suffering and comedy.'],hard:['He represents emasculated Filipino men under colonial culture.','He hid from his wife in the house of Padre Florentino to escape her wrath.','He appeared first in Noli Me Tangere and continues his miserable marriage in El Fili.']}},
-
-  {id:'juanito',emoji:'💼',name:'Juanito Pelaez',alias:'Ang Ambisyosong Estudyante',role:'Karibal ni Isagani',traitClass:'trait-a',traitLabel:'Antagonista',bg:'linear-gradient(160deg,#100d00,#070500)',filter:'antagonista',
-  shortDesc:'A wealthy and cunning student who eventually married Paulita Gomez, breaking Isagani\'s heart.',
-  attrs:[{label:'Father',value:'Don Timoteo Pelaez'},{label:'Victory',value:'Married Paulita Gomez'},{label:'Symbol',value:'Wealth over Idealism'},{label:'Trait',value:'Cunning and opportunistic'}],
-  desc:'Juanito Pelaez is the son of the wealthy Don Timoteo and the rival of Isagani for Paulita\'s heart. He wins not through love or virtue, but through money and social position.',
-  quote:'"Sa mundong ito, ang matalino ay iyong marunong pumili."',
-  clues:{easy:['He is a rich student who got the girl at the end.','He is the son of a wealthy man who threw a big banquet.','He beat a poet for the woman he loved.'],medium:['He married Paulita Gomez, the girlfriend of Isagani.','His father hosted the banquet where Simoun planned to set off the bomb.','He won through wealth, not love.'],hard:['His marriage to Paulita symbolizes pragmatic society beating poetic idealism.','His father Don Timoteo Pelaez spent a fortune hosting the Spanish officials.','He represents the elite Filipino class that benefited from and collaborated with colonialism.']}},
-
-  {id:'macaraig',emoji:'⭐',name:'Macaraig',alias:'Lider ng mga Estudyante',role:'Estudyante',traitClass:'trait-p',traitLabel:'Protagonista',bg:'linear-gradient(160deg,#05101a,#020809)',filter:'protagonista',
-  shortDesc:'A wealthy student who led the movement to establish an Academy of the Spanish Language.',
-  attrs:[{label:'Role',value:'Student leader'},{label:'Campaign',value:'Spanish Language Academy petition'},{label:'Symbol',value:'Ilustrado Youth'},{label:'Trait',value:'Wealthy, organized, idealistic'}],
-  desc:'Macaraig is the wealthiest and most well-connected of the student group. He leads the push for the Spanish Language Academy and uses his resources to navigate the colonial bureaucracy.',
-  quote:'"Ang kaalaman sa wika ng mananakop ay sandata rin natin."',
-  clues:{easy:['He is a rich student who is a leader among his peers.','He organized a petition for the students.','He is idealistic and well-connected.'],medium:['He led the campaign for a Spanish language academy at the university.','His wealth gave the students access to colonial officials.','He worked closely with other ilustrado students.'],hard:['His petition eventually reached Don Custodio who let it die in bureaucracy.','He offered his own house to be the location of the proposed academy.','His character shows how even privileged youth were frustrated by colonial obstruction.']}},
-
-  {id:'quiroga',emoji:'🏮',name:'Quiroga',alias:'Ang Tsino na Negosyante',role:'Negosyante',traitClass:'trait-a',traitLabel:'Antagonista',bg:'linear-gradient(160deg,#120000,#080000)',filter:'antagonista',
-  shortDesc:'A Chinese businessman who aspired to become a consul and helped Simoun smuggle weapons.',
-  attrs:[{label:'Nationality',value:'Chinese'},{label:'Aspiration',value:'Chinese Consul'},{label:'Crime',value:'Weapons smuggling with Simoun'},{label:'Symbol',value:'Complicity for personal gain'}],
-  desc:'Quiroga is a Chinese merchant in Manila who dreams of becoming consul. He strikes a deal with Simoun to smuggle weapons hidden inside furniture — a transaction driven entirely by ambition and greed.',
-  quote:'"Ang negosyo ay negosyo — walang politika."',
-  clues:{easy:['He is a Chinese businessman living in Manila.','He dreams of getting an official government title.','He worked with a mysterious jeweler.'],medium:['He helped smuggle hidden weapons inside furniture shipments.','He wanted to become the Chinese consul in Manila.','His deal with Simoun was motivated purely by self-interest.'],hard:['He hid Simoun\'s weapons inside furniture delivered to key locations.','His character critiques the Chinese merchant class that collaborated with colonial power for profit.','He represents how personal ambition makes people complicit in larger schemes.']}},
-
-  {id:'placido',emoji:'🎓',name:'Placido Penitente',alias:'Ang Disilusiyadong Estudyante',role:'Estudyante',traitClass:'trait-p',traitLabel:'Protagonista',bg:'linear-gradient(160deg,#0a0016,#050008)',filter:'protagonista',
-  shortDesc:'A student from Batangas who became disillusioned with unfair treatment at university and eventually quit his studies.',
-  attrs:[{label:'Origin',value:'Batangas'},{label:'Status',value:'Dropped out of university'},{label:'Symbol',value:'Disillusioned Filipino Youth'},{label:'Experience',value:'Humiliated in class by a friar-professor'}],
-  desc:'Placido Penitente starts the novel as a student with dreams. But the humiliation he suffers at the hands of a friar-professor in the classroom drives him away from education entirely. His story is one of the novel\'s most vivid critiques of the colonial school system.',
-  quote:'"Para saan pa ang pag-aaral kung ang kaalaman ay ginagamit laban sa amin?"',
-  clues:{easy:['He is a student who grew tired of unfair treatment.','He came from a province south of Manila.','He eventually stopped going to school.'],medium:['He was humiliated by a friar-professor in class.','He dropped out after becoming disillusioned with the university.','He is from Batangas.'],hard:['The opening classroom scene of the novel features his humiliation as its centerpiece.','His quitting school represents how colonial education demoralized Filipino students.','His full name "Penitente" is ironic — he is the one doing penance for a system that sins against him.']}},
-
-  {id:'sandoval',emoji:'🤝',name:'Sandoval',alias:'Ang Espanyol na Kaibigan',role:'Estudyante',traitClass:'trait-p',traitLabel:'Protagonista',bg:'linear-gradient(160deg,#001810,#000e08)',filter:'protagonista',
-  shortDesc:'A Spanish student who sympathized with the Filipino students\' cause for equal rights and education.',
-  attrs:[{label:'Nationality',value:'Spanish'},{label:'Role',value:'Student ally'},{label:'Symbol',value:'Enlightened Colonizer'},{label:'Trait',value:'Fair-minded and vocal'}],
-  desc:'Sandoval is a rare Spanish student who openly sympathizes with the Filipino students. He argues in their favor and challenges the injustice of the colonial system — making him an unusual but important voice in the novel.',
-  quote:'"Hindi lahat ng Espanyol ay bulag sa katotohanan."',
-  clues:{easy:['He is a Spanish student who became friends with Filipinos.','He defended his Filipino classmates.','He believed in fairness regardless of race.'],medium:['He sided with the Filipino students in debates about the academy.','He is one of the few Spaniards in the novel shown positively.','His friendship with the ilustrado students was genuine.'],hard:['His character suggests Rizal believed not all Spaniards were oppressors — the system was the problem.','He is an ally in the academy petition despite being part of the ruling class.','His presence gave the students\' cause a cross-racial dimension.']}},
-
-  {id:'pecson',emoji:'😔',name:'Pecson',alias:'Ang Pesimista',role:'Estudyante',traitClass:'trait-s',traitLabel:'Satiriko',bg:'linear-gradient(160deg,#101010,#080808)',filter:'satiriko',
-  shortDesc:'A student known for his pessimistic views regarding the students\' petitions and the possibility of reform.',
-  attrs:[{label:'Role',value:'Doubting student'},{label:'Trait',value:'Cynical and pessimistic'},{label:'Symbol',value:'Despair Under Colonialism'},{label:'View',value:'Reform is impossible'}],
-  desc:'Pecson is the cynic of the student group. He consistently doubts that any petition or reform effort will succeed under Spanish rule. His pessimism is born from experience — and sadly, he is often right.',
-  quote:'"Subukan man natin, walang mangyayari. Iyan ang katotohanan."',
-  clues:{easy:['He is a student who always thinks the worst will happen.','He discourages his classmates from hoping too much.','He is gloomy and doubtful.'],medium:['He was pessimistic about the success of the Spanish Academy.','He often argues with the optimistic Sandoval.','He represents the loss of hope in the youth.'],hard:['He famously suggested the students have a "pancit dinner" to mock their failed petition.','His skepticism provides a balance to the idealism of Isagani.','He is the first to predict the friars will block any progress.']}}
+  {
+    id: 'simoun',
+    imgSrc: './panitikan/Images/Characters/simoun.webp',
+    name: 'Simoun',
+    alias: 'Crisostomo Ibarra',
+    role: 'Pangunahing Tauhan',
+    traitClass: 'trait-p',
+    traitLabel: 'Protagonista',
+    bg: 'linear-gradient(160deg,#1f0e02,#0d0600)',
+    filter: 'protagonista',
+    shortDesc: 'Isang mayamang alahero na sa katotohanan ay si Crisostomo Ibarra, nagbalik para maghasik ng himagsikan.',
+    attrs: [
+      {label: 'Tunay na Pangalan', value: 'Crisostomo Ibarra'},
+      {label: 'Katayuan', value: 'Alahero / Rebolusyonaryo'},
+      {label: 'Simbolo', value: 'Ganti at Ginto'},
+      {label: 'Wakas', value: 'Namatay sa bahay ni Padre Florentino'}
+    ],
+    desc: 'Nagbalik si Simoun sa Pilipinas bilang isang maimpluwensyang alahero. Sa likod ng yaman, nagtatago ang galit at paghahangad ng higanti para sa bayan.',
+    quote: '"Ang mga luha ng dukha ay nagiging dugo ng mga makapangyarihan."',
+    clues: {
+      easy: ['Alahero na laging may suot na itim na salamin.', 'Nagtatago ng plano ng paghihiganti sa likod ng yaman.', 'Ginamit ang mga hiyas para pondohan ang himagsikan.'],
+      medium: ['Dating estudyante na ipinatapon ng mga Kastila.', 'Nagplano ng pagpapasabog sa isang kasalan.', 'Ang tunay na pangalan ay Crisostomo Ibarra.'],
+      hard: ['Uminom ng lason kaysa mahuli ng mga awtoridad.', 'Ipinagtapat ang lahat kay Padre Florentino bago mamatay.', 'Itinapon ang kanyang kayamanan sa dagat pagkatapos niyang pumanaw.']
+    }
+  },
+  {
+    id: 'basilio',
+    imgSrc: './panitikan/Images/Characters/basilio.webp',
+    name: 'Basilio',
+    alias: 'Anak ni Sisa',
+    role: 'Pangunahing Tauhan',
+    traitClass: 'trait-p',
+    traitLabel: 'Protagonista',
+    bg: 'linear-gradient(160deg,#060c1a,#030609)',
+    filter: 'protagonista',
+    shortDesc: 'Anak ni Sisa at isang mahusay na estudyante ng medisina na dumanas ng matinding hirap.',
+    attrs: [
+      {label: 'Propesyon', value: 'Estudyante ng Medisina'},
+      {label: 'Ina', value: 'Sisa (Noli Me Tangere)'},
+      {label: 'Tagapayo', value: 'Kapitan Tiago'},
+      {label: 'Wakas', value: 'Nakulong at sumapi sa himagsikan'}
+    ],
+    desc: 'Lumaking mahirap si Basilio at naulila nang mamatay si Sisa. Sa tulong ni Kapitan Tiago, naging estudyante siya ng medisina at naging saksi sa mga lihim ni Simoun.',
+    quote: '"Ang aming mga pangarap ay hindi paunti-unti kundi sabay-sabay na nasisira."',
+    clues: {
+      easy: ['Masipag na estudyante ng medisina.', 'Anak ng isang tanyag na baliw sa Noli Me Tangere.', 'Kasintahan ni Juli.'],
+      medium: ['Nakita niya si Simoun sa kagubatan habang naghuhukay.', 'Nadakip siya dahil sa pagbibintang na may kinalaman sa paskin.', 'Nakaligtas sa kamatayan sa San Diego noong bata pa.'],
+      hard: ['Naglingkod kay Kapitan Tiago kapalit ng pag-aaral.', 'Nais sanang maging doktor para makatulong sa kapwa ngunit naging biktima ng kawalan ng katarungan.', 'Sa huli, sumama siya sa plano ni Simoun matapos mamatay si Juli.']
+    }
+  },
+  {
+    id: 'isagani',
+    imgSrc: './panitikan/Images/Characters/isagani.webp',
+    name: 'Isagani',
+    alias: 'Ang Makatang Kabataan',
+    role: 'Kaibigan ni Basilio',
+    traitClass: 'trait-p',
+    traitLabel: 'Idealista',
+    bg: 'linear-gradient(160deg,#1f0d03,#100500)',
+    filter: 'protagonista',
+    shortDesc: 'Isang makata at matalik na kaibigan ni Basilio — ang idealistang pamangkin ni Padre Florentino.',
+    attrs: [
+      {label: 'Talento', value: 'Makata at Orador'},
+      {label: 'Kasintahan', value: 'Paulita Gomez'},
+      {label: 'Tito', value: 'Padre Florentino'},
+      {label: 'Kabayanihan', value: 'Iniligtas ang mga tao sa pagsabog'}
+    ],
+    desc: 'Isang makabayang binata na puno ng pangarap. Itinapon niya ang lamparang may bomba sa ilog upang iligtas si Paulita Gomez, kahit pa ito ang naging hadlang sa himagsikan.',
+    quote: '"Ang Pilipinas ay hindi maliit na bansa para sa maliit na pangarap."',
+    clues: {
+      easy: ['Batang makata na mahal na mahal ang bayan.', 'Kasintahan ni Paulita Gomez.', 'Matalik na kaibigan ni Basilio.'],
+      medium: ['Itinapon ang lampara sa ilog para pigilan ang pagsabog.', 'Pamangkin ni Padre Florentino.', 'Nakipagtalo kay Padre Fernandez tungkol sa karapatan ng mga Pilipino.'],
+      hard: ['Siya ang nagligtas sa mga prayle at opisyal sa piging ni Don Timoteo.', 'Iniwan siya ng kanyang kasintahan para sa isang mayamang lalaki.', 'Kumakatawan sa kabataang may matayog na pangarap para sa edukasyon.']
+    }
+  },
+  {
+    id: 'juli',
+    imgSrc: './panitikan/Images/Characters/juli.webp',
+    name: 'Juli',
+    alias: 'Juliana de Dios',
+    role: 'Biktima ng Lipunan',
+    traitClass: 'trait-l',
+    traitLabel: 'Trahedya',
+    bg: 'linear-gradient(160deg,#0d1420,#060810)',
+    filter: 'biktima',
+    shortDesc: 'Anak ni Kabesang Tales at kasintahan ni Basilio na nagpaalila para iligtas ang ama.',
+    attrs: [
+      {label: 'Ama', value: 'Kabesang Tales'},
+      {label: 'Kasintahan', value: 'Basilio'},
+      {label: 'Simbolo', value: 'Dalisay na Pilipina'},
+      {label: 'Wakas', value: 'Tumalon mula sa bintana'}
+    ],
+    desc: 'Isang maganda at madasaling dalaga na naging alila para matubos ang ama. Pinili niyang mamatay kaysa madungisan ang kanyang puri ng isang prayle.',
+    quote: '"Lalong malaya ang namatay kaysa nabuhay nang walang karangalan."',
+    clues: {
+      easy: ['Madasalin at mahinhin na dalaga.', 'Anak ni Kabesang Tales.', 'Namatay sa loob ng kumbento.'],
+      medium: ['Naging katulong ni Hermana Penchang para mapalaya ang ama.', 'Tumalon sa bintana para takasan si Padre Camorra.', 'Nawala ang kanyang lakas ng loob nang makulong si Basilio.'],
+      hard: ['Isinanla ang kanyang mga hiyas maliban sa isang agnos na galing kay Basilio.', 'Nagbuwis ng buhay para sa kanyang karangalan at pamilya.', 'Simbolo ng kawalang-sala na nadudungisan ng kolonyalismo.']
+    }
+  },
+  {
+    id: 'tales',
+    imgSrc: './panitikan/Images/Characters/tales.webp',
+    name: 'Kabesang Tales',
+    alias: 'Matanglawin',
+    role: 'Magsasaka',
+    traitClass: 'trait-p',
+    traitLabel: 'Biktima',
+    bg: 'linear-gradient(160deg,#04180a,#020c05)',
+    filter: 'biktima',
+    shortDesc: 'Isang dating Cabeza de Barangay na naging tulisan matapos agawin ng mga prayle ang lupa.',
+    attrs: [
+      {label: 'Anak', value: 'Juli (Juliana)'},
+      {label: 'Alias', value: 'Matanglawin'},
+      {label: 'Simbolo', value: 'Inaping Magsasaka'},
+      {label: 'Wakas', value: 'Naging pinuno ng mga tulisan'}
+    ],
+    desc: 'Masipag na magsasaka na pinaghirapang linisin ang lupain, ngunit inagaw ng mga prayle. Dahil sa kawalan ng katarungan, naging kinatatakutang tulisan sa bundok.',
+    quote: '"Ang lupang aking inani ng pawis ay hindi ipagkakaloob ko kahit kanino."',
+    clues: {
+      easy: ['Magsasaka na ninakawan ng lupa.', 'Ama ni Juli.', 'Naging kilabot na tulisan sa bundok.'],
+      medium: ['May alyas na "Matanglawin".', 'Pinatay ang prayle at ang bagong may-ari ng kanyang lupa.', 'Dating Cabeza de Barangay na naging rebelde.'],
+      hard: ['Ipinaglaban ang kanyang lupa sa korte hanggang sa maubos ang kanyang pera.', 'Binitbit ang baril, palakol, at kalaunan ay gulok sa pagbabantay ng bukid.', 'Kumakatawan sa galit ng mga magsasakang biktima ng sistemang encomienda.']
+    }
+  },
+  {
+    id: 'florentino',
+    imgSrc: './panitikan/Images/Characters/florentino.webp',
+    name: 'Padre Florentino',
+    alias: 'Ang Paring Pilipino',
+    role: 'Marunong na Matanda',
+    traitClass: 'trait-r',
+    traitLabel: 'Relihiyoso',
+    bg: 'linear-gradient(160deg,#100e00,#080600)',
+    filter: 'relihiyoso',
+    shortDesc: 'Isang marangal na paring Pilipino na nagpatuloy kay Simoun sa huling sandali nito.',
+    attrs: [
+      {label: 'Propesyon', value: 'Sekular na Pari'},
+      {label: 'Pamangkin', value: 'Isagani'},
+      {label: 'Wakas', value: 'Itinapon ang kayamanan ni Simoun'},
+      {label: 'Papel', value: 'Nakikinig sa kumpisal ni Simoun'}
+    ],
+    desc: 'Kinakatawan ang ideal na paring Pilipino. Kinupkop niya ang sugatang si Simoun at itinapon ang kayamanan nito sa dagat upang hindi na ito magamit sa kasamaan.',
+    quote: '"Nasaan ang kabataang mag-aalay ng kanilang ginintuang sandali para sa bayan?"',
+    clues: {
+      easy: ['Mabait na paring Pilipino.', 'Nakita niya ang pagkamatay ni Simoun.', 'Tito ni Isagani.'],
+      medium: ['Itinapon ang kaban ng kayamanan sa dagat.', 'Naniniwala na ang kalayaan ay dapat paghirapan at hindi idaan sa dahas.', 'Pinilit lamang magpari ng kanyang ina.'],
+      hard: ['Piniling manirahan sa malapit sa dagat para sa katahimikan.', 'Nagbigay ng huling kumpisal sa naghihingalong si Simoun.', 'Simbolo ng moralidad at tunay na pananampalataya sa nobela.']
+    }
+  },
+  {
+    id: 'custodio',
+    imgSrc: './panitikan/Images/Characters/custodio.webp',
+    name: 'Don Custodio',
+    alias: 'Ang Palaging May Plano',
+    role: 'Opisyal',
+    traitClass: 'trait-s',
+    traitLabel: 'Satiriko',
+    bg: 'linear-gradient(160deg,#0d0800,#060400)',
+    filter: 'satiriko',
+    shortDesc: 'Isang mataas na opisyal na kilala sa dami ng plano ngunit wala namang naisasagawa.',
+    attrs: [
+      {label: 'Katungkulan', value: 'Opisyal ng Gobyerno'},
+      {label: 'Simbolo', value: 'Mabagal na Burukrasya'},
+      {label: 'Alyas', value: 'Buena Tinta'},
+      {label: 'Papel', value: 'Humawak sa petisyon ng mga estudyante'}
+    ],
+    desc: 'Simbolo ng mga opisyal na maraming sinasabi pero walang ginagawa. Ang petisyon ng mga estudyante para sa akademya ay nabaon sa kanyang mga walang katapusang plano.',
+    quote: '"May plano ako para diyan... bukas na lang nating pag-usapan."',
+    clues: {
+      easy: ['Opisyal na mahilig gumawa ng planong hindi natutuloy.', 'Tinatawag na "Buena Tinta".', 'Mabagal magdesisyon.'],
+      medium: ['Sa kanya napunta ang desisyon para sa Akademya ng Wikang Kastila.', 'Isang Kastilang nagmamarunong kahit walang sapat na kaalaman.', 'Pinakasalan ang isang mayamang babae para sa status.'],
+      hard: ['Naniniwala siya na ang mga Pilipino ay hindi dapat matuto ng Kastila.', 'Ginamit ni Rizal para punahin ang palpak na gobyerno ng Espanya.', 'Isang satiriko na karakter na kumakatawan sa kolonyal na burukrasya.']
+    }
+  },
+  {
+    id: 'paulita',
+    imgSrc: './panitikan/Images/Characters/paulita.webp',
+    name: 'Paulita Gomez',
+    alias: 'Pamangkin ni Doña Victorina',
+    role: 'Pag-ibig ni Isagani',
+    traitClass: 'trait-l',
+    traitLabel: 'Trahedya',
+    bg: 'linear-gradient(160deg,#1a0516,#0d000a)',
+    filter: 'biktima',
+    shortDesc: 'Ang magandang pamangkin ni Doña Victorina na piniling pakasalan si Juanito Pelaez.',
+    attrs: [
+      {label: 'Tiyahin', value: 'Doña Victorina'},
+      {label: 'Unang Pag-ibig', value: 'Isagani'},
+      {label: 'Asawa', value: 'Juanito Pelaez'},
+      {label: 'Simbolo', value: 'Praktikalidad kaysa Pag-ibig'}
+    ],
+    desc: 'Pinili ang yaman at seguridad ni Juanito Pelaez kaysa sa pag-ibig ni Isagani. Kinakatawan niya ang mga Pilipinong nabulag ng materyal na bagay at katayuan sa lipunan.',
+    quote: '"Ang puso ay sumusunod sa isip, at ang isip ay sumusunod sa kalagayan."',
+    clues: {
+      easy: ['Magandang dalaga na hinahangaan ng marami.', 'Pamangkin ni Doña Victorina.', 'Iniwan ang kasintahan para sa mayamang lalaki.'],
+      medium: ['Ikinasal kay Juanito Pelaez sa huling bahagi ng kwento.', 'Naging dahilan kung bakit iniligtas ni Isagani ang mga tao sa pagsabog.', 'Isang sosyal na dalaga sa Maynila.'],
+      hard: ['Iniwan si Isagani dahil ito ay naging rebelde at walang pera.', 'Simbolo ng tradisyonal na babaeng Pilipina na sunod-sunuran sa dikta ng lipunan.', 'Ang kanyang kasal ang naging tagpuan ng planong pagpapasabog ni Simoun.']
+    }
+  },
+  {
+    id: 'pecson',
+    imgSrc: './panitikan/Images/Characters/pecson.webp',
+    name: 'Pecson',
+    alias: 'Ang Pesimista',
+    role: 'Estudyante',
+    traitClass: 'trait-s',
+    traitLabel: 'Satiriko',
+    bg: 'linear-gradient(160deg,#101010,#080808)',
+    filter: 'satiriko',
+    shortDesc: 'Isang estudyante na laging duda sa tagumpay ng kanilang mga petisyon.',
+    attrs: [
+      {label: 'Papel', value: 'Estudyanteng mapagduda'},
+      {label: 'Katangian', value: 'Pesimista'},
+      {label: 'Simbolo', value: 'Kawalan ng pag-asa'},
+      {label: 'Pananaw', value: 'Walang mangyayaring reporma'}
+    ],
+    desc: 'Siya ang nagbibigay ng negatibong pananaw sa grupo. Para sa kanya, hindi kailanman papakinggan ng gobyerno ang mga hiling ng mga Pilipino.',
+    quote: '"Subukan man natin, walang mangyayari. Iyan ang katotohanan."',
+    clues: {
+      easy: ['Estudyante na laging negatibo.', 'Duda sa lahat ng plano ng mga kaklase.', 'Laging malungkot ang pananaw.'],
+      medium: ['Nagprotesta sa pamamagitan ng paghahain ng "piging sa pansiterya".', 'Kabaligtaran ng optimistang si Sandoval.', 'Isa sa mga nag-organisa ng huling hapunan ng mga estudyante.'],
+      hard: ['Siya ang unang nakapuna na haharangin ng mga prayle ang akademya.', 'Ang kanyang karakter ay sumasalamin sa kawalan ng tiwala ng kabataan sa gobyerno.', 'Isang boses ng reyalidad na madalas hindi gustong pakinggan ng iba.']
+    }
+  }
 ];
