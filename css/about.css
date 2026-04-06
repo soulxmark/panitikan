@@ -16,7 +16,7 @@
 .about-text{font-size:clamp(.9rem,2vw,1.05rem);line-height:1.9;color:rgba(245,234,208,.78);margin-bottom:1.2rem}
 .about-text strong{color:var(--gold-light);font-weight:600}
 
-/* Timeline */
+/* Linya ng Panahon */
 .timeline{position:relative;padding-left:2rem}
 .timeline::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:1px;background:linear-gradient(180deg,var(--gold-dim),transparent)}
 .tl-item{position:relative;margin-bottom:2.2rem;opacity:0;transform:translateX(-16px);transition:opacity .6s,transform .6s}

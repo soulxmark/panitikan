@@ -95,7 +95,7 @@ function renderScene(idx) {
   const charsForScene = (ch.chars||[]).slice(0,3).map(id => CHARS.find(c=>c.id===id)).filter(Boolean);
   charsForScene.forEach((c, i) => {
     sceneCharLayers.push({
-      emoji: c.emoji,
+      emoji: c.imgSrc||c.img||'👤',
       x: 0.15 + i * 0.32 + (Math.random()-.5)*.1,
       y: 0.25 + (Math.random()-.5)*.15,
       floatOffset: Math.random()*Math.PI*2,
@@ -120,7 +120,7 @@ function renderScene(idx) {
     const W = stageW, H = stageH;
     ctx2d.clearRect(0,0,W,H);
 
-    // Background gradient (Ken Burns pan)
+    // Kasaysayan gradient (Ken Burns pan)
     const panX = Math.sin(t*0.004)*30 + mouseInfluence.x*25;
     const panY = Math.cos(t*0.003)*15 + mouseInfluence.y*18;
     const grd = ctx2d.createRadialGradient(W/2+panX, H*.35+panY, 0, W/2+panX, H/2, W*.85);
@@ -193,7 +193,7 @@ function renderScene(idx) {
       ctx2d.textAlign = 'center'; ctx2d.textBaseline = 'middle';
       // Glow
       ctx2d.shadowBlur = 40; ctx2d.shadowColor = ch.color || '#c9a84c';
-      ctx2d.fillText(layer.emoji, px, py);
+      // emoji removed — using imgSrc for character images
       ctx2d.shadowBlur = 0;
       ctx2d.restore();
     });
@@ -242,13 +242,13 @@ function buildSceneUI() {
     const c = CHARS.find(x=>x.id===id);
     if (!c) return;
     const pill = document.createElement('div'); pill.className='scene-char-pill';
-    pill.innerHTML=`<span class="scene-char-pill-emoji">${c.emoji}</span><span class="scene-char-pill-name">${c.name}</span>`;
+    pill.innerHTML=`<img class="scene-char-pill-emoji" src="${c.imgSrc||c.img||''}" style="width:28px;height:28px;object-fit:cover;object-position:top;border-radius:50%" onerror="this.style.display='none'"><span class="scene-char-pill-name">${c.name}</span>`;
     pill.addEventListener('click', ()=>{ closeScene(); openModal(c); });
     row.appendChild(pill);
   });
   // Nav buttons
   document.getElementById('scenePrevBtn').disabled = sceneIdx === 0;
-  document.getElementById('sceneNextBtn').disabled = sceneIdx === CHAPTERS.length-1;
+  document.getElementById('sceneSusunodBtn').disabled = sceneIdx === CHAPTERS.length-1;
   // Animate text in
   ['sceneChTag','sceneTitle','sceneBody'].forEach((id,i) => {
     const el=document.getElementById(id);

@@ -38,9 +38,9 @@ const VIDEOS = [
     desc:'Serye ng mga lektura tungkol sa buhay, mga akda, at pamana ni Jose Rizal para sa mga estudyante.',
     source:'YouTube', lang:'Filipino/English', dur:'55m' },
 
-  // ── Film Adaptations ──
+  // ── Film Adaptasyons ──
   { id:'Bks_0sTFMkQ', cat:'pelikula', badge:'film', badgeLabel:'PELIKULA',
-    title:'Ilustrado (El Filibusterismo Adaptation)',
+    title:'Ilustrado (El Filibusterismo Adaptasyon)',
     desc:'Isang makabagong interpretasyon ng El Filibusterismo sa pamamagitan ng visual storytelling at sining.',
     source:'YouTube', lang:'Filipino', dur:'1h 30m' },
   { id:'7Kp_bAmaVY8', cat:'pelikula', badge:'film', badgeLabel:'PELIKULA',
@@ -50,7 +50,7 @@ const VIDEOS = [
 
   // ── Animated / Summary ──
   { id:'_Hk3kxcjmmc', cat:'animated', badge:'ani', badgeLabel:'ANIMATED',
-    title:'El Filibusterismo — Chapter Summary (Animated)',
+    title:'El Filibusterismo — Kabanata Summary (Animated)',
     desc:'Animated na buod ng bawat kabanata ng El Filibusterismo — perpekto para sa mabilis na pag-aaral.',
     source:'YouTube', lang:'Filipino', dur:'20m' },
   { id:'ueZ1lGajkHE', cat:'animated', badge:'ani', badgeLabel:'ANIMATED',
@@ -75,7 +75,7 @@ function buildVideo() {
   const tabs = document.getElementById('vidTabs');
   VID_CATS.forEach((c,i) => {
     const btn = document.createElement('button');
-    btn.className = 'vid-tab' + (i===0?' active':'');
+    btn.classPangalan = 'vid-tab' + (i===0?' active':'');
     btn.textContent = c.label; btn.dataset.cat = c.key;
     btn.addEventListener('click', () => {
       tabs.querySelectorAll('.vid-tab').forEach(b=>b.classList.remove('active'));
@@ -88,7 +88,7 @@ function buildVideo() {
   const grid = document.getElementById('vidGrid');
   VIDEOS.forEach((v,i) => {
     const card = document.createElement('div');
-    card.className = 'vid-card'; card.dataset.cat = v.cat;
+    card.classPangalan = 'vid-card'; card.dataset.cat = v.cat;
     card.style.animationDelay = i*.055+'s';
     card.innerHTML = `
       <div class="vid-thumb">
@@ -140,7 +140,7 @@ function closeLightbox() {
   document.getElementById('vidLightbox').classList.remove('open');
   document.body.style.overflow = '';
 }
-// Close on backdrop click
+// Isara on backdrop click
 document.getElementById('vidLightbox').addEventListener('click', e => {
   if (e.target === document.getElementById('vidLightbox')) closeLightbox();
 });

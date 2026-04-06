@@ -4,25 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>El Filibusterismo — Pangunahing Pahina</title>
-
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
 
-<!-- ── CSS (load order matters) ── -->
-<link rel="stylesheet" href="css/variables-reset.css">
-<link rel="stylesheet" href="css/keyframes.css">
-<link rel="stylesheet" href="css/layout.css">
-<link rel="stylesheet" href="css/navbar.css">
-<link rel="stylesheet" href="css/pages.css">
-<link rel="stylesheet" href="css/landing.css">
-<link rel="stylesheet" href="css/characters.css">
-<link rel="stylesheet" href="css/about.css">
-<link rel="stylesheet" href="css/game.css">
-<link rel="stylesheet" href="css/modal.css">
-<link rel="stylesheet" href="css/misc.css">
-<link rel="stylesheet" href="css/kwento.css">
-<link rel="stylesheet" href="css/video.css">
-<link rel="stylesheet" href="css/registration.css">
+  <link rel="stylesheet" href="css/variables-reset.css">
+  <link rel="stylesheet" href="css/keyframes.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/characters.css">
+  <link rel="stylesheet" href="css/about.css">
+  <link rel="stylesheet" href="css/game.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/misc.css">
+  <link rel="stylesheet" href="css/kwento.css">
+  <link rel="stylesheet" href="css/video.css">
+  <link rel="stylesheet" href="css/registration.css">
 </head>
 <body>
 
@@ -30,22 +27,24 @@
 <div id="pageWipe"></div>
 <!-- Read progress -->
 <div id="readProg"></div>
-<!-- Custom cursor -->
+<!-- Cursor -->
 <div class="c-dot" id="cDot"></div>
 <div class="c-ring" id="cRing"></div>
-<!-- Floating particles -->
+<!-- Particles -->
 <div id="particles"></div>
 
-<!-- ── NAVBAR ── -->
+<!-- ══════════════════════════════════════
+     NAVBAR
+     ══════════════════════════════════════ -->
 <nav id="navbar">
   <div class="nav-brand" onclick="nav('home')">El Filibusterismo</div>
   <div class="nav-links">
-    <button class="nav-link active" data-page="home"       onclick="nav('home')">Tahanan</button>
-    <button class="nav-link"        data-page="characters" onclick="nav('characters')">Mga Tauhan</button>
-    <button class="nav-link"        data-page="kwento"     onclick="nav('kwento')">Kuwento</button>
-    <button class="nav-link"        data-page="about"      onclick="nav('about')">Tungkol Sa</button>
-    <button class="nav-link"        data-page="game"       onclick="nav('game')">Laro</button>
-    <button class="nav-link"        data-page="video"      onclick="nav('video')">▶ Video</button>
+    <button class="nav-link active" data-page="home" onclick="nav('home')">Tahanan</button>
+    <button class="nav-link" data-page="characters" onclick="nav('characters')">Mga Tauhan</button>
+    <button class="nav-link" data-page="kwento" onclick="nav('kwento')">Kwento</button>
+    <button class="nav-link" data-page="about" onclick="nav('about')">Tungkol Sa</button>
+    <button class="nav-link" data-page="game" onclick="nav('game')">Laro</button>
+    <button class="nav-link" data-page="video" onclick="nav('video')">▶ Video</button>
   </div>
   <div style="display:flex;align-items:center;gap:.4rem">
     <button class="nav-music-btn" id="navMusicBtn" onclick="toggleMusic()" title="Musika">▶</button>
@@ -71,7 +70,7 @@
 </div>
 
 <!-- ══════════════════════════════════════
-     PAGE: TAHANAN (Home)
+     LANDING PAGE
      ══════════════════════════════════════ -->
 <div id="page-home" class="page active">
   <section class="lhero">
@@ -83,7 +82,7 @@
     <p class="lhero-desc">Ang ikalawang nobela ni Jose Rizal — isang kwento ng galit,<br>pagmamahal, at rebolusyon laban sa pananakop ng Espanya.</p>
     <div class="lhero-btns">
       <button class="btn-primary" onclick="nav('characters')">Tuklasin ang mga Tauhan</button>
-      <button class="btn-outline"  onclick="nav('game')">Maglaro Ngayon ✦</button>
+      <button class="btn-outline" onclick="nav('game')">Maglaro Ngayon ✦</button>
     </div>
     <div class="candle-row" id="candleRow"></div>
     <div class="lhero-scroll">
@@ -91,21 +90,26 @@
       <div class="lhero-scroll-arr"></div>
     </div>
   </section>
+
+  <!-- Featured characters -->
   <section class="featured">
     <p class="featured-label">Mga Pangunahing Tauhan</p>
     <h2 class="featured-title">Kilalanin Sila</h2>
     <div class="featured-rule"><span>✦</span></div>
     <div class="featured-grid" id="featGrid"></div>
   </section>
+
+  <!-- Quote -->
   <div class="quote-strip">
     <p class="quote-text">"Ang mga luha ng dukha ay nagiging dugo ng mga makapangyarihan."</p>
     <p class="quote-attr">— Simoun, El Filibusterismo</p>
   </div>
+
   <footer class="footer"><span>✦</span>&nbsp; El Filibusterismo — Jose Rizal — 1891 &nbsp;<span>✦</span></footer>
 </div>
 
 <!-- ══════════════════════════════════════
-     PAGE: MGA TAUHAN (Characters)
+     CHARACTERS PAGE
      ══════════════════════════════════════ -->
 <div id="page-characters" class="page">
   <div class="chars-hero">
@@ -122,7 +126,7 @@
 </div>
 
 <!-- ══════════════════════════════════════
-     PAGE: TUNGKOL SA (About)
+     ABOUT PAGE
      ══════════════════════════════════════ -->
 <div id="page-about" class="page">
   <div class="about-hero">
@@ -138,15 +142,19 @@
         <p class="rizal-bio">Si Jose Rizal ay ang pambansang bayani ng Pilipinas — isang manunulat, doktor, painter, sculptor, at polyglot na nagsalita ng mahigit 22 wika. Ang kanyang mga nobela — <strong>Noli Me Tangere</strong> at <strong>El Filibusterismo</strong> — ay nagbigay ng sunog sa rebolusyonaryong kilusan ng mga Pilipino.</p>
       </div>
     </div>
+
     <div class="about-section">
       <div class="about-section-title">Kasaysayan ng Nobela</div>
       <p class="about-text">Ang <strong>El Filibusterismo</strong> ay ang ikalawang bahagi ng dilogy ni Rizal, na sinundan ang unang nobela na <strong>Noli Me Tangere</strong> (1887). Inilathala ito noong <strong>1891 sa Ghent, Belgium</strong>, matapos maibenta ni Rizal ang kanyang alahas upang mapondohan ang pag-imprenta.</p>
-      <p class="about-text">Ang pamagat ay nagmula sa salitang Espanyol na "filibustero" — isang termino na ginamit ng mga Espanyol para tukuyin ang mga Pilipinong nagtataguyod ng reporma o rebolusyon.</p>
+      <p class="about-text">Ang pamagat ay nagmula sa salitang Espanyol na "filibustero" — isang termino na ginamit ng mga Espanyol para tukuyin ang mga Pilipinong nagtataguyod ng reporma o rebolusyon. Sa nobela, ito ay ang bansag sa dating Crisostomo Ibarra na ngayon ay kilala bilang <strong>Simoun</strong>.</p>
+      <p class="about-text">Kung ang Noli Me Tangere ay naglarawan ng mga panlipunang sakit ng lipunang Pilipino, ang El Filibusterismo naman ay nagtatayo ng tanong: <em>"Kung hindi mababago ang sistema sa pamamagitan ng reporma, dapat bang rebolusyon ang sagot?"</em></p>
     </div>
+
     <div class="about-section">
       <div class="about-section-title">Kronolohiya</div>
       <div class="timeline" id="timeline"></div>
     </div>
+
     <div class="about-section">
       <div class="about-section-title">Mga Katotohanan</div>
       <div class="facts-grid">
@@ -158,12 +166,18 @@
         <div class="fact-card"><div class="fact-icon">⚖️</div><div class="fact-title">Pagbabawal</div><div class="fact-text">Agad na ipinagbawal ng mga Espanyol ang nobela sa Pilipinas pagkatapos itong mailathala.</div></div>
       </div>
     </div>
+
+    <div class="about-section">
+      <div class="about-section-title">Pamana at Kahalagahan</div>
+      <p class="about-text">Ang El Filibusterismo ay itinuturing na isa sa mga pinakamahalagang akdang pampanitikan sa kasaysayan ng Pilipinas. Ito ay nagsilbing inspirasyon sa Kilusang Propaganda at sa huli ay sa Rebolusyong Pilipino ng 1896.</p>
+      <p class="about-text">Ngayon, ang nobela ay bahagi ng curriculum ng lahat ng paaralang Pilipino at patuloy na pinag-aaralan bilang isang kritikal na pagsusuri ng kolonyal na karanasan ng mga Pilipino.</p>
+    </div>
   </div>
   <footer class="footer"><span>✦</span>&nbsp; El Filibusterismo — Jose Rizal — 1891 &nbsp;<span>✦</span></footer>
 </div>
 
 <!-- ══════════════════════════════════════
-     PAGE: LARO (Game)
+     GAME PAGE
      ══════════════════════════════════════ -->
 <div id="page-game" class="page">
   <div class="game-hero">
@@ -171,60 +185,78 @@
     <p class="game-subtitle">Hulaan ang tauhan mula sa mga pahiwatig · May Boses na AI</p>
   </div>
   <div class="game-wrap">
+    <!-- Player Badge -->
     <div class="player-badge" id="playerBadge" style="display:none">
       <div class="player-avatar" id="playerAvatar">?</div>
       <div class="player-info">
-        <div class="player-name" id="playerName">—</div>
+        <div class="player-name" id="playerPangalan">—</div>
         <div class="player-meta" id="playerMeta">—</div>
       </div>
       <button class="player-change-btn" onclick="showReg()">Baguhin</button>
     </div>
+
+    <!-- Puntos -->
     <div class="score-bar">
       <div class="score-item"><span class="score-label">Puntos</span><span class="score-val" id="scoreVal">0</span></div>
-      <div class="score-item"><span class="score-label">Streak</span><span class="score-val" id="streakVal">0🔥</span></div>
+      <div class="score-item"><span class="score-label">Sunod-sunod</span><span class="score-val" id="streakVal">0🔥</span></div>
       <div class="score-item"><span class="score-label">Tanong</span><span class="score-val" id="qNumVal">1/10</span></div>
       <div class="score-item"><span class="score-label">Pinakamataas</span><span class="score-val" id="highVal">0</span></div>
     </div>
+
+    <!-- Difficulty -->
     <div class="diff-row">
       <button class="diff-btn active" onclick="setDiff('easy',this)">Madali</button>
-      <button class="diff-btn"        onclick="setDiff('medium',this)">Katamtaman</button>
-      <button class="diff-btn"        onclick="setDiff('hard',this)">Mahirap</button>
+      <button class="diff-btn" onclick="setDiff('medium',this)">Katamtaman</button>
+      <button class="diff-btn" onclick="setDiff('hard',this)">Mahirap</button>
     </div>
+
+    <!-- Game card -->
     <div class="game-card" id="gameCard">
       <div class="clue-number" id="clueNumber">PAHIWATIG #1</div>
       <div class="clue-text" id="clueText"><span id="clueDisplay"></span><span class="clue-cursor" id="clueCursor"></span></div>
       <div class="voice-row">
         <button class="voice-btn" id="voiceBtn" onclick="speakClue()"><span class="voice-icon">🔊</span> BASAHIN</button>
-        <button class="ai-btn"    id="aiBtn"    onclick="getAIClue()"><span>✦</span> <span id="aiBtnText">AI PAHIWATIG</span> <span class="ai-loading" id="aiLoading"></span></button>
+        <button class="ai-btn" id="aiBtn" onclick="getAIClue()"><span>✦</span> <span id="aiBtnText">AI PAHIWATIG</span> <span class="ai-loading" id="aiLoading"></span></button>
       </div>
+      <!-- Countdown -->
       <div class="countdown-wrap" id="countdownWrap">
         <svg class="countdown-svg" width="46" height="46" viewBox="0 0 46 46">
-          <circle class="countdown-bg"  cx="23" cy="23" r="20"/>
+          <circle class="countdown-bg" cx="23" cy="23" r="20"/>
           <circle class="countdown-arc" id="countdownArc" cx="23" cy="23" r="20"/>
         </svg>
         <div class="countdown-num" id="countdownNum">30</div>
       </div>
     </div>
+
+    <!-- Result -->
     <div class="result-feedback" id="resultFb"></div>
-    <div class="choices-grid"   id="choicesGrid"></div>
+
+    <!-- Choices -->
+    <div class="choices-grid" id="choicesGrid"></div>
+
+    <!-- Controls -->
     <div class="game-ctrl">
-      <button class="ctrl-btn primary" id="nextBtn" onclick="nextQuestion()" style="display:none">Susunod →</button>
-      <button class="ctrl-btn"         onclick="resetGame()">↺ Magsimula Ulit</button>
+      <button class="ctrl-btn primary" id="nextBtn" onclick="nextTanong()" style="display:none">Susunod →</button>
+      <button class="ctrl-btn" onclick="resetGame()">↺ Magsimula Ulit</button>
     </div>
+
+    <!-- Local high scores -->
     <div class="highscores">
       <div class="hs-title">⭐ Iyong mga Naitala</div>
       <ul class="hs-list" id="hsList"></ul>
     </div>
+
+    <!-- Global leaderboard -->
     <div class="global-lb" id="globalLb">
       <div class="glb-header">
         <div class="glb-title-wrap">
           <span class="glb-icon">🌍</span>
           <div>
-            <div class="glb-title">Global Leaderboard</div>
+            <div class="glb-title">Pandaigdigang Talaan ng Pinakamataas</div>
             <div class="glb-sub">Pinakamataas na Puntos — Lahat ng Manlalaro</div>
           </div>
         </div>
-        <button class="glb-refresh" id="glbRefreshBtn" onclick="loadGlobalBoard()">↺ I-refresh</button>
+        <button class="glb-refresh" id="glbI-refreshBtn" onclick="loadGlobalBoard()">↺ I-refresh</button>
       </div>
       <div class="glb-body" id="glbBody">
         <div class="glb-loading"><div class="glb-loading-spin"></div>Nilo-load ang leaderboard...</div>
@@ -234,8 +266,9 @@
   <footer class="footer"><span>✦</span>&nbsp; El Filibusterismo — Jose Rizal — 1891 &nbsp;<span>✦</span></footer>
 </div>
 
+
 <!-- ══════════════════════════════════════
-     PAGE: KWENTO (Story)
+     KWENTO (STORY) PAGE
      ══════════════════════════════════════ -->
 <div id="page-kwento" class="page">
   <div class="kwento-hero">
@@ -247,7 +280,36 @@
 </div>
 
 <!-- ══════════════════════════════════════
-     PAGE: VIDEO
+     SCENE VIEWER OVERLAY
+     ══════════════════════════════════════ -->
+<div class="scene-viewer" id="sceneViewer">
+  <div class="scene-stage" id="sceneStage">
+    <canvas id="sceneCanvas"></canvas>
+    <!-- Character layers rendered by JS -->
+    <div class="scene-text-overlay">
+      <div class="scene-chapter-tag" id="sceneChTag"></div>
+      <div class="scene-title" id="sceneTitle"></div>
+      <div class="scene-body" id="sceneBody"></div>
+      <div class="scene-chars-row" id="sceneCharsRow"></div>
+    </div>
+    <div class="scene-flash" id="sceneFlash"></div>
+    <!-- Controls -->
+    <div class="scene-controls">
+      <button class="scene-ctrl-btn" id="sceneVoiceBtn" onclick="sceneSpeak()">🔊 BOSES</button>
+      <button class="scene-ctrl-btn" id="sceneAutoBtn" onclick="toggleAutoPlay()">▶ AUTO</button>
+    </div>
+  </div>
+  <div class="scene-nav">
+    <button class="scene-nav-btn" id="scenePrevBtn" onclick="sceneNav(-1)">← NAKARAAN</button>
+    <div class="scene-progress-dots" id="sceneProgDots"></div>
+    <button class="scene-nav-btn" id="sceneSusunodBtn" onclick="sceneNav(1)">SUSUNOD →</button>
+    <button class="scene-close-btn" onclick="closeScene()">✕ ISARA</button>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════
+     VIDEO PAGE
      ══════════════════════════════════════ -->
 <div id="page-video" class="page">
   <div class="video-hero">
@@ -256,59 +318,29 @@
   </div>
   <div class="video-wrap">
     <div class="vid-tabs" id="vidTabs"></div>
-    <div class="vid-grid"  id="vidGrid"></div>
+    <div class="vid-grid" id="vidGrid"></div>
   </div>
   <footer class="footer"><span>✦</span>&nbsp; El Filibusterismo — Jose Rizal — 1891 &nbsp;<span>✦</span></footer>
 </div>
 
-<!-- ══════════════════════════════════════
-     SCENE VIEWER (overlay)
-     ══════════════════════════════════════ -->
-<div class="scene-viewer" id="sceneViewer">
-  <div class="scene-stage" id="sceneStage">
-    <canvas id="sceneCanvas"></canvas>
-    <div class="scene-text-overlay">
-      <div class="scene-chapter-tag" id="sceneChTag"></div>
-      <div class="scene-title"       id="sceneTitle"></div>
-      <div class="scene-body"        id="sceneBody"></div>
-      <div class="scene-chars-row"   id="sceneCharsRow"></div>
-    </div>
-    <div class="scene-flash" id="sceneFlash"></div>
-    <div class="scene-controls">
-      <button class="scene-ctrl-btn" id="sceneVoiceBtn" onclick="sceneSpeak()">🔊 BOSES</button>
-      <button class="scene-ctrl-btn" id="sceneAutoBtn"  onclick="toggleAutoPlay()">▶ AUTO</button>
-    </div>
-  </div>
-  <div class="scene-nav">
-    <button class="scene-nav-btn" id="scenePrevBtn" onclick="sceneNav(-1)">← NAKARAAN</button>
-    <div class="scene-progress-dots" id="sceneProgDots"></div>
-    <button class="scene-nav-btn" id="sceneNextBtn" onclick="sceneNav(1)">SUSUNOD →</button>
-    <button class="scene-close-btn"  onclick="closeScene()">✕ ISARA</button>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════════
-     VIDEO LIGHTBOX (overlay)
-     ══════════════════════════════════════ -->
+<!-- Video Lightbox -->
 <div class="vid-lightbox" id="vidLightbox">
   <div class="vid-lb-inner">
     <button class="vid-lb-close" onclick="closeLightbox()">✕ ISARA</button>
     <div class="vid-lb-frame"><iframe id="vidLbFrame" allowfullscreen allow="autoplay"></iframe></div>
-    <div class="vid-lb-title"  id="vidLbTitle"></div>
+    <div class="vid-lb-title" id="vidLbTitle"></div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     CHARACTER MODAL (overlay)
-     ══════════════════════════════════════ -->
+<!-- Modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
-    <button class="modal-close" id="modalClose">✕</button>
+    <button class="modal-close" id="modalIsara">✕</button>
     <div class="modal-header">
       <div class="modal-emoji" id="mEmoji"></div>
       <div>
-        <div class="modal-name"     id="mName"></div>
-        <div class="modal-alias"    id="mAlias"></div>
+        <div class="modal-name" id="mPangalan"></div>
+        <div class="modal-alias" id="mAlias"></div>
         <span class="modal-role-tag" id="mRole"></span>
       </div>
     </div>
@@ -316,107 +348,131 @@
       <div class="modal-sec-label">Mga Katangian</div>
       <div class="modal-attrs" id="mAttrs"></div>
       <div class="modal-sec-label">Buod</div>
-      <p class="modal-desc"    id="mDesc"></p>
+      <p class="modal-desc" id="mDesc"></p>
       <div class="modal-quote" id="mQuote"></div>
     </div>
   </div>
 </div>
 
+
+
 <!-- ══════════════════════════════════════
-     PLAYER REGISTRATION (overlay)
+     PLAYER REGISTRATION SCREEN
      ══════════════════════════════════════ -->
 <div class="reg-screen hidden" id="regScreen">
   <div class="reg-box">
-    <p class="reg-eyeline">El Filibusterismo — Laro</p>
-    <h2 class="reg-title">Sino Ka?</h2>
-    <p class="reg-sub">Pumasok ang iyong impormasyon bago maglaro</p>
-    <div class="reg-divider"><span>✦</span></div>
-    <div class="reg-field">
-      <label class="reg-label" for="regName">Pangalan</label>
-      <input class="reg-input" id="regName" type="text" placeholder="Ilagay ang iyong pangalan..." maxlength="40" autocomplete="name">
-      <div class="reg-error" id="regNameErr">Pakisulat ang iyong pangalan.</div>
-    </div>
-    <div class="reg-row">
-      <div class="reg-field">
-        <label class="reg-label" for="regAge">Edad</label>
-        <input class="reg-input" id="regAge" type="number" placeholder="Hal. 16" min="5" max="99">
-        <div class="reg-error" id="regAgeErr">Ilagay ang tamang edad (5–99).</div>
+
+    <!-- Window title bar -->
+    <div class="reg-titlebar">
+      <div class="reg-titlebar-dots">
+        <div class="reg-titlebar-dot close" onclick="hideReg()" title="Isara"></div>
+        <div class="reg-titlebar-dot"></div>
+        <div class="reg-titlebar-dot"></div>
       </div>
+      <div class="reg-titlebar-label">El Filibusterismo — Laro</div>
+      <div class="reg-titlebar-spacer"></div>
+    </div>
+
+    <!-- Scrollable form body -->
+    <div class="reg-body">
+      <p class="reg-eyeline">Mag-ingat sa Espanya</p>
+      <h2 class="reg-title">Sino Ka?</h2>
+      <p class="reg-sub">Pumasok ang iyong impormasyon bago maglaro</p>
+      <div class="reg-divider"><span>✦</span></div>
+
       <div class="reg-field">
-        <label class="reg-label" for="regGender">Kasarian</label>
-        <select class="reg-select" id="regGender">
+        <label class="reg-label" for="regPangalan">Pangalan</label>
+        <input class="reg-input" id="regPangalan" type="text" placeholder="Ilagay ang iyong pangalan..." maxlength="40" autocomplete="name">
+        <div class="reg-error" id="regPangalanErr">Pakisulat ang iyong pangalan.</div>
+      </div>
+
+      <div class="reg-row">
+        <div class="reg-field">
+          <label class="reg-label" for="regEdad">Edad</label>
+          <input class="reg-input" id="regEdad" type="number" placeholder="Hal. 16" min="5" max="99">
+          <div class="reg-error" id="regEdadErr">Ilagay ang tamang edad (5–99).</div>
+        </div>
+        <div class="reg-field">
+          <label class="reg-label" for="regKasarian">Kasarian</label>
+          <select class="reg-select" id="regKasarian">
+            <option value="">— Piliin —</option>
+            <option value="Lalaki">Lalaki</option>
+            <option value="Babae">Babae</option>
+            <option value="Iba pa">Iba pa</option>
+            <option value="Ayaw sabihin">Ayaw sabihin</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="reg-row">
+        <div class="reg-field">
+          <label class="reg-label" for="regSeksiyon">Seksiyon / Kurso</label>
+          <input class="reg-input" id="regSeksiyon" type="text" placeholder="Hal. Gr.10 Narra" maxlength="30">
+        </div>
+        <div class="reg-field">
+          <label class="reg-label" for="regPaaralan">Paaralan</label>
+          <input class="reg-input" id="regPaaralan" type="text" placeholder="Pangalan ng paaralan" maxlength="50">
+        </div>
+      </div>
+
+      <div class="reg-field">
+        <label class="reg-label" for="regRehiyon">Rehiyon</label>
+        <select class="reg-select" id="regRehiyon">
           <option value="">— Piliin —</option>
-          <option value="Lalaki">Lalaki</option>
-          <option value="Babae">Babae</option>
-          <option value="Iba pa">Iba pa</option>
-          <option value="Ayaw sabihin">Ayaw sabihin</option>
+          <option>NCR — Metro Manila</option>
+          <option>Rehiyon I — Ilocos</option>
+          <option>Rehiyon II — Cagayan Valley</option>
+          <option>Rehiyon III — Central Luzon</option>
+          <option>Rehiyon IV-A — CALABARZON</option>
+          <option>Rehiyon IV-B — MIMAROPA</option>
+          <option>Rehiyon V — Bicol</option>
+          <option>Rehiyon VI — Western Visayas</option>
+          <option>Rehiyon VII — Central Visayas</option>
+          <option>Rehiyon VIII — Eastern Visayas</option>
+          <option>Rehiyon IX — Zamboanga Peninsula</option>
+          <option>Rehiyon X — Northern Mindanao</option>
+          <option>Rehiyon XI — Davao</option>
+          <option>Rehiyon XII — SOCCSKSARGEN</option>
+          <option>Rehiyon XIII — Caraga</option>
+          <option>BARMM</option>
+          <option>CAR — Cordillera</option>
+          <option>Ibang Bansa</option>
         </select>
       </div>
-    </div>
-    <div class="reg-row">
-      <div class="reg-field">
-        <label class="reg-label" for="regSection">Seksiyon / Kurso</label>
-        <input class="reg-input" id="regSection" type="text" placeholder="Hal. Gr.10 Narra" maxlength="30">
-      </div>
-      <div class="reg-field">
-        <label class="reg-label" for="regSchool">Paaralan</label>
-        <input class="reg-input" id="regSchool" type="text" placeholder="Pangalan ng paaralan" maxlength="50">
-      </div>
-    </div>
-    <div class="reg-field">
-      <label class="reg-label" for="regRegion">Rehiyon</label>
-      <select class="reg-select" id="regRegion">
-        <option value="">— Piliin —</option>
-        <option>NCR — Metro Manila</option>
-        <option>Region I — Ilocos</option>
-        <option>Region II — Cagayan Valley</option>
-        <option>Region III — Central Luzon</option>
-        <option>Region IV-A — CALABARZON</option>
-        <option>Region IV-B — MIMAROPA</option>
-        <option>Region V — Bicol</option>
-        <option>Region VI — Western Visayas</option>
-        <option>Region VII — Central Visayas</option>
-        <option>Region VIII — Eastern Visayas</option>
-        <option>Region IX — Zamboanga Peninsula</option>
-        <option>Region X — Northern Mindanao</option>
-        <option>Region XI — Davao</option>
-        <option>Region XII — SOCCSKSARGEN</option>
-        <option>Region XIII — Caraga</option>
-        <option>BARMM</option>
-        <option>CAR — Cordillera</option>
-        <option>Ibang Bansa</option>
-      </select>
-    </div>
-    <button class="reg-submit" id="regSubmitBtn" onclick="submitReg()">
-      <span id="regBtnText">MAGSIMULA NA ✦</span>
-      <span class="reg-spin" id="regSpin"></span>
-    </button>
-  </div>
+
+      <button class="reg-submit" id="regIsumiteBtn" onclick="submitReg()">
+        <span id="regBtnText">MAGSIMULA NA ✦</span>
+        <span class="reg-spin" id="regSpin"></span>
+      </button>
+    </div><!-- /.reg-body -->
+
+  </div><!-- /.reg-box -->
 </div>
 
-<!-- ══════════════════════════════════════
-     JAVASCRIPT — load order matters
-     ══════════════════════════════════════ -->
-<script src="js/data-chars.js"></script>
-<script src="js/data-timeline.js"></script>
-<script src="js/data-chapters.js"></script>
-<script src="js/audio.js"></script>
-<script src="js/navigation.js"></script>
-<script src="js/cursor.js"></script>
-<script src="js/sparks-particles.js"></script>
-<script src="js/landing.js"></script>
-<script src="js/characters.js"></script>
-<script src="js/about.js"></script>
-<script src="js/modal.js"></script>
-<script src="js/scroll.js"></script>
-<script src="js/game.js"></script>
-<script src="js/voice.js"></script>
-<script src="js/ai-clue.js"></script>
-<script src="js/kwento.js"></script>
-<script src="js/scene.js"></script>
-<script src="js/video.js"></script>
-<script src="js/sheets.js"></script>
-<script src="js/init.js"></script>
 
+  <!-- Data -->
+  <script src="js/data-chars.js"></script>
+  <script src="js/data-timeline.js"></script>
+  <script src="js/data-chapters.js"></script>
+  <!-- Engine -->
+  <script src="js/audio.js"></script>
+  <script src="js/navigation.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/sparks-particles.js"></script>
+  <!-- Pages -->
+  <script src="js/landing.js"></script>
+  <script src="js/characters.js"></script>
+  <script src="js/about.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/scroll.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/voice.js"></script>
+  <script src="js/ai-clue.js"></script>
+  <script src="js/kwento.js"></script>
+  <script src="js/scene.js"></script>
+  <script src="js/video.js"></script>
+  <!-- Sheets / Init -->
+  <script src="js/sheets.js"></script>
+  <script src="js/init.js"></script>
 </body>
 </html>

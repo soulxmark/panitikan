@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════
 // GAME ENGINE
 // ═══════════════════════════════════════════════════
-let gScore=0,gStreak=0,gHigh=0,gQ=0,gTotal=10,gDiff='easy',gAnswered=false,gTimer=null,gTimeLeft=30,gQuestions=[];
+let gPuntos=0,gStreak=0,gHigh=0,gQ=0,gTotal=10,gDiff='easy',gAnswered=false,gTimer=null,gTimeLeft=30,gTanongs=[];
 let isSpeaking=false;
 
 function setDiff(d,btn){
@@ -13,7 +13,7 @@ function setDiff(d,btn){
 
 /* initGame defined below in the Sheets/Player section */
 function startFreshGame_core() {
-  gScore=0;gStreak=0;gQ=0;gAnswered=false;
+  gPuntos=0;gStreak=0;gQ=0;gAnswered=false;
   // Restore gameCard structure (endGame replaces it with score screen)
   const gc = document.getElementById('gameCard');
   if (gc) gc.innerHTML = `<div class="clue-number" id="clueNumber">PAHIWATIG #1</div>
@@ -29,21 +29,17 @@ function startFreshGame_core() {
         </svg>
         <div class="countdown-num" id="countdownNum">30</div>
       </div>`;
-  // Reset UI controls
-  const nb = document.getElementById('nextBtn');
-  if (nb) nb.style.display = 'none';
-  const rf = document.getElementById('resultFb');
-  if (rf) rf.classList.remove('show');
-  const cg = document.getElementById('choicesGrid');
-  if (cg) cg.innerHTML = '';
-  loadHighScores();
-  buildQuestions();
-  showQuestion();
+  const nb = document.getElementById('nextBtn'); if (nb) nb.style.display='none';
+  const rf = document.getElementById('resultFb'); if (rf) rf.classList.remove('show');
+  const cg = document.getElementById('choicesGrid'); if (cg) cg.innerHTML='';
+  loadHighPuntoss();
+  buildTanongs();
+  showTanong();
 }
 
-function buildQuestions() {
+function buildTanongs() {
   const shuffled=[...CHARS].sort(()=>Math.random()-.5);
-  gQuestions=shuffled.slice(0,Math.min(gTotal,CHARS.length)).map(c=>{
+  gTanongs=shuffled.slice(0,Math.min(gTotal,CHARS.length)).map(c=>{
     const clueArr=c.clues[gDiff];
     const clue=clueArr[Math.floor(Math.random()*clueArr.length)];
     // Wrong choices
@@ -51,12 +47,12 @@ function buildQuestions() {
     const choices=[c,...wrong].sort(()=>Math.random()-.5);
     return {char:c,clue,choices};
   });
-  gTotal=gQuestions.length;
+  gTotal=gTanongs.length;
 }
 
-function showQuestion() {
+function showTanong() {
   if(gQ>=gTotal){endGame();return}
-  const q=gQuestions[gQ];
+  const q=gTanongs[gQ];
   gAnswered=false;
   document.getElementById('qNumVal').textContent=`${gQ+1}/${gTotal}`;
   document.getElementById('clueNumber').textContent=`PAHIWATIG #${gQ+1}`;
@@ -68,7 +64,7 @@ function showQuestion() {
   const cg=document.getElementById('choicesGrid');cg.innerHTML='';
   q.choices.forEach(c=>{
     const btn=document.createElement('button');btn.className='choice-btn';
-    btn.innerHTML=`<span class="choice-emoji">${c.emoji}</span>${c.name}`;
+    btn.innerHTML=`<img src="${c.imgSrc||c.img||''}" class="choice-emoji" style="width:32px;height:32px;object-fit:cover;object-position:top;border-radius:50%;vertical-align:middle" onerror="this.style.display='none'">${c.name}`;
     btn.addEventListener('click',()=>answer(c,q.char,btn));
     cg.appendChild(btn);
   });
@@ -122,19 +118,19 @@ function answer(chosen,correct,btn){
     gStreak++;
     const pts=gDiff==='easy'?10:gDiff==='medium'?20:35;
     const bonus=Math.floor(gTimeLeft/5)*2;
-    gScore+=pts+bonus;
+    gPuntos+=pts+bonus;
     btn.classList.add('correct');
     showFeedback(true,`✦ Tama! +${pts+bonus} puntos (${bonus} bonus para sa bilis)`);
     sparks(btn.getBoundingClientRect().left+btn.offsetWidth/2,btn.getBoundingClientRect().top,14);
   } else {
     gStreak=0;
     btn.classList.add('wrong');
-    showFeedback(false,`✕ Mali. Ang tamang sagot ay ${correct.emoji} ${correct.name}`);
+    showFeedback(false,`✕ Mali. Ang tamang sagot ay <img src="${correct.imgSrc||correct.img||''}" style="width:20px;height:20px;object-fit:cover;border-radius:50%;vertical-align:middle" onerror="this.remove()"> ${correct.name}`);
     highlightAnswer(correct);
   }
   document.getElementById('nextBtn').style.display='';
   updateDisplay();
-  if(gScore>gHigh){gHigh=gScore;document.getElementById('highVal').textContent=gHigh}
+  if(gPuntos>gHigh){gHigh=gPuntos;document.getElementById('highVal').textContent=gHigh}
 }
 
 function highlightAnswer(correct=null){
@@ -156,11 +152,11 @@ function showFeedback(ok,msg){
 }
 
 function updateDisplay(){
-  const sv=document.getElementById('scoreVal');sv.textContent=gScore;sv.classList.remove('pop');void sv.offsetWidth;sv.classList.add('pop');
+  const sv=document.getElementById('scoreVal');sv.textContent=gPuntos;sv.classList.remove('pop');void sv.offsetWidth;sv.classList.add('pop');
   document.getElementById('streakVal').textContent=gStreak+(gStreak>=3?'🔥':'');
 }
 
-function nextQuestion(){gQ++;showQuestion()}
+function nextTanong(){gQ++;showTanong()}
 
 function endGame(){
   clearInterval(gTimer);
@@ -169,19 +165,19 @@ function endGame(){
     <div style="font-family:'Cinzel Decorative',serif;font-size:clamp(1.2rem,4vw,2rem);color:var(--gold-light);margin-bottom:1rem">Tapos na ang Laro!</div>
     <div style="font-size:3rem;margin-bottom:1rem">🎉</div>
     <div style="font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.3em;color:var(--gold);margin-bottom:.5rem">IYONG PUNTOS</div>
-    <div style="font-family:'Cinzel Decorative',serif;font-size:3rem;color:var(--gold-light);margin-bottom:1.5rem">${gScore}</div>
-    <div style="font-size:.95rem;color:rgba(245,234,208,.7);font-style:italic">${gScore>=150?'"Ikaw ay tunay na maalam tungkol sa El Filibusterismo!"':gScore>=80?'"Magaling! Matuto pa tungkol sa mga tauhan."':'"Subukan ulit! Marami pa kayong maaaring matutunan."'}</div>
+    <div style="font-family:'Cinzel Decorative',serif;font-size:3rem;color:var(--gold-light);margin-bottom:1.5rem">${gPuntos}</div>
+    <div style="font-size:.95rem;color:rgba(245,234,208,.7);font-style:italic">${gPuntos>=150?'"Ikaw ay tunay na maalam tungkol sa El Filibusterismo!"':gPuntos>=80?'"Magaling! Matuto pa tungkol sa mga tauhan."':'"Subukan ulit! Marami pa kayong maaaring matutunan."'}</div>
   </div>`;
   document.getElementById('choicesGrid').innerHTML='';
   document.getElementById('resultFb').classList.remove('show');
   document.getElementById('nextBtn').style.display='none';
-  saveScore();
-  loadHighScores();
+  savePuntos();
+  loadHighPuntoss();
 }
 
-/* resetGame and saveScore defined in Sheets/Player section below */
+/* resetGame and savePuntos defined in Sheets/Player section below */
 function resetGame(){initGame()}
-function loadHighScores(){
+function loadHighPuntoss(){
   let scores=[];
   try{scores=JSON.parse(localStorage.getItem('elfili_scores')||'[]')}catch(e){}
   const list=document.getElementById('hsList');list.innerHTML='';

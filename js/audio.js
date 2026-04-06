@@ -8,7 +8,7 @@ function initAudio() {
   audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 }
 
-function buildScore() {
+function buildPuntos() {
   if (!audioCtx) return;
   musicNodes.forEach(n => { try{n.stop()}catch(e){} });
   musicNodes = [];
@@ -44,7 +44,7 @@ function toggleMusic() {
   initAudio();
   if (!musicPlaying) {
     if (audioCtx.state==='suspended') audioCtx.resume();
-    buildScore();
+    buildPuntos();
     musicPlaying = true;
     document.getElementById('navMusicBtn').textContent = '⏸';
     document.querySelectorAll('.nav-eq-bar').forEach(b => b.classList.remove('paused'));

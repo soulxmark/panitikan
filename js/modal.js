@@ -3,8 +3,8 @@
 // ═══════════════════════════════════════════════════
 const overlay=document.getElementById('modalOverlay');
 function openModal(c){
-  document.getElementById('mEmoji').textContent=c.emoji;
-  document.getElementById('mName').textContent=c.name;
+  const mEl=document.getElementById('mEmoji'); mEl.innerHTML=''; const mImg=document.createElement('img'); mImg.src=c.imgSrc||c.img||''; mImg.alt=c.name; mImg.style.cssText='width:100%;height:100%;object-fit:cover;object-position:top;border-radius:4px'; mImg.onerror=()=>{mEl.textContent='👤'}; mEl.appendChild(mImg);
+  document.getElementById('mPangalan').textContent=c.name;
   document.getElementById('mAlias').textContent=c.alias;
   document.getElementById('mRole').textContent=c.role;
   document.getElementById('mDesc').textContent=c.desc;
@@ -13,6 +13,6 @@ function openModal(c){
   overlay.classList.add('open');document.body.style.overflow='hidden';
 }
 function closeModal(){overlay.classList.remove('open');document.body.style.overflow=''}
-document.getElementById('modalClose').addEventListener('click',closeModal);
+document.getElementById('modalIsara').addEventListener('click',closeModal);
 overlay.addEventListener('click',e=>{if(e.target===overlay)closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});

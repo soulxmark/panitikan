@@ -21,34 +21,34 @@ function showReg() {
   document.getElementById('regScreen').classList.remove('hidden');
   document.body.style.overflow = 'hidden';
   if (gPlayer) {
-    document.getElementById('regName').value    = gPlayer.name    || '';
-    document.getElementById('regAge').value     = gPlayer.age     || '';
-    document.getElementById('regGender').value  = gPlayer.gender  || '';
-    document.getElementById('regSection').value = gPlayer.section || '';
-    document.getElementById('regSchool').value  = gPlayer.school  || '';
-    document.getElementById('regRegion').value  = gPlayer.region  || '';
+    document.getElementById('regPangalan').value    = gPlayer.name    || '';
+    document.getElementById('regEdad').value     = gPlayer.age     || '';
+    document.getElementById('regKasarian').value  = gPlayer.gender  || '';
+    document.getElementById('regSeksiyon').value = gPlayer.section || '';
+    document.getElementById('regPaaralan').value  = gPlayer.school  || '';
+    document.getElementById('regRehiyon').value  = gPlayer.region  || '';
   }
-  setTimeout(() => document.getElementById('regName').focus(), 300);
+  setTimeout(() => document.getElementById('regPangalan').focus(), 300);
 }
 function hideReg() {
   document.getElementById('regScreen').classList.add('hidden');
   document.body.style.overflow = '';
 }
 
-// ── Submit reg ──
+// ── Isumite reg ──
 async function submitReg() {
-  const name    = document.getElementById('regName').value.trim();
-  const age     = parseInt(document.getElementById('regAge').value);
-  const gender  = document.getElementById('regGender').value;
-  const section = document.getElementById('regSection').value.trim();
-  const school  = document.getElementById('regSchool').value.trim();
-  const region  = document.getElementById('regRegion').value;
+  const name    = document.getElementById('regPangalan').value.trim();
+  const age     = parseInt(document.getElementById('regEdad').value);
+  const gender  = document.getElementById('regKasarian').value;
+  const section = document.getElementById('regSeksiyon').value.trim();
+  const school  = document.getElementById('regPaaralan').value.trim();
+  const region  = document.getElementById('regRehiyon').value;
 
   let ok = true;
-  document.getElementById('regNameErr').classList.remove('show');
-  document.getElementById('regAgeErr').classList.remove('show');
-  if (!name)              { document.getElementById('regNameErr').classList.add('show'); ok = false; }
-  if (!age||age<5||age>99){ document.getElementById('regAgeErr').classList.add('show');  ok = false; }
+  document.getElementById('regPangalanErr').classList.remove('show');
+  document.getElementById('regEdadErr').classList.remove('show');
+  if (!name)              { document.getElementById('regPangalanErr').classList.add('show'); ok = false; }
+  if (!age||age<5||age>99){ document.getElementById('regEdadErr').classList.add('show');  ok = false; }
   if (!ok) return;
 
   savePlayer({ name, age, gender, section, school, region });
@@ -56,7 +56,7 @@ async function submitReg() {
 
   // confetti
   for (let i = 0; i < 18; i++) setTimeout(() => {
-    const d = document.createElement('div'); d.className = 'confetti-dot';
+    const d = document.createElement('div'); d.classPangalan = 'confetti-dot';
     d.style.cssText = `left:${window.innerWidth/2+(Math.random()-.5)*300}px;top:${window.innerHeight/2+(Math.random()-.5)*200}px;background:hsl(${Math.random()*60+30},90%,65%)`;
     document.body.appendChild(d); setTimeout(()=>d.remove(), 900);
   }, i * 40);
@@ -69,7 +69,7 @@ function updatePlayerBadge() {
   if (!gPlayer) return;
   document.getElementById('playerBadge').style.display = 'flex';
   document.getElementById('playerAvatar').textContent  = gPlayer.name.charAt(0).toUpperCase();
-  document.getElementById('playerName').textContent    = gPlayer.name;
+  document.getElementById('playerPangalan').textContent    = gPlayer.name;
   const meta = [gPlayer.age && gPlayer.age+' taong gulang', gPlayer.section, gPlayer.region].filter(Boolean).join(' · ');
   document.getElementById('playerMeta').textContent = meta || gPlayer.school || '';
 }
@@ -92,13 +92,13 @@ function initGame() {
 // GOOGLE SHEETS — Push & Fetch
 // ═══════════════════════════════════════════════════
 
-// Called at end of game (replaces/extends original saveScore)
-function saveScore() {
-  if (gScore === 0) return;
+// Called at end of game (replaces/extends original savePuntos)
+function savePuntos() {
+  if (gPuntos === 0) return;
   // Local storage
   let scores = [];
   try { scores = JSON.parse(localStorage.getItem('elfili_scores')||'[]'); } catch(e) {}
-  scores.push({ score: gScore, date: new Date().toLocaleDateString('fil-PH') });
+  scores.push({ score: gPuntos, date: new Date().toLocaleDateString('fil-PH') });
   scores.sort((a,b) => b.score - a.score);
   scores = scores.slice(0, 5);
   localStorage.setItem('elfili_scores', JSON.stringify(scores));
@@ -110,14 +110,14 @@ async function pushToSheet() {
   if (!gPlayer || !SHEET_URL || SHEET_URL.includes('PASTE_YOUR')) return;
 
   const params = new URLSearchParams({
-    action:  'addScore',
+    action:  'addPuntos',
     name:    gPlayer.name,
     age:     gPlayer.age     || '',
     gender:  gPlayer.gender  || '',
     section: gPlayer.section || '',
     school:  gPlayer.school  || '',
     region:  gPlayer.region  || '',
-    score:   gScore,
+    score:   gPuntos,
     streak:  gStreak,
     diff:    gDiff,
     date:    new Date().toLocaleString('fil-PH'),
@@ -128,13 +128,13 @@ async function pushToSheet() {
   // Method 1: fetch with no-cors (fire-and-forget, always works cross-origin)
   try {
     await fetch(url, { method: 'GET', mode: 'no-cors' });
-    console.log('Score pushed via fetch (no-cors)');
+    console.log('Puntos pushed via fetch (no-cors)');
   } catch(e) {
     // Method 2: image ping fallback (works even when fetch is blocked)
     try {
       const img = new Image();
       img.src = url;
-      console.log('Score pushed via image ping');
+      console.log('Puntos pushed via image ping');
     } catch(e2) { console.warn('Push failed:', e2); }
   }
 
@@ -144,7 +144,7 @@ async function pushToSheet() {
 
 async function loadGlobalBoard() {
   const body = document.getElementById('glbBody');
-  const btn  = document.getElementById('glbRefreshBtn');
+  const btn  = document.getElementById('glbI-refreshBtn');
   if (!body) return;
 
   if (!SHEET_URL || SHEET_URL.includes('PASTE_YOUR')) {
@@ -156,31 +156,19 @@ async function loadGlobalBoard() {
   btn.textContent = 'Nilo-load...';
   body.innerHTML = '<div class="glb-loading"><div class="glb-loading-spin"></div>Nilo-load ang leaderboard...</div>';
 
-  // Use JSONP to bypass CORS — Apps Script returns callback(json)
-  const cbName = 'elfili_lb_' + Date.now();
-  const url = SHEET_URL + '?action=getScores&limit=20&callback=' + cbName + '&t=' + Date.now();
+  // JSONP — bypasses CORS completely, Apps Script returns callback(json)
+  const cbPangalan = 'elfili_lb_' + Date.now();
+  const url = SHEET_URL + '?action=getPuntoss&limit=20&callback=' + cbPangalan + '&t=' + Date.now();
 
   await new Promise((resolve) => {
-    const timeout = setTimeout(() => {
-      cleanup(); renderLocalFallback(); resolve();
-    }, 8000);
-
-    window[cbName] = (data) => {
-      cleanup();
-      renderGlobalBoard(Array.isArray(data) ? data : []);
-      resolve();
-    };
-
+    const timeout = setTimeout(() => { cleanup(); renderLocalFallback(); resolve(); }, 8000);
+    window[cbPangalan] = (data) => { cleanup(); renderGlobalBoard(Array.isArray(data) ? data : []); resolve(); };
     function cleanup() {
-      clearTimeout(timeout);
-      delete window[cbName];
-      const s = document.getElementById('elfili_jsonp_script');
-      if (s) s.remove();
+      clearTimeout(timeout); delete window[cbPangalan];
+      const s = document.getElementById('elfili_jsonp'); if (s) s.remove();
     }
-
     const script = document.createElement('script');
-    script.id  = 'elfili_jsonp_script';
-    script.src = url;
+    script.id = 'elfili_jsonp'; script.src = url;
     script.onerror = () => { cleanup(); renderLocalFallback(); resolve(); };
     document.head.appendChild(script);
   });

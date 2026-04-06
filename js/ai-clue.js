@@ -3,7 +3,7 @@
 // ═══════════════════════════════════════════════════
 async function getAIClue(){
   if(gAnswered)return;
-  const q=gQuestions[gQ];
+  const q=gTanongs[gQ];
   if(!q)return;
   const btn=document.getElementById('aiBtn');
   const loading=document.getElementById('aiLoading');
@@ -23,14 +23,14 @@ async function getAIClue(){
     const data=await resp.json();
     if(data.content&&data.content[0]){
       const newClue=data.content[0].text.trim();
-      gQuestions[gQ].clue=newClue;
+      gTanongs[gQ].clue=newClue;
       typewriterEffect(newClue);
     }
   }catch(e){
     // Fallback to next preset clue
     const arr=q.char.clues[gDiff];
     const newClue=arr[Math.floor(Math.random()*arr.length)];
-    gQuestions[gQ].clue=newClue;
+    gTanongs[gQ].clue=newClue;
     typewriterEffect(newClue);
   }finally{
     btn.disabled=false;loading.style.display='none';btnText.textContent='AI PAHIWATIG';

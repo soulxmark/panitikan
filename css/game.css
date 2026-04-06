@@ -8,7 +8,7 @@
 .game-wrap{max-width:800px;margin:0 auto;padding:1rem 2rem 5rem}
 @media(max-width:600px){.game-wrap{padding:1rem 1rem 4rem}}
 
-/* Score bar */
+/* Puntos bar */
 .score-bar{display:flex;align-items:center;justify-content:space-between;background:var(--ink-3);border:1px solid rgba(201,168,76,.18);border-radius:3px;padding:.8rem 1.4rem;margin-bottom:2rem}
 .score-item{text-align:center}
 .score-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.28em;color:rgba(201,168,76,.55);text-transform:uppercase;display:block;margin-bottom:.2rem}
