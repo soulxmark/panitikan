@@ -4,7 +4,7 @@
 const CHARS = [
   {
     id: 'simoun',
-    imgSrc: './panitikan/Images/simoun.webp',
+    imgSrc: './Images/simoun.webp',
     name: 'Simoun',
     alias: 'Crisostomo Ibarra',
     role: 'Pangunahing Tauhan',
@@ -24,7 +24,7 @@ const CHARS = [
   },
   {
     id: 'basilio',
-    imgSrc: './panitikan/Images/basilio.webp',
+    imgSrc: './Images/basilio.webp',
     name: 'Basilio',
     alias: 'Anak ni Sisa',
     role: 'Pangunahing Tauhan',
@@ -44,7 +44,7 @@ const CHARS = [
   },
   {
     id: 'isagani',
-    imgSrc: './panitikan/Images/isagani.webp',
+    imgSrc: './Images/isagani.webp',
     name: 'Isagani',
     alias: 'Ang Makatang Kabataan',
     role: 'Kaibigan ni Basilio',
@@ -64,7 +64,7 @@ const CHARS = [
   },
   {
     id: 'juli',
-    imgSrc: './panitikan/Images/juli.webp',
+    imgSrc: './Images/juli.webp',
     name: 'Juli',
     alias: 'Juliana de Dios',
     role: 'Biktima ng Lipunan',
@@ -84,7 +84,7 @@ const CHARS = [
   },
   {
     id: 'tales',
-    imgSrc: './panitikan/Images/kabesangTales.webp',
+    imgSrc: './Images/kabesangTales.webp',
     name: 'Kabesang Tales',
     alias: 'Matanglawin',
     role: 'Magsasaka',
@@ -104,7 +104,7 @@ const CHARS = [
   },
   {
     id: 'florentino',
-    imgSrc: './panitikan/Images/padreFlorentino.webp',
+    imgSrc: './Images/padreFlorentino.webp',
     name: 'Padre Florentino',
     alias: 'Ang Paring Pilipino',
     role: 'Marunong na Matanda',
@@ -124,7 +124,7 @@ const CHARS = [
   },
   {
     id: 'custodio',
-    imgSrc: './panitikan/Images/donCustodio.webp',
+    imgSrc: './Images/donCustodio.webp',
     name: 'Don Custodio',
     alias: 'Ang Palaging May Plano',
     role: 'Opisyal',
@@ -144,7 +144,7 @@ const CHARS = [
   },
   {
     id: 'paulita',
-    imgSrc: './panitikan/Images/paulitaGomez.webp',
+    imgSrc: './Images/paulitaGomez.webp',
     name: 'Paulita Gomez',
     alias: 'Pamangkin ni Doña Victorina',
     role: 'Pag-ibig ni Isagani',
@@ -164,7 +164,7 @@ const CHARS = [
   },
   {
     id: 'pecson',
-    imgSrc: './panitikan/Images/pecson.png',
+    imgSrc: './Images/pecson.png',
     name: 'Pecson',
     alias: 'Ang Pesimista',
     role: 'Estudyante',

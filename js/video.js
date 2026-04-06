@@ -75,7 +75,7 @@ function buildVideo() {
   const tabs = document.getElementById('vidTabs');
   VID_CATS.forEach((c,i) => {
     const btn = document.createElement('button');
-    btn.classPangalan = 'vid-tab' + (i===0?' active':'');
+    btn.className = 'vid-tab' + (i===0?' active':'');
     btn.textContent = c.label; btn.dataset.cat = c.key;
     btn.addEventListener('click', () => {
       tabs.querySelectorAll('.vid-tab').forEach(b=>b.classList.remove('active'));
@@ -88,7 +88,7 @@ function buildVideo() {
   const grid = document.getElementById('vidGrid');
   VIDEOS.forEach((v,i) => {
     const card = document.createElement('div');
-    card.classPangalan = 'vid-card'; card.dataset.cat = v.cat;
+    card.className = 'vid-card'; card.dataset.cat = v.cat;
     card.style.animationDelay = i*.055+'s';
     card.innerHTML = `
       <div class="vid-thumb">

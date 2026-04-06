@@ -56,7 +56,7 @@ async function submitReg() {
 
   // confetti
   for (let i = 0; i < 18; i++) setTimeout(() => {
-    const d = document.createElement('div'); d.classPangalan = 'confetti-dot';
+    const d = document.createElement('div'); d.className = 'confetti-dot';
     d.style.cssText = `left:${window.innerWidth/2+(Math.random()-.5)*300}px;top:${window.innerHeight/2+(Math.random()-.5)*200}px;background:hsl(${Math.random()*60+30},90%,65%)`;
     document.body.appendChild(d); setTimeout(()=>d.remove(), 900);
   }, i * 40);

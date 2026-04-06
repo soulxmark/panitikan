@@ -8,7 +8,7 @@ function buildKwento() {
   const ROMAN = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX','XXI','XXII','XXIII','XXIV'];
   CHAPTERS.forEach((ch, i) => {
     const item = document.createElement('div');
-    item.classPangalan = 'chapter-item';
+    item.className = 'chapter-item';
     item.dataset.idx = i;
     const charTags = (ch.chars||[]).map(id => {
       const c = CHARS.find(x=>x.id===id);
