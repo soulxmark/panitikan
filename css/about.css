@@ -33,7 +33,7 @@
   position:relative;overflow:hidden;
 }
 .rizal-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 0% 50%,rgba(201,168,76,.04),transparent 65%);pointer-events:none}
-.rizal-emoji{font-size:4rem;flex-shrink:0;filter:drop-shadow(0 6px 16px rgba(0,0,0,.6));}
+.rizal-emoji{font-size:4rem;flex-shrink:0;filter:drop-shadow(0 6px 16px rgba(0,0,0,.6))}
 .rizal-info{}
 .rizal-name{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold-light);margin-bottom:.3rem}
 .rizal-dates{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.25em;color:rgba(201,168,76,.55);margin-bottom:.8rem}

@@ -23,7 +23,7 @@ const CHAPTERS = [
   {num:7,roman:'VII',title:'Ang Alahas ni Simoun',imgSrc:'./Images/alahas.webp',chars:['simoun'],color:'#f0d070',
   story:'Sa loob ng kanyang kuwarto, binubuksan ni Simoun ang kanyang kahon ng mga alahas — ang kayamanan na magbibigay sa kanya ng kapangyarihan.',
   scene:'Ang liwanag ng kandila ay gumagalaw sa mga diamante. Sa bawat alahas ay isang alaala, sa bawat gintong singsing ay isang naalab na damdamin.'},
-  {num:8,roman:'VIII',title:'Ang Lupa ni Tales',imgSrc:'./Images/tales.webp',chars:['tales','juli'],color:'#40b060',
+  {num:8,roman:'VIII',title:'Ang Lupa ni Tales',imgSrc:'./Images/kabesangTales.webp',chars:['tales','juli'],color:'#40b060',
   story:'Si Cabesang Tales ay nagtatrabaho sa kanyang bukid. Ngunit ang mga prayle ay nagdeklara ng kanilang karapatan sa lupaing ito.',
   scene:'Ang bukid ay berde at sagana. Si Tales ay nakatayo sa gitna ng kanyang mga pananim, ngunit sa kanyang mga mata ay nakikita ang takot.'},
   {num:9,roman:'IX',title:'Ang Pagkabigo ni Tales',imgSrc:'./Images/talesFail.webp',chars:['tales','juli','florentino'],color:'#80a040',

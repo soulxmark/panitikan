@@ -95,7 +95,8 @@ function renderScene(idx) {
   const charsForScene = (ch.chars||[]).slice(0,3).map(id => CHARS.find(c=>c.id===id)).filter(Boolean);
   charsForScene.forEach((c, i) => {
     sceneCharLayers.push({
-      emoji: c.imgSrc||c.img||'👤',
+      emoji: c.imgSrc||c.img||'',
+      image: (() => { const img = new Image(); img.src = c.imgSrc||c.img||''; return img; })(),
       x: 0.15 + i * 0.32 + (Math.random()-.5)*.1,
       y: 0.25 + (Math.random()-.5)*.15,
       floatOffset: Math.random()*Math.PI*2,
@@ -189,12 +190,23 @@ function renderScene(idx) {
       const sz = Math.min(W*.13, 90);
       ctx2d.save();
       ctx2d.globalAlpha = layer.alpha;
-      ctx2d.font = `${sz}px serif`;
-      ctx2d.textAlign = 'center'; ctx2d.textBaseline = 'middle';
-      // Glow
-      ctx2d.shadowBlur = 40; ctx2d.shadowColor = ch.color || '#c9a84c';
-      // emoji removed — using imgSrc for character images
-      ctx2d.shadowBlur = 0;
+      // Draw character image on canvas
+      if (layer.image && layer.image.complete && layer.image.naturalWidth > 0) {
+        const imgH = Math.min(W * .38, 260);
+        const imgW = imgH * (layer.image.naturalWidth / layer.image.naturalHeight);
+        // Glow behind character
+        ctx2d.shadowBlur = 50; ctx2d.shadowColor = ch.color || '#c9a84c';
+        ctx2d.drawImage(layer.image, px - imgW/2, py - imgH/2, imgW, imgH);
+        ctx2d.shadowBlur = 0;
+      } else {
+        // Fallback: glowing circle placeholder
+        ctx2d.beginPath();
+        ctx2d.arc(px, py, sz/2, 0, Math.PI*2);
+        ctx2d.fillStyle = 'rgba(201,168,76,0.15)';
+        ctx2d.shadowBlur = 30; ctx2d.shadowColor = ch.color || '#c9a84c';
+        ctx2d.fill();
+        ctx2d.shadowBlur = 0;
+      }
       ctx2d.restore();
     });
 
@@ -242,7 +254,7 @@ function buildSceneUI() {
     const c = CHARS.find(x=>x.id===id);
     if (!c) return;
     const pill = document.createElement('div'); pill.className='scene-char-pill';
-    pill.innerHTML=`<img class="scene-char-pill-emoji" src="${c.imgSrc||c.img||''}" style="width:28px;height:28px;object-fit:cover;object-position:top;border-radius:50%" onerror="this.style.display='none'"><span class="scene-char-pill-name">${c.name}</span>`;
+    pill.innerHTML=`<img class="scene-char-pill-emoji" src="${c.imgSrc||c.img||''}"" style="width:28px;height:28px;object-fit:cover;object-position:top;border-radius:50%" onerror="this.style.display='none'"><span class="scene-char-pill-name">${c.name}</span>`;
     pill.addEventListener('click', ()=>{ closeScene(); openModal(c); });
     row.appendChild(pill);
   });

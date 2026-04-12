@@ -7,7 +7,7 @@
 .modal-close:hover{color:var(--gold);transform:rotate(90deg)}
 .modal-header{padding:2.2rem 2.2rem 1.6rem;border-bottom:1px solid rgba(201,168,76,.12);display:flex;gap:1.4rem;align-items:flex-start;position:relative;overflow:hidden}
 .modal-header::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 0% 50%,rgba(201,168,76,.04),transparent 65%);pointer-events:none}
-.modal-emoji{font-size:3.8rem;flex-shrink:0;filter:drop-shadow(0 6px 16px rgba(0,0,0,.6));animation:float-s 3s ease-in-out infinite}
+.modal-emoji{width:130px;height:170px;flex-shrink:0;border-radius:6px;overflow:hidden;border:1px solid rgba(201,168,76,.2);background:rgba(0,0,0,.4);animation:float-s 3s ease-in-out infinite}
 .modal-name{font-family:'Cinzel',serif;font-size:clamp(1.2rem,4vw,1.55rem);color:var(--gold-light);margin-bottom:.2rem;animation:ink-reveal .6s var(--ease-expo) forwards}
 .modal-alias{font-style:italic;font-size:.88rem;color:rgba(201,168,76,.55);margin-bottom:.55rem}
 .modal-role-tag{font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:.25em;padding:3px 10px;border:1px solid rgba(201,168,76,.45);color:var(--gold);text-transform:uppercase;display:inline-block}

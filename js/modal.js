@@ -3,7 +3,7 @@
 // ═══════════════════════════════════════════════════
 const overlay=document.getElementById('modalOverlay');
 function openModal(c){
-  const mEl=document.getElementById('mEmoji'); mEl.innerHTML=''; const mImg=document.createElement('img'); mImg.src=c.imgSrc||c.img||''; mImg.alt=c.name; mImg.style.cssText='width:100%;height:100%;object-fit:cover;object-position:top;border-radius:4px'; mImg.onerror=()=>{mEl.textContent='👤'}; mEl.appendChild(mImg);
+  const mEl=document.getElementById('mEmoji'); mEl.innerHTML=''; const mImg=document.createElement('img'); mImg.src=c.imgSrc||c.img||''; mImg.alt=c.name; mImg.style.cssText='width:100%;height:100%;object-fit:contain;object-position:center;border-radius:4px;background:transparent'; mImg.onerror=()=>{mEl.textContent='👤'}; mEl.appendChild(mImg);
   document.getElementById('mPangalan').textContent=c.name;
   document.getElementById('mAlias').textContent=c.alias;
   document.getElementById('mRole').textContent=c.role;

@@ -14,7 +14,7 @@
   featured.forEach((c,i)=>{
     const card=document.createElement('div');card.className='feat-card';
     card.style.animationDelay=`${i*.07}s`;
-    card.innerHTML=`<div class="feat-emoji" style="background:${c.bg};overflow:hidden;padding:0"><img src="${c.imgSrc||c.img||''}" alt="${c.name}" style="width:100%;height:100%;object-fit:cover;object-position:top" onerror="this.parentElement.textContent='👤'"></div><div class="feat-name">${c.name}</div>`;
+    card.innerHTML=`<div class="feat-emoji" style="background:${c.bg};overflow:hidden;padding:0"><img src="${c.imgSrc||c.img||''}"" alt="${c.name}" style="width:100%;height:100%;object-fit:cover;object-position:top" onerror="this.parentElement.textContent='👤'"></div><div class="feat-name">${c.name}</div>`;
     card.addEventListener('click',e=>{sparks(e.clientX,e.clientY,8);openModal(c)});
     g.appendChild(card);
   });

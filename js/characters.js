@@ -25,7 +25,7 @@ function buildChars() {
     const card=document.createElement('div');
     card.className='char-card';card.dataset.filter=c.filter;
     card.style.animationDelay=`${i*.07}s`;
-    card.innerHTML=`<span class="card-role-tag">${c.role}</span><div class="card-portrait"><div class="card-portrait-bg" style="background:${c.bg}"></div><img class="card-img" src="${c.imgSrc||c.img||''}" alt="${c.name}" loading="lazy" onerror="this.style.display='none'"></div><div class="shimmer-l"></div><div class="card-body"><div class="card-name">${c.name}</div><div class="card-alias">${c.alias}</div><p class="card-desc">${c.shortDesc}</p><span class="card-trait ${c.traitClass}">${c.traitLabel}</span></div>`;
+    card.innerHTML=`<span class="card-role-tag">${c.role}</span><div class="card-portrait"><div class="card-portrait-bg" style="background:${c.bg}"></div><img class="card-img" src="${c.imgSrc||c.img||''}"" alt="${c.name}" loading="lazy" onerror="this.style.display='none'"></div><div class="shimmer-l"></div><div class="card-body"><div class="card-name">${c.name}</div><div class="card-alias">${c.alias}</div><p class="card-desc">${c.shortDesc}</p><span class="card-trait ${c.traitClass}">${c.traitLabel}</span></div>`;
     card.addEventListener('click',e=>{sparks(e.clientX,e.clientY,10);openModal(c)});
     if(window.matchMedia('(min-width:769px)').matches){
       card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();const dx=(e.clientX-r.left-r.width/2)/(r.width/2);const dy=(e.clientY-r.top-r.height/2)/(r.height/2);card.style.transform=`perspective(900px) rotateY(${dx*9}deg) rotateX(${-dy*7}deg) translateY(-8px) scale(1.015)`});

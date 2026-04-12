@@ -12,7 +12,7 @@ function buildKwento() {
     item.dataset.idx = i;
     const charTags = (ch.chars||[]).map(id => {
       const c = CHARS.find(x=>x.id===id);
-      return c ? `<span class="ch-char-tag"><img src="${c.imgSrc||c.img||''}" style="width:16px;height:16px;object-fit:cover;border-radius:50%;vertical-align:middle" onerror="this.remove()"> ${c.name}</span>` : '';
+      return c ? `<span class="ch-char-tag"><img src="${c.imgSrc||c.img||''}"" style="width:16px;height:16px;object-fit:cover;border-radius:50%;vertical-align:middle" onerror="this.remove()"> ${c.name}</span>` : '';
     }).join('');
     item.innerHTML = `
       <div class="ch-num-col">

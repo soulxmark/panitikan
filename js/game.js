@@ -64,7 +64,7 @@ function showTanong() {
   const cg=document.getElementById('choicesGrid');cg.innerHTML='';
   q.choices.forEach(c=>{
     const btn=document.createElement('button');btn.className='choice-btn';
-    btn.innerHTML=`<img src="${c.imgSrc||c.img||''}" class="choice-emoji" style="width:32px;height:32px;object-fit:cover;object-position:top;border-radius:50%;vertical-align:middle" onerror="this.style.display='none'">${c.name}`;
+    btn.innerHTML=`<img src="${c.imgSrc||c.img||''}"" class="choice-emoji" style="width:32px;height:32px;object-fit:cover;object-position:top;border-radius:50%;vertical-align:middle" onerror="this.style.display='none'">${c.name}`;
     btn.addEventListener('click',()=>answer(c,q.char,btn));
     cg.appendChild(btn);
   });
