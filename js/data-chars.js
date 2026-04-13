@@ -294,7 +294,7 @@ const CHARS = [
       hard:['Ang kasal kay Paulita ay simbolo ng pragmatismo na nanaig sa idealismo.','Ang ama ay gumastos para sa mga Espanyol na opisyal.','Kumakatawan sa mataas na uri na nakikiisa sa pananakop.']
     }
   },{
-    id:'macaraig', imgSrc:'./Images/macaraig.webp',
+    id:'macaraig', imgSrc:'./Images/macaraig.png',
     name:'Macaraig', alias:'Lider ng mga Estudyante', role:'Estudyante',
     traitClass:'trait-p', traitLabel:'Protagonista',
     bg:'linear-gradient(160deg,#05101a,#020809)', filter:'protagonista',
@@ -308,7 +308,7 @@ const CHARS = [
       hard:['Ang petisyon ay nakarating kay Don Custodio na pinabayaan.','Kumakatawan sa ilustrado na naniniwala sa reporma sa loob ng sistema.','Nagpapakita ng kabiguan ng pribilehiyadong kabataan sa kolonyal.']
     }
   },{
-    id:'quiroga', imgSrc:'./Images/quiroga.png',
+    id:'quiroga', imgSrc:'./Images/quiroga.webp',
     name:'Quiroga', alias:'Ang Tsino na Negosyante', role:'Negosyante',
     traitClass:'trait-a', traitLabel:'Antagonista',
     bg:'linear-gradient(160deg,#120000,#080000)', filter:'antagonista',
