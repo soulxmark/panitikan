@@ -5,7 +5,7 @@ let charsBuilt = false;
 function buildChars() {
   if (charsBuilt) return; charsBuilt = true;
   // Filter bar
-  const filters=['lahat','protagonista','antagonista','biktima','relihiyoso','simbolo'];
+  const filters=['lahat','protagonista','antagonista','biktima','relihiyoso'];
   const fb=document.getElementById('filterBar');
   filters.forEach((f,i)=>{
     const b=document.createElement('button');
