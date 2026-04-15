@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════
 // GOOGLE SHEETS CONFIG — paste your Web App URL below
 // ═══════════════════════════════════════════════════
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxyzcWIbkZjA22Arsr97DxnkVPYxr3E353Xd30d681ZkgUWjI2oTgjEPou_ZJoglqW7/exec';
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwEgdKusVkXRqhss2kwL8X0fP1Z8XkQGhMmq64QpPAiyYArFf8_KUFVL5JFjLpAynp-/exec';
 
 // ═══════════════════════════════════════════════════
 // PLAYER DATA
@@ -22,11 +22,11 @@ function showReg() {
   document.body.style.overflow = 'hidden';
   if (gPlayer) {
     document.getElementById('regPangalan').value    = gPlayer.name    || '';
-    document.getElementById('regEdad').value     = gPlayer.age     || '';
-    document.getElementById('regKasarian').value  = gPlayer.gender  || '';
-    document.getElementById('regSeksiyon').value = gPlayer.section || '';
-    document.getElementById('regPaaralan').value  = gPlayer.school  || '';
-    document.getElementById('regRehiyon').value  = gPlayer.region  || '';
+    document.getElementById('regEdad').value        = gPlayer.age     || '';
+    document.getElementById('regKasarian').value    = gPlayer.gender  || '';
+    document.getElementById('regSeksiyon').value    = gPlayer.section || '';
+    document.getElementById('regPaaralan').value    = gPlayer.school  || '';
+    document.getElementById('regRehiyon').value     = gPlayer.region  || '';
   }
   setTimeout(() => document.getElementById('regPangalan').focus(), 300);
 }
@@ -47,8 +47,8 @@ async function submitReg() {
   let ok = true;
   document.getElementById('regPangalanErr').classList.remove('show');
   document.getElementById('regEdadErr').classList.remove('show');
-  if (!name)              { document.getElementById('regPangalanErr').classList.add('show'); ok = false; }
-  if (!age||age<5||age>99){ document.getElementById('regEdadErr').classList.add('show');  ok = false; }
+  if (!name)               { document.getElementById('regPangalanErr').classList.add('show'); ok = false; }
+  if (!age||age<5||age>99) { document.getElementById('regEdadErr').classList.add('show');     ok = false; }
   if (!ok) return;
 
   savePlayer({ name, age, gender, section, school, region });
@@ -69,12 +69,12 @@ function updatePlayerBadge() {
   if (!gPlayer) return;
   document.getElementById('playerBadge').style.display = 'flex';
   document.getElementById('playerAvatar').textContent  = gPlayer.name.charAt(0).toUpperCase();
-  document.getElementById('playerPangalan').textContent    = gPlayer.name;
+  document.getElementById('playerPangalan').textContent = gPlayer.name;
   const meta = [gPlayer.age && gPlayer.age+' taong gulang', gPlayer.section, gPlayer.region].filter(Boolean).join(' · ');
   document.getElementById('playerMeta').textContent = meta || gPlayer.school || '';
 }
 
-// ── startFreshGame: delegates to core (defined above) ──
+// ── startFreshGame: delegates to core (defined in game.js) ──
 function startFreshGame() {
   startFreshGame_core();
 }
@@ -92,13 +92,18 @@ function initGame() {
 // GOOGLE SHEETS — Push & Fetch
 // ═══════════════════════════════════════════════════
 
-// Called at end of game (replaces/extends original savePuntos)
+// Called at end of game
 function savePuntos() {
   if (gPuntos === 0) return;
   // Local storage
   let scores = [];
   try { scores = JSON.parse(localStorage.getItem('elfili_scores')||'[]'); } catch(e) {}
-  scores.push({ score: gPuntos, date: new Date().toLocaleDateString('fil-PH') });
+  scores.push({
+    score:   gPuntos,
+    correct: gCorrect,                            // ✅ save locally too
+    total:   gTotal,
+    date:    new Date().toLocaleDateString('fil-PH')
+  });
   scores.sort((a,b) => b.score - a.score);
   scores = scores.slice(0, 5);
   localStorage.setItem('elfili_scores', JSON.stringify(scores));
@@ -120,17 +125,16 @@ async function pushToSheet() {
     score:   gPuntos,
     streak:  gStreak,
     diff:    gDiff,
+    correct: gCorrect,                            // ✅ Tamang Sagot
     date:    new Date().toLocaleString('fil-PH'),
   });
 
   const url = SHEET_URL + '?' + params.toString();
 
-  // Method 1: fetch with no-cors (fire-and-forget, always works cross-origin)
   try {
     await fetch(url, { method: 'GET', mode: 'no-cors' });
     console.log('Puntos pushed via fetch (no-cors)');
   } catch(e) {
-    // Method 2: image ping fallback (works even when fetch is blocked)
     try {
       const img = new Image();
       img.src = url;
@@ -138,7 +142,6 @@ async function pushToSheet() {
     } catch(e2) { console.warn('Push failed:', e2); }
   }
 
-  // Reload leaderboard after a short delay to let sheet process
   setTimeout(loadGlobalBoard, 3000);
 }
 
@@ -156,7 +159,6 @@ async function loadGlobalBoard() {
   btn.textContent = 'Nilo-load...';
   body.innerHTML = '<div class="glb-loading"><div class="glb-loading-spin"></div>Nilo-load ang leaderboard...</div>';
 
-  // JSONP — bypasses CORS completely, Apps Script returns callback(json)
   const cbPangalan = 'elfili_lb_' + Date.now();
   const url = SHEET_URL + '?action=getPuntoss&limit=20&callback=' + cbPangalan + '&t=' + Date.now();
 
@@ -183,19 +185,23 @@ function renderGlobalBoard(rows) {
     body.innerHTML = '<div class="glb-empty">Wala pang naitala. Ikaw ang maging una!</div>';
     return;
   }
-  const medals  = ['🥇','🥈','🥉'];
-  const topCls  = ['top1','top2','top3'];
+  const medals = ['🥇','🥈','🥉'];
+  const topCls = ['top1','top2','top3'];
   body.innerHTML = rows.map((r, i) => {
-    const isMe  = gPlayer && r.name === gPlayer.name;
-    const info  = [r.age && r.age+'y', r.section, r.region].filter(Boolean).join(' · ');
-    const diff  = { easy:'Madali', medium:'Katamtaman', hard:'Mahirap' }[r.diff] || r.diff || '';
+    const isMe    = gPlayer && r.name === gPlayer.name;
+    const info    = [r.age && r.age+'y', r.section, r.region].filter(Boolean).join(' · ');
+    const diff    = { easy:'Madali', medium:'Katamtaman', hard:'Mahirap' }[r.diff] || r.diff || '';
+    // ✅ Show correct answers if available
+    const correct = (r.correct != null && r.correct !== 0)
+      ? `<small style="display:block;font-size:.6rem;color:rgba(201,168,76,.6);margin-top:2px">✓ ${r.correct} tama</small>`
+      : '';
     return `<div class="glb-row ${isMe?'me':''}">
       <div class="glb-rank ${topCls[i]||''}">${medals[i]||i+1}</div>
       <div class="glb-player">
         <div class="glb-player-name">${escHtml(r.name)}${isMe?' <span style="color:var(--gold);font-size:.6rem">(Ikaw)</span>':''}</div>
         <div class="glb-player-info">${escHtml(info||r.school||'')}</div>
       </div>
-      <div class="glb-score">${r.score}<small>${escHtml(diff)}</small></div>
+      <div class="glb-score">${r.score}<small>${escHtml(diff)}</small>${correct}</div>
     </div>`;
   }).join('');
 }
@@ -208,14 +214,19 @@ function renderLocalFallback() {
   body.innerHTML =
     '<div style="text-align:center;padding:.4rem 1rem .2rem;font-size:.7rem;color:rgba(201,168,76,.4);font-style:italic">⚠ Hindi ma-connect — nagpapakita ng lokal na datos</div>' +
     (scores.length
-      ? scores.map((s,i) => `<div class="glb-row">
-          <div class="glb-rank ${['top1','top2','top3'][i]||''}">${medals[i]||i+1}</div>
-          <div class="glb-player">
-            <div class="glb-player-name">${escHtml(gPlayer?.name||'Ikaw')}</div>
-            <div class="glb-player-info">${s.date}</div>
-          </div>
-          <div class="glb-score">${s.score}</div>
-        </div>`).join('')
+      ? scores.map((s,i) => {
+          const correct = s.correct != null
+            ? `<small style="display:block;font-size:.6rem;color:rgba(201,168,76,.6);margin-top:2px">✓ ${s.correct}/${s.total||10} tama</small>`
+            : '';
+          return `<div class="glb-row">
+            <div class="glb-rank ${['top1','top2','top3'][i]||''}">${medals[i]||i+1}</div>
+            <div class="glb-player">
+              <div class="glb-player-name">${escHtml(gPlayer?.name||'Ikaw')}</div>
+              <div class="glb-player-info">${s.date}</div>
+            </div>
+            <div class="glb-score">${s.score}${correct}</div>
+          </div>`;
+        }).join('')
       : '<div class="glb-empty">Wala pang naitala sa lokal.</div>');
 }
 
@@ -232,8 +243,7 @@ document.getElementById('regScreen').addEventListener('click', e => {
   if (e.target === document.getElementById('regScreen') && gPlayer) hideReg();
 });
 
-window.addEventListener('load',()=>{
-  // voices may need a moment to load
-  window.speechSynthesis&&window.speechSynthesis.getVoices();
-  setTimeout(()=>window.speechSynthesis&&window.speechSynthesis.getVoices(),500);
+window.addEventListener('load', () => {
+  window.speechSynthesis && window.speechSynthesis.getVoices();
+  setTimeout(() => window.speechSynthesis && window.speechSynthesis.getVoices(), 500);
 });
