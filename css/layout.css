@@ -1,3 +1,6 @@
+html, body {
+    cursor: auto !important;
+}
 /* ── READ PROGRESS ── */
 #readProg{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold-dim),var(--gold-light));z-index:9995;width:0;transition:width .1s;box-shadow:0 0 6px rgba(201,168,76,.5)}
 
@@ -5,8 +8,4 @@
 #pageWipe{position:fixed;inset:0;background:var(--ink);z-index:99998;transform-origin:right center;animation:page-wipe 1.1s cubic-bezier(.77,0,.18,1) .1s forwards}
 
 /* ── CURSOR ── */
-.c-dot,.c-ring{position:fixed;border-radius:50%;pointer-events:none;z-index:9999}
-.c-dot{width:7px;height:7px;background:var(--gold);top:-3.5px;left:-3.5px;transition:transform .06s var(--ease-expo);mix-blend-mode:difference}
-.c-ring{width:32px;height:32px;border:1.5px solid rgba(201,168,76,.6);top:-16px;left:-16px;transition:transform .16s var(--ease-expo),width .3s,height .3s,border-color .3s;mix-blend-mode:difference}
-.c-ring.hov{width:52px;height:52px;border-color:rgba(201,168,76,.22);top:-26px;left:-26px}
-@media(max-width:768px){.c-dot,.c-ring{display:none}}
+@media(max-width:768px){}

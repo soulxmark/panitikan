@@ -28,6 +28,8 @@
 <!-- Read progress -->
 <div id="readProg"></div>
 
+<div class="c-dot" id="cDot"></div>
+<div class="c-ring" id="cRing"></div>
 <!-- Particles -->
 <div id="particles"></div>
 
@@ -39,22 +41,11 @@
   <div class="nav-links">
     <button class="nav-link active" data-page="home" onclick="nav('home')">Tahanan</button>
     <button class="nav-link" data-page="characters" onclick="nav('characters')">Mga Tauhan</button>
-    <button class="nav-link" data-page="kwento" onclick="nav('kwento')">Kuwento</button>
+    <button class="nav-link" data-page="kwento" onclick="nav('kwento')">Kwento</button>
     <button class="nav-link" data-page="about" onclick="nav('about')">Tungkol Sa</button>
     <button class="nav-link" data-page="game" onclick="nav('game')">Laro</button>
-    
     <button class="nav-link" data-page="video" onclick="nav('video')">▶ Video</button>
-
-    <div class="nav-dropdown">
-      <button class="nav-link">📖 | ▾Mga Kabanata ▾</button>
-      <div class="nav-dropdown-content">
-        <a href="https://panitikan-gen-z.onrender.com/" target="_blank">Kabanata | 1-10 </a>
-        <a href="https://breadddd011.github.io/El_Fili/" target="_blank">Kabanata | 19 - 25</a>
-        <a href="https://lrxnzz.github.io/Panitikan/Panitikan.html" target="_blank">Kabanata | 33-39 </a>
-      </div>
-    </div>
   </div>
-
   <div style="display:flex;align-items:center;gap:.4rem">
     <button class="nav-music-btn" id="navMusicBtn" onclick="toggleMusic()" title="Musika">▶</button>
     <div class="nav-eq" id="navEq">
@@ -68,6 +59,7 @@
   </div>
 </nav>
 
+<!-- Mobile nav -->
 <div class="mobile-nav" id="mobileNav">
   <div class="mobile-nav-link" onclick="nav('home');toggleMobileNav()">✦ Tahanan</div>
   <div class="mobile-nav-link" onclick="nav('characters');toggleMobileNav()">⚜ Mga Tauhan</div>
@@ -75,30 +67,15 @@
   <div class="mobile-nav-link" onclick="nav('about');toggleMobileNav()">📜 Tungkol Sa</div>
   <div class="mobile-nav-link" onclick="nav('game');toggleMobileNav()">🎮 Laro</div>
   <div class="mobile-nav-link" onclick="nav('video');toggleMobileNav()">▶ Video</div>
-
-  <div class="mobile-nav-item">
-    <div class="mobile-nav-link" onclick="toggleMobileDropdown(event, 'm-kab-list')" style="color: #d4af37;">
-      📖 Mga Kabanata <span class="chevron" style="float:right; transition:0.3s">▾</span>
-    </div>
-    <div class="mobile-submenu" id="m-kab-list" style="display:none; flex-direction:column; background:rgba(0,0,0,0.1); max-height:200px; overflow-y:auto;">
-      <a href="https://youtu.be/B70UuAtKygs" target="_blank" class="mobile-nav-link sub" onclick="toggleMobileNav()">Kabanata 11</a>
-      <a href="https://youtu.be/7qG14HMPohc" target="_blank" class="mobile-nav-link sub" onclick="toggleMobileNav()">Kabanata 12</a>
-      <a href="https://youtu.be/P1qHYN3Z8Zk" target="_blank" class="mobile-nav-link sub" onclick="toggleMobileNav()">Kabanata 13</a>
-      <a href="https://youtu.be/O2MBEr-sTuo" target="_blank" class="mobile-nav-link sub" onclick="toggleMobileNav()">Kabanata 14</a>
-      <a href="https://youtu.be/HJNt8VBhElk" target="_blank" class="mobile-nav-link sub" onclick="toggleMobileNav()">Kabanata 15</a>
-      <a href="https://youtu.be/Y-zFsm1edk" target="_blank" class="mobile-nav-link sub" onclick="toggleMobileNav()">Kabanata 16</a>
-      <a href="https://youtu.be/UQG3ORgCksc" target="_blank" class="mobile-nav-link sub" onclick="toggleMobileNav()">Kabanata 17</a>
-      <a href="https://youtu.be/QIk7IK9_z3A" target="_blank" class="mobile-nav-link sub" onclick="toggleMobileNav()">Kabanata 18</a>
-    </div>
-  </div>
 </div>
+
 <!-- ══════════════════════════════════════
      LANDING PAGE
      ══════════════════════════════════════ -->
 <div id="page-home" class="page active">
   <section class="lhero">
     <div class="lhero-rings" id="lheroRings"></div>
-    <p class="lhero-tag">Jose Rizal</p>
+    <p class="lhero-tag">Jose Rizal · Ghent, Belgium · 1891</p>
     <h1 class="lhero-title">El Filibusterismo</h1>
     <p class="lhero-sub">Nobelang Panlipunan ng Pilipinas</p>
     <div class="lhero-divider"><span class="lhero-gem">✦</span></div>
@@ -128,10 +105,7 @@
     <p class="quote-attr">— Simoun, El Filibusterismo</p>
   </div>
 
-  <footer class="footer"><span>✦</span>&nbsp; El Filibusterismo — Jose Rizal — 1891 &nbsp;
-    <p>Mga Developer Mark Estimada, John Apolo at Angelic Niverba</p>
-    <p>Ang Website ay pagmamaari ni Maam Cecile Blancaflor</p>
-    <span>✦</span></footer>
+  <footer class="footer"><span>✦</span>&nbsp; El Filibusterismo — Jose Rizal — 1891 &nbsp;<span>✦</span></footer>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -139,7 +113,8 @@
      ══════════════════════════════════════ -->
 <div id="page-characters" class="page">
   <div class="chars-hero">
-    <h1 class="chars-title">Mga <Br> Pangunahing Tauhan</h1>
+    <p class="chars-eyeline">Dramatis Personae</p>
+    <h1 class="chars-title">Mga Pangunahing Tauhan</h1>
     <p class="chars-desc">Ang bawat tauhan ay isang salamin ng lipunang kolonyal ng Pilipinas sa ilalim ng pamamahala ng Espanya.</p>
   </div>
   <div class="section-wrap">
@@ -160,7 +135,7 @@
   </div>
   <div class="about-content">
     <div class="rizal-box">
-      <div class="rizal-emoji"><img src="images/joseRizal.jpg" alt="Jose Rizal"></div>
+      <div class="rizal-emoji">👨‍💼</div>
       <div class="rizal-info">
         <div class="rizal-name">Jose Protacio Rizal Mercado y Alonzo Realonda</div>
         <div class="rizal-dates">Hunyo 19, 1861 — Disyembre 30, 1896</div>
@@ -309,24 +284,11 @@
      ══════════════════════════════════════ -->
 <div class="scene-viewer" id="sceneViewer">
   <div class="scene-stage" id="sceneStage">
-    <canvas id="sceneCanvas"></canvas>
-    <!-- Character layers rendered by JS -->
-    <div class="scene-text-overlay">
-      <div class="scene-chapter-tag" id="sceneChTag"></div>
-      <div class="scene-title" id="sceneTitle"></div>
-      <div class="scene-body" id="sceneBody"></div>
-      <div class="scene-chars-row" id="sceneCharsRow"></div>
-    </div>
-    <div class="scene-flash" id="sceneFlash"></div>
-    <!-- Controls -->
-    <div class="scene-controls">
-      <button class="scene-ctrl-btn" id="sceneVoiceBtn" onclick="sceneSpeak()">🔊 BOSES</button>
-      <button class="scene-ctrl-btn" id="sceneAutoBtn" onclick="toggleAutoPlay()">▶ AUTO</button>
-    </div>
+    <!-- Comic panels rendered by JS buildComicPanel() -->
   </div>
-  <div class="scene-nav">
-    <button class="scene-nav-btn" id="scenePrevBtn" onclick="sceneNav(-1)">← NAKARAAN</button>
-    <div class="scene-progress-dots" id="sceneProgDots"></div>
+  <div class="scene-prog-dots" id="sceneProgDots"></div>
+  <button class="scene-voice-btn" id="sceneVoiceBtn" onclick="sceneSpeak()">🔊 BOSES</button>
+</div>
     <button class="scene-nav-btn" id="sceneSusunodBtn" onclick="sceneNav(1)">SUSUNOD →</button>
     <button class="scene-close-btn" onclick="closeScene()">✕ ISARA</button>
   </div>
@@ -475,16 +437,12 @@
 </div>
 
 
-  <!-- Data -->
   <script src="js/data-chars.js"></script>
   <script src="js/data-timeline.js"></script>
   <script src="js/data-chapters.js"></script>
-  <!-- Engine -->
   <script src="js/audio.js"></script>
   <script src="js/navigation.js"></script>
-  
   <script src="js/sparks-particles.js"></script>
-  <!-- Pages -->
   <script src="js/landing.js"></script>
   <script src="js/characters.js"></script>
   <script src="js/about.js"></script>
@@ -496,7 +454,6 @@
   <script src="js/kwento.js"></script>
   <script src="js/scene.js"></script>
   <script src="js/video.js"></script>
-  <!-- Sheets / Init -->
   <script src="js/sheets.js"></script>
   <script src="js/init.js"></script>
 </body>
